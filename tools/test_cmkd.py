@@ -61,7 +61,7 @@ def parse_config():
 
 def eval_single_ckpt(model, test_loader, args, eval_output_dir, logger, epoch_id, dist_test=False):
     # load checkpoint
-    
+
     if args.use_lidar_head:
 
         model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=dist_test)
@@ -78,7 +78,7 @@ def eval_single_ckpt(model, test_loader, args, eval_output_dir, logger, epoch_id
     '''
     if args.pretrained_lidar_model is not None:
         model.load_params_from_file(args.pretrained_lidar_model, logger, to_cpu = dist_test)
-    
+
     model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=dist_test)
     '''
 
@@ -142,7 +142,7 @@ def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir
 
         total_time = 0
         first_eval = False
-        
+
         if args.use_lidar_head:
 
             model.load_params_from_file(filename=cur_ckpt, logger=logger, to_cpu=dist_test)
@@ -155,10 +155,10 @@ def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir
             if args.pretrained_lidar_model is not None:
                 model.load_params_from_file(args.pretrained_lidar_model, logger, to_cpu = dist_test)
             model.load_params_from_file(filename=cur_ckpt, logger=logger, to_cpu=dist_test)
-        
+
         """ if args.pretrained_lidar_model is not None:
             model.load_params_from_file(args.pretrained_lidar_model, logger, to_cpu = dist_test)
-            
+
         model.load_params_from_file(filename=cur_ckpt, logger=logger, to_cpu=dist_test)
         """
 
@@ -240,7 +240,7 @@ def main():
     )
 
     model = build_network(model_cfg=cfg.MODEL_IMG, num_class=len(cfg.CLASS_NAMES), dataset=test_set)
-    
+
     if args.mem:
         model.vfe.ffn.ddn.save_mem()
 

@@ -108,7 +108,7 @@ def eval_one_epoch(cfg, model, dataloader, epoch_id, logger, dist_test=False, sa
 
     with open(result_dir / 'result.pkl', 'wb') as f:
         pickle.dump(det_annos, f)
-    
+
     logger.info('Result is save to %s' % result_dir)
 
     if not format_only:
