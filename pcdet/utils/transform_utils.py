@@ -7,7 +7,7 @@ try:
         convert_points_from_homogeneous,
     )
 except:
-    pass 
+    pass
     # print('Warning: kornia is not installed. This package is only required by CaDDN')
 
 
@@ -69,6 +69,7 @@ def bin_depths(depth_map, mode, depth_min, depth_max, num_bins, target=False):
     Returns:
         indices: (H, W), Depth bin indices
     """
+
     if mode == "UD":
         bin_size = (depth_max - depth_min) / num_bins
         indices = ((depth_map - depth_min) / bin_size)
@@ -102,5 +103,5 @@ def bin2depth(bin_map, mode, depth_min, depth_max, num_bins):
         raise NotImplementedError
     else:
         raise NotImplementedError
-    
+
     return depths

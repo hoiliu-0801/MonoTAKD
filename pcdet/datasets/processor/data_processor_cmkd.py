@@ -147,19 +147,19 @@ class DataProcessor_CMKD(object):
             self.grid_size = np.round(grid_size).astype(np.int64)
             self.voxel_size = config.VOXEL_SIZE
             return partial(self.transform_points_to_voxels_placeholder, config=config)
-        
+
         return data_dict
 
     # VOXEL_SIZE/VOXEL_SIZE_LIDAR
     def transform_points_to_voxels(self, data_dict=None, config=None):
         if data_dict is None:
 
-            if 'VOXEL_SIZE' in config: 
+            if 'VOXEL_SIZE' in config:
                 grid_size = (self.point_cloud_range[3:6] - self.point_cloud_range[0:3]) / np.array(config.VOXEL_SIZE)
                 self.grid_size = np.round(grid_size).astype(np.int64)
                 self.voxel_size = config.VOXEL_SIZE
 
-            elif 'VOXEL_SIZE_LIDAR' in config: 
+            elif 'VOXEL_SIZE_LIDAR' in config:
                 grid_size_lidar = (self.point_cloud_range[3:6] - self.point_cloud_range[0:3]) / np.array(config.VOXEL_SIZE_LIDAR)
                 self.grid_size_lidar = np.round(grid_size_lidar).astype(np.int64)
                 self.voxel_size_lidar = config.VOXEL_SIZE_LIDAR
@@ -172,7 +172,7 @@ class DataProcessor_CMKD(object):
             return data_dict
 
         if self.voxel_generator is None:
-            if 'VOXEL_SIZE' in config: 
+            if 'VOXEL_SIZE' in config:
                 self.voxel_generator = VoxelGeneratorWrapper(
                     vsize_xyz=config.VOXEL_SIZE,
                     coors_range_xyz=self.point_cloud_range,
@@ -180,7 +180,7 @@ class DataProcessor_CMKD(object):
                     max_num_points_per_voxel=config.MAX_POINTS_PER_VOXEL,
                     max_num_voxels=config.MAX_NUMBER_OF_VOXELS[self.mode],
                 )
-            elif 'VOXEL_SIZE_LIDAR' in config: 
+            elif 'VOXEL_SIZE_LIDAR' in config:
                 self.voxel_generator = VoxelGeneratorWrapper(
                     vsize_xyz=config.VOXEL_SIZE_LIDAR,
                     coors_range_xyz=self.point_cloud_range,
@@ -221,7 +221,7 @@ class DataProcessor_CMKD(object):
                 near_idxs_choice = np.random.choice(near_idxs, num_points - len(far_idxs_choice), replace=False)
                 choice = np.concatenate((near_idxs_choice, far_idxs_choice), axis=0) \
                     if len(far_idxs_choice) > 0 else near_idxs_choice
-            else: 
+            else:
                 choice = np.arange(0, len(points), dtype=np.int32)
                 choice = np.random.choice(choice, num_points, replace=False)
             np.random.shuffle(choice)
@@ -246,7 +246,7 @@ class DataProcessor_CMKD(object):
                 grid_size_img = (self.point_cloud_range[3:6] - self.point_cloud_range[0:3]) / np.array(config.VOXEL_SIZE_IMG)
                 self.grid_size_img = np.round(grid_size_img).astype(np.int64)
                 self.voxel_size_img = config.VOXEL_SIZE_IMG
-                return partial(self.calculate_grid_size, config=config)                
+                return partial(self.calculate_grid_size, config=config)
         return data_dict
 
     def downsample_depth_map(self, data_dict=None, config=None):

@@ -44,6 +44,7 @@ class AnchorHeadSingleCMKD_V2(AnchorHeadTemplate):
         nn.init.normal_(self.conv_box.weight, mean=0, std=0.001)
 
     def forward(self, data_dict):
+        ### 在BEV上面做RPN###
         spatial_features_2d = data_dict['spatial_features_2d']
 
         cls_preds = self.conv_cls(spatial_features_2d)
@@ -91,11 +92,11 @@ class AnchorHeadSingleCMKD_V2(AnchorHeadTemplate):
         # pos norm
         pos = (cls_teacher_pred > 0.1).float()
         pos_normalizer = pos.sum(1, keepdim=True).float()
-        
+
         # calculate loss
 
         cls_loss = self.QFL(cls_preds, cls_teacher_pred, pos_normalizer)
-        cls_loss = cls_loss.sum() 
+        cls_loss = cls_loss.sum()
         cls_loss = cls_loss * self.model_cfg.LOSS_CONFIG.LOSS_WEIGHTS['cls_weight']
         tb_dict = {
             'rpn_loss_cls': cls_loss.item()

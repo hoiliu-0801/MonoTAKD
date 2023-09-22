@@ -47,8 +47,16 @@ class FrustumToVoxel(nn.Module):
         # Sample frustum volume to generate voxel volume
         voxel_features = self.sampler(input_features=batch_dict["frustum_features"],
                                       grid=grid)  # (B, C, X, Y, Z)
-
+        ##### image frumstum #####
         # (B, C, X, Y, Z) -> (B, C, Z, Y, X)
         voxel_features = voxel_features.permute(0, 1, 4, 3, 2)
         batch_dict["voxel_features"] = voxel_features
+
+        ##### lidar frumstum #####
+        # Sample frustum volume to generate voxel volume
+        if self.training:
+            voxel_features_target = self.sampler(input_features=batch_dict["frustum_features_target"],
+                                        grid=grid)  # (B, C, X, Y, Z)
+            voxel_features_target = voxel_features_target.permute(0, 1, 4, 3, 2)
+            batch_dict["voxel_features_target"] = voxel_features_target
         return batch_dict

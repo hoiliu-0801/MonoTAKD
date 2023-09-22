@@ -16,8 +16,8 @@ import kornia
 import kornia.augmentation as ka
 from ..model_utils import model_nms_utils
 import cv2
-import os
 import matplotlib.pyplot as plt
+import os
 from PIL import Image
 from scipy import ndimage
 
@@ -43,8 +43,6 @@ class CMKD(nn.Module):
 
         self.amp_training = False
         self.bev_layer = model_cfg.get('bev_layer', 'spatial_features')
-        self.bev_layer_copy = model_cfg.get('bev_layer_copy', 'spatial_features_copy')
-        self.bev_layer_target = model_cfg.get('bev_layer_target', 'spatial_features_target')
 
     def forward(self, batch_dict):
         loss, tb_dict, disp_dict = self.get_training_loss(batch_dict)
@@ -74,7 +72,6 @@ class CMKD(nn.Module):
                 bev_image = ndimage.zoom(ndimage.rotate(torch.mean(bev_image[B,:,:,:].cpu().detach(), dim=0), degree),3)
                 save_path=os.path.join(save_bev, key+"_"+ str(B)+".png")
                 plt.imsave(save_path, bev_image, cmap='inferno')
-
     def get_training_loss(self, batch_dict):
 
         # forward lidar model
@@ -100,69 +97,38 @@ class CMKD(nn.Module):
         self.model_img.calculate_rpn_loss = self.calculate_rpn_loss
 
         ret_dict, tb_dict, disp_dict = self.model_img(batch_dict)
-        # batch_dict: dict_keys(['frame_id', 'gt_boxes', 'gt_scores', 'images', 'points', 'trans_lidar_to_cam', 'trans_cam_to_img', 'use_lead_xyz', 'voxels', 'voxel_coords', 'voxel_num_points', 'image_shape', 'batch_size', 'frustum_features', 'image_features', 'voxel_features', 'spatial_features', 'spatial_features_2d'])
-
         loss_rpn = ret_dict.get('loss', torch.tensor(0))
 
         # bev_loss
-        bev_img = batch_dict.get(self.bev_layer, None) # learn only camera info
-        bev_img_copy = batch_dict.get(self.bev_layer_copy, None) # learn only lidar info
+        bev_img = batch_dict.get(self.bev_layer, None)
         gt_mask = batch_dict.get('gt_mask', None)
         loss_bev = torch.tensor(0)
-        ### Get Lidar-image-like ###
-        bev_lidar_img_like = batch_dict.get(self.bev_layer_target, None) # 1st: learn from lida, 2st: teaches
 
-        ##### Stage 1 : Train bev_diff and bev_img to bev_lidar_img_like ####
-        if (bev_img is not None) and (bev_lidar is not None) and (bev_lidar_img_like is not None) is not None and self.calculate_bev_loss:
+        if (bev_img is not None) and (bev_lidar is not None) and self.calculate_bev_loss:
 
-            bev_loss_mask = torch.ones((bev_lidar_img_like.shape[0], 1, bev_lidar_img_like.shape[2], bev_lidar_img_like.shape[3]), device = bev_lidar_img_like.device)
+            bev_loss_mask = torch.ones((bev_lidar.shape[0], 1, bev_lidar.shape[2], bev_lidar.shape[3]), device = bev_lidar.device)
             if gt_mask:
                 bev_loss_mask *= gt_mask
             if self.use_nonzero_mask:
-                nonzero_mask = (bev_lidar_img_like.sum(1,keepdim=True)!=0).float()
+                nonzero_mask = (bev_lidar.sum(1,keepdim=True)!=0).float()
                 nonzero_mask[nonzero_mask==0] = 0.05
                 bev_loss_mask *= nonzero_mask
             noralizer = bev_loss_mask.numel() / bev_loss_mask.sum()
 
             if self.bev_loss_type == 'L2':
-                loss_bev_image = (self.bev_loss_fun(bev_lidar, bev_img)*bev_loss_mask).mean()*noralizer
-                ## new ##
-                loss_bev_image_like = (self.bev_loss_fun(bev_lidar, bev_lidar_img_like)*bev_loss_mask).mean()*noralizer
-                loss_bev_copy = (self.bev_loss_fun(bev_lidar, bev_img_copy)*bev_loss_mask).mean()*noralizer
-                #########
-            # loss_bev_image*= self.bev_loss_weight
-            loss_bev_image_like*= self.bev_loss_weight
-            loss_bev_copy*= (self.bev_loss_weight/2)
-            loss_bev = loss_bev_image_like + loss_bev_copy + loss_bev_image
+                loss_bev = (self.bev_loss_fun(bev_img,bev_lidar)*bev_loss_mask).mean()*noralizer
+
+            elif self.bev_loss_type == 'SUM':
+                B,C,H,W = bev_img.shape
+                with torch.no_grad():
+                    mean_img = bev_img.mean()
+                    mean_lidar = bev_lidar.mean()
+                loss_bev = (self.bev_loss_fun(bev_img.sum(dim=1)/C/mean_img,bev_lidar.sum(dim=1)/C/mean_lidar)*bev_loss_mask).mean()
+
+            loss_bev *= self.bev_loss_weight
         ### bev_draw #####
-        bev_diff = torch.absolute(bev_lidar-bev_lidar_img_like)
-        visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_like=bev_lidar_img_like, bev_img_copy=bev_img_copy, bev_diff=bev_diff)
+        visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img)
         self.visual_(batch_dict, visual_dict)
-        ##### Stage 2 : Train bev_diff and bev_img to bev_lidar_img_like ####
-        # bev_diff = torch.absolute(bev_lidar-bev_lidar_img_like)
-        # if (bev_img is not None) and (bev_lidar is not None) and self.calculate_bev_loss:
-
-        #     bev_loss_mask = torch.ones((bev_lidar.shape[0], 1, bev_lidar.shape[2], bev_lidar.shape[3]), device = bev_lidar.device)
-        #     if gt_mask:
-        #         bev_loss_mask *= gt_mask
-        #     if self.use_nonzero_mask:
-        #         nonzero_mask = (bev_lidar.sum(1,keepdim=True)!=0).float()
-        #         nonzero_mask[nonzero_mask==0] = 0.05
-        #         bev_loss_mask *= nonzero_mask
-        #     noralizer = bev_loss_mask.numel() / bev_loss_mask.sum()
-
-        #     if self.bev_loss_type == 'L2':
-        #         loss_bev = (self.bev_loss_fun(bev_img,bev_lidar)*bev_loss_mask).mean()*noralizer
-
-        #     elif self.bev_loss_type == 'SUM':
-        #         B,C,H,W = bev_img.shape
-        #         with torch.no_grad():
-        #             mean_img = bev_img.mean()
-        #             mean_lidar = bev_lidar.mean()
-        #         loss_bev = (self.bev_loss_fun(bev_img.sum(dim=1)/C/mean_img,bev_lidar.sum(dim=1)/C/mean_lidar)*bev_loss_mask).mean()
-
-        #     loss_bev *= self.bev_loss_weight
-
         #all loss
         loss = loss_bev + loss_rpn
 
@@ -184,10 +150,8 @@ class CMKD_MONO(Detector3DTemplate_CMKD):
 
         for cur_module in self.module_list:
             batch_dict = cur_module(batch_dict)
-        # batch_dict['image_features'].shape = torch.Size([2, 64, 47, 156])
-        # batch_dict['voxel_features'].shape = torch.Size([2, 64, 10, 188, 140])
-        # 還差把融合後的 bev 換回去model img的bev
-        if self.training:  # True
+
+        if self.training:
             self.calculate_rpn_loss = batch_dict.get('calculate_rpn_loss', self.calculate_rpn_loss)
             loss, tb_dict, disp_dict = self.get_training_loss()
 
@@ -223,8 +187,6 @@ class CMKD_MONO(Detector3DTemplate_CMKD):
 
         # depth loss, optional
         if self.model_cfg['VFE']['FFN'].get('LOSS',None) is not None and self.calculate_depth_loss:
-            ## incomplete code here
-            exit()
             loss_depth, tb_dict_depth = self.vfe.get_loss()
             tb_dict.update({
                 'loss_depth': loss_depth.item(),
@@ -377,17 +339,14 @@ class CMKD_LIDAR(Detector3DTemplate_CMKD):
         self.bev_layer = model_cfg.get('bev_layer', 'spatial_features')
         self.res_layer = model_cfg.get('res_layer', 'teacher_pred')
 
+
     def forward(self, batch_dict):
 
         for cur_module in self.module_list:
             batch_dict = cur_module(batch_dict)
-        # print("batch_dict.keys():", batch_dict.keys())
-        # exit()
-        # (['frame_id', 'gt_boxes', 'gt_scores', 'gt_boxes2d', 'images', 'points', 'depth_maps', 'trans_lidar_to_cam', 'trans_cam_to_img', 'use_lead_xyz', 'voxels', 'voxel_coords', 'voxel_num_points', 'image_shape', 'batch_size', 'voxel_features', 'encoded_spconv_tensor', 'encoded_spconv_tensor_stride', 'multi_scale_3d_features', 'spatial_features', 'spatial_features_stride', 'spatial_features_2d', 'teacher_pred'])
-        # exit()
-        # batch_dict['voxel_features'].shape = torch.Size([31446, 4])
-        # batch_dict['depth_maps'].shape = torch.Size([2, 375, 1242])
+
         bev_lidar = batch_dict.get(self.bev_layer, None)
+
         teacher_pred = batch_dict.get(self.res_layer, None)
 
         return bev_lidar, teacher_pred
@@ -405,4 +364,3 @@ def load_data_to_gpu(batch_dict):
             batch_dict[key] = torch.from_numpy(val).int().cuda()
         else:
             batch_dict[key] = torch.from_numpy(val).float().cuda()
-
