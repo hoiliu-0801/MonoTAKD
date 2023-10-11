@@ -85,7 +85,24 @@ class BaseBEVBackbone(nn.Module):
                 spatial_features
         Returns:
         """
+        # if 'spatial_features_fusion' in data_dict.keys():
+        #     spatial_features = data_dict['spatial_features_fusion']
+        #     spatial_features2 = data_dict['spatial_features']
+        # else:
+        #     spatial_features = data_dict['spatial_features']
         spatial_features = data_dict['spatial_features']
+        # print(data_dict.keys())
+        # exit()
+
+        spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
+        save_path="/home/ipl-pc/cmkd/output/"+"10.png"
+        import matplotlib.pyplot as plt
+        plt.imsave(save_path, spatial_features_, cmap='inferno')
+        # spatial_features_2 = torch.mean(spatial_features2[0,:,:,:].cpu().detach(),dim=0)
+        # save_path1="/home/ipl-pc/cmkd/output/"+"11.png"
+        # import matplotlib.pyplot as plt
+        # plt.imsave(save_path1, spatial_features_2, cmap='inferno')
+        # exit()
         ups = []
         ret_dict = {}
         x = spatial_features

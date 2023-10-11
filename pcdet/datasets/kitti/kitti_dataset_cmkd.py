@@ -73,7 +73,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
             img_file = self.raw_path/'KITTI_Raw'/img_dir
 
         assert img_file.exists()
-        
+
         image = io.imread(img_file)
         image = image.astype(np.float32)
         image /= 255.0
@@ -121,12 +121,13 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
         return depth
 
     def get_calib(self, idx):
-        
+
         if len(idx) == 6:
             calib_file = self.root_split_path / 'calib' / ('%s.txt' % idx)
-        else:    
+        else:
             calib_dir = 'calib/'+idx[0:10]+'.txt'
             calib_file = self.raw_path / calib_dir
+
         assert calib_file.exists()
         return calibration_kitti.Calibration(calib_file)
 
@@ -360,7 +361,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
 
                 if not (output_path/frame_id[:-11]).exists():
                     (output_path/frame_id[:-11]).mkdir(parents=True, exist_ok=True)
-                
+
                 with open(cur_det_file, 'w') as f:
                     bbox = single_pred_dict['bbox']
                     loc = single_pred_dict['location']
@@ -378,7 +379,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
 
     def evaluation(self, det_annos, class_names, **kwargs):
         if 'annos' not in self.kitti_infos[0].keys():
-            return None, {} 
+            return None, {}
 
         from .kitti_object_eval_python import eval as kitti_eval
 
@@ -416,7 +417,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
             annos = common_utils.drop_info_with_name(annos, name='DontCare')
             loc, dims, rots = annos['location'], annos['dimensions'], annos['rotation_y']
             gt_names = annos['name']
-            gt_boxes_camera = np.concatenate([loc, dims, rots[..., np.newaxis]], axis=1).astype(np.float32)
+            gt_boxes_camera = np.concatenate([loc, dims, rots[..., np.newaxis]], axis=1).astype(np.float32) #(3, 7)
             gt_boxes_lidar = box_utils.boxes3d_kitti_camera_to_lidar(gt_boxes_camera, calib)
             score = annos['score']
             mask = (score == -1)
@@ -482,7 +483,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
                 gt_boxes_mask = np.array([n in self.class_names for n in data_dict['gt_names']], dtype=np.bool_)
             else:
                 gt_boxes_mask = None
- 
+
             data_dict = self.data_augmentor.forward(
                 data_dict=
                 {
@@ -524,10 +525,10 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
 #TODO:incomplete?
 def create_kitti_infos_soft(dataset_cfg, class_names, data_path, save_path, split_name, your_label_path=None, workers=4):
     dataset = KittiDataset_CMKD(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
-    
+
     soft_label_filename = save_path / ('kitti_infos_%s.pkl' % split_name)
     dataset.set_split(split_name)
-  
+
     for sample_idx in dataset.sample_id_list:
         obj_list = dataset.get_label(sample_idx, your_label_path)
         if (len(obj_list) == 0):
@@ -543,7 +544,7 @@ def create_kitti_infos_soft(dataset_cfg, class_names, data_path, save_path, spli
     with open(soft_label_filename, 'wb') as f:
         pickle.dump(kitti_infos, f)
     print('Kitti info train file is saved to %s' % soft_label_filename)
-    
+
     print('---------------Data preparation Done---------------')
 
 def create_kitti_infos_unlabel(dataset_cfg, class_names, data_path, save_path, split_name, workers=4):
@@ -559,7 +560,7 @@ def create_kitti_infos_unlabel(dataset_cfg, class_names, data_path, save_path, s
     with open(soft_label_filename, 'wb') as f:
         pickle.dump(kitti_infos, f)
     print('Kitti info train file is saved to %s' % soft_label_filename)
-    
+
     print('---------------Data preparation Done---------------')
 
 
@@ -595,5 +596,5 @@ if __name__ == '__main__':
             data_path=ROOT_DIR / 'data' / 'kitti',
             save_path=ROOT_DIR / 'data' / 'kitti',
             split_name=split_name,
-        )    
+        )
 

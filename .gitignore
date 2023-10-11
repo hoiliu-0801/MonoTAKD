@@ -21,3 +21,5 @@ waymo_sub/
 waymo-open-dataset*
 run_cmds.txt
 .vscode/
+scripts/viz_bbox/
+*.png

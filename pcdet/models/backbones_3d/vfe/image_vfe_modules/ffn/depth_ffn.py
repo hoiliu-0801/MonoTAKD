@@ -6,6 +6,7 @@ from pcdet.models.model_utils.basic_block_2d import BasicBlock2D
 from skimage import transform
 import numpy as np
 import torch
+import matplotlib.pyplot as plt
 
 class DepthFFN(nn.Module):
 
@@ -67,18 +68,15 @@ class DepthFFN(nn.Module):
             for i in range(h):
                 for j in range(w):
                     bin_value = depth_target_bin [b,i,j]
-                    if bin_value==120: # out of boundary
-                        # print("depth_map_target:", depth_map_target[b,i,j])
-                        depth_target [b,bin_value,i,j] = 100000
-                    elif bin_value>120 or bin_value<0:
-                        print("error bin")
-                    else:
-                        depth_target [b,bin_value,i,j] = 1
-                        # depth_target [b,bin_value,i,j] = depth_map_target[b,i,j]
-        # depth_target = depth_target [:, :-1, :]
-        # depth_probs = F.softmax(depth_target, dim=depth_dim)  # [2, 120, 47, 156]
-        # print("depth_probs:", depth_probs.shape)
-        # exit()
+                    depth_target [b,bin_value,i,j] = 1
+                    # if bin_value==120: # out of boundary
+                    #     # print("depth_map_target:", depth_map_target[b,i,j])
+                    #     depth_target [b,bin_value,i,j] = 100000
+                    # elif bin_value>120 or bin_value<0:
+                    #     print("error bin")
+                    # else:
+                    #     depth_target [b,bin_value,i,j] = 1
+
         return depth_target
 
     def forward(self, batch_dict):
@@ -91,6 +89,7 @@ class DepthFFN(nn.Module):
             batch_dict:
                 frustum_features: (N, C, D, H_out, W_out), Image depth features
         """
+        # print("batch_dict['frame_id']:", batch_dict['frame_id'][0])
         # Pixel-wise depth classification
         images = batch_dict["images"] #([2, 3, 375, 1242])
         ddn_result = self.ddn(images)  # self.ddn is a pretrained backbone, which is used to generate pretrained depth feature and depth bin
@@ -106,37 +105,26 @@ class DepthFFN(nn.Module):
         batch_dict["frustum_features"] = frustum_features
         batch_dict["image_features"] = image_features
 
-        if self.training:
-            # depth_maps and gt_boxes2d are optional
-            self.forward_ret_dict["depth_maps"] = batch_dict.get("depth_maps",None)
-            self.forward_ret_dict["gt_boxes2d"] = batch_dict.get("gt_boxes2d",None)
-            self.forward_ret_dict["depth_logits"] = depth_logits # torch.Size([2, 121, 47, 156])
-            #### New code ####
-            #### Create Lidar-image-lije feature plane-sweep volume ###
-            self.forward_ret_dict["depth_maps"] = self.sparse_avg_pooling(self.forward_ret_dict["depth_maps"], 8)
-            # save_path="/home/ipl-pc/cmkd/output/vis_result"+".depth.png"
-            # import matplotlib.pyplot as plt
-            # print(self.forward_ret_dict["depth_maps"][0,:].shape)
-            # plt.imsave(save_path, self.forward_ret_dict["depth_maps"][0,:].cpu().detach())
-            # exit()
-            depth_map_target = self.forward_ret_dict["depth_maps"]  ## ([47, 156])
-            depth_target_bin = self.ddn_loss(**self.forward_ret_dict) # 0-120, total 121 dim
-            depth_target = self.create_depth_target(depth_map_target, depth_target_bin)
-            frustum_features_target = self.create_frustum_features(image_features, depth_target, target=True)
-            batch_dict["frustum_features_target"] = frustum_features_target
-            frustum_features, image_features = self.create_frustum_features(image_features=image_features,
-                                                    depth_logits=depth_logits)
-        # print(depth_map_target.max())
+        # depth_maps and gt_boxes2d are optional
+        self.forward_ret_dict["depth_maps"] = batch_dict.get("depth_maps",None)
+        self.forward_ret_dict["gt_boxes2d"] = batch_dict.get("gt_boxes2d",None)
+        self.forward_ret_dict["depth_logits"] = depth_logits # torch.Size([2, 121, 47, 156])
+        #### New code ####
+        #### Create Lidar-image-lije feature plane-sweep volume ###
+        self.forward_ret_dict["depth_maps"] = self.sparse_avg_pooling(self.forward_ret_dict["depth_maps"], 8)
+        # save_path="/home/ipl-pc/cmkd/output/vis_result"+".depth.png"
+        # print(self.forward_ret_dict["depth_maps"])
         # exit()
+        # plt.imsave(save_path, self.forward_ret_dict["depth_maps"][0,:].cpu().detach())
 
-
-        ## 這邊也要decode 回one hot bin#
-        # depth_map_target_list = []
-        # print("1:",depth_map_target.shape)
-        # depth_map_target_list.append(depth_map_target)
-        # depth_map_target_list.append(zero_tensor)
-        # depth_map_target= torch.cat(depth_map_target_list, dim=2)
-        # frustum_features_target = depth_map_target * image_features_insq
+        depth_map_target = self.forward_ret_dict["depth_maps"]  ## ([47, 156])
+        depth_target_bin = self.ddn_loss(**self.forward_ret_dict) # 0-120, total 121 dim
+        # print(np.unique(depth_target_bin[0,:].cpu().detach())) # 29-120
+        depth_target = self.create_depth_target(depth_map_target, depth_target_bin)
+        frustum_features_target = self.create_frustum_features(image_features, depth_target, target=True)
+        batch_dict["frustum_features_target"] = frustum_features_target
+        frustum_features = self.create_frustum_features(image_features=image_features,
+                                                depth_logits=depth_logits)
         return batch_dict
 
     def create_frustum_features(self, image_features, depth_logits, target=False):

@@ -14,8 +14,8 @@ def points_in_boxes_cpu(points, boxes):
     Returns:
         point_indices: (N, num_points)
     """
-    assert boxes.shape[1] == 7
-    assert points.shape[1] == 3
+    assert boxes.shape[1] == 7 #(4, 7)
+    assert points.shape[1] == 3 #(121015, 3)
     points, is_numpy = common_utils.check_numpy_to_torch(points)
     boxes, is_numpy = common_utils.check_numpy_to_torch(boxes)
 

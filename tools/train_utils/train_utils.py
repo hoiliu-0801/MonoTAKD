@@ -27,7 +27,7 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
             dataloader_iter = iter(train_loader)
             batch = next(dataloader_iter)
             print('new iters')
-        
+
         data_timer = time.time()
         cur_data_time = data_timer - end
 
@@ -155,7 +155,7 @@ def train_one_epoch_cmkd(model, optimizer, train_loader, model_func, lr_schedule
             dataloader_iter = iter(train_loader)
             batch = next(dataloader_iter)
             print('new iters')
-        
+
         data_timer = time.time()
         cur_data_time = data_timer - end
 
@@ -252,7 +252,7 @@ def train_model_cmkd(model, optimizer, train_loader, model_func, lr_scheduler, o
                 cur_scheduler = lr_warmup_scheduler
             else:
                 cur_scheduler = lr_scheduler
-            
+
             # train_one_epoch -> train_one_epoch_cmkd
             accumulated_iter = train_one_epoch_cmkd(
                 model, optimizer, train_loader, model_func,

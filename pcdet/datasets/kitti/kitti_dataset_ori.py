@@ -4,10 +4,10 @@ import pickle
 import numpy as np
 from skimage import io
 
-from pcdet.datasets.kitti import kitti_utils
-from pcdet.ops.roiaware_pool3d import roiaware_pool3d_utils
-from pcdet.utils import box_utils, calibration_kitti, common_utils, object3d_kitti
-from pcdet.datasets.dataset import DatasetTemplate
+from . import kitti_utils
+from ...ops.roiaware_pool3d import roiaware_pool3d_utils
+from ...utils import box_utils, calibration_kitti, common_utils, object3d_kitti
+from ..dataset import DatasetTemplate
 
 
 class KittiDataset(DatasetTemplate):
@@ -26,7 +26,7 @@ class KittiDataset(DatasetTemplate):
         self.split = self.dataset_cfg.DATA_SPLIT[self.mode]
         self.root_split_path = self.root_path / ('training' if self.split != 'test' else 'testing')
 
-        split_dir = self.root_path / 'training/split' / (self.split + '.txt')
+        split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
         self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
 
         self.kitti_infos = []
@@ -57,9 +57,8 @@ class KittiDataset(DatasetTemplate):
         self.split = split
         self.root_split_path = self.root_path / ('training' if self.split != 'test' else 'testing')
 
-        split_dir = self.root_path / 'training/split' / (self.split + '.txt')
+        split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
         self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
-        print(f'Number of {self.split} samples: {len(self.sample_id_list)}')
 
     def get_lidar(self, idx):
         lidar_file = self.root_split_path / 'velodyne' / ('%s.bin' % idx)
@@ -151,8 +150,7 @@ class KittiDataset(DatasetTemplate):
     def get_infos(self, num_workers=4, has_label=True, count_inside_pts=True, sample_id_list=None):
         import concurrent.futures as futures
 
-
-        def process_single_scene(sample_idx, is_empty=False):
+        def process_single_scene(sample_idx):
             print('%s sample_idx: %s' % (self.split, sample_idx))
             info = {}
             pc_info = {'num_features': 4, 'lidar_idx': sample_idx}
@@ -173,25 +171,14 @@ class KittiDataset(DatasetTemplate):
 
             if has_label:
                 obj_list = self.get_label(sample_idx)
-
-                if len(obj_list) <= 0:
-                    is_empty = True
-                    return info, is_empty
-                
                 annotations = {}
                 annotations['name'] = np.array([obj.cls_type for obj in obj_list])
                 annotations['truncated'] = np.array([obj.truncation for obj in obj_list])
                 annotations['occluded'] = np.array([obj.occlusion for obj in obj_list])
                 annotations['alpha'] = np.array([obj.alpha for obj in obj_list])
-                if len(obj_list) > 0:
-                    annotations['bbox'] = np.concatenate([obj.box2d.reshape(1, 4) for obj in obj_list], axis=0)
-                else:
-                    annotations['bbox'] = np.array([])
+                annotations['bbox'] = np.concatenate([obj.box2d.reshape(1, 4) for obj in obj_list], axis=0)
                 annotations['dimensions'] = np.array([[obj.l, obj.h, obj.w] for obj in obj_list])  # lhw(camera) format
-                if len(obj_list) > 0:    
-                    annotations['location'] = np.concatenate([obj.loc.reshape(1, 3) for obj in obj_list], axis=0)
-                else:
-                    annotations['location'] = np.array([])
+                annotations['location'] = np.concatenate([obj.loc.reshape(1, 3) for obj in obj_list], axis=0)
                 annotations['rotation_y'] = np.array([obj.ry for obj in obj_list])
                 annotations['score'] = np.array([obj.score for obj in obj_list])
                 annotations['difficulty'] = np.array([obj.level for obj in obj_list], np.int32)
@@ -204,18 +191,15 @@ class KittiDataset(DatasetTemplate):
                 loc = annotations['location'][:num_objects]
                 dims = annotations['dimensions'][:num_objects]
                 rots = annotations['rotation_y'][:num_objects]
-                if len(obj_list) > 0:
-                    loc_lidar = calib.rect_to_lidar(loc)
-                    l, h, w = dims[:, 0:1], dims[:, 1:2], dims[:, 2:3]
-                    loc_lidar[:, 2] += h[:, 0] / 2
-                    gt_boxes_lidar = np.concatenate([loc_lidar, l, w, h, -(np.pi / 2 + rots[..., np.newaxis])], axis=1)
-                    annotations['gt_boxes_lidar'] = gt_boxes_lidar
-                else:
-                    annotations['gt_boxes_lidar'] = np.array([[], [], [], [], [], [], []]).reshape(-1, 7)
+                loc_lidar = calib.rect_to_lidar(loc)
+                l, h, w = dims[:, 0:1], dims[:, 1:2], dims[:, 2:3]
+                loc_lidar[:, 2] += h[:, 0] / 2
+                gt_boxes_lidar = np.concatenate([loc_lidar, l, w, h, -(np.pi / 2 + rots[..., np.newaxis])], axis=1)
+                annotations['gt_boxes_lidar'] = gt_boxes_lidar
 
                 info['annos'] = annotations
 
-                if count_inside_pts and len(obj_list) > 0:
+                if count_inside_pts:
                     points = self.get_lidar(sample_idx)
                     calib = self.get_calib(sample_idx)
                     pts_rect = calib.lidar_to_rect(points[:, 0:3])
@@ -229,36 +213,19 @@ class KittiDataset(DatasetTemplate):
                         flag = box_utils.in_hull(pts_fov[:, 0:3], corners_lidar[k])
                         num_points_in_gt[k] = flag.sum()
                     annotations['num_points_in_gt'] = num_points_in_gt
-                    
-            return info, is_empty
+
+            return info
 
         sample_id_list = sample_id_list if sample_id_list is not None else self.sample_id_list
-                
-        infos = []
-        empty = []
-        for sample in sample_id_list:
-            info, is_empty = process_single_scene(sample)
-            if is_empty:
-                empty.append(str(sample))
-                continue
-            infos.append(info)
-            
-        # Save empty IDs in a txt
-        with open('/home/ipl-pc/cmkd/data/kitti/empty_train_ids.txt', 'wt') as f:
-            for id in empty:
-                f.write(id + '\n')
-            f.close()
-        
-        # with futures.ThreadPoolExecutor(num_workers) as executor:
-        #     infos = executor.map(process_single_scene, sample_id_list)
-        
+        with futures.ThreadPoolExecutor(num_workers) as executor:
+            infos = executor.map(process_single_scene, sample_id_list)
         return list(infos)
 
     def create_groundtruth_database(self, info_path=None, used_classes=None, split='train'):
         import torch
-        save_path = '/home/ipl-pc/cmkd/data/kitti'
-        database_save_path = Path(save_path) / ('gt_database' if split == 'train' else ('gt_database_%s' % split))
-        db_info_save_path = Path(save_path) / ('kitti_dbinfos_%s.pkl' % split)
+
+        database_save_path = Path(self.root_path) / ('gt_database' if split == 'train' else ('gt_database_%s' % split))
+        db_info_save_path = Path(self.root_path) / ('kitti_dbinfos_%s.pkl' % split)
 
         database_save_path.mkdir(parents=True, exist_ok=True)
         all_db_infos = {}
@@ -292,7 +259,7 @@ class KittiDataset(DatasetTemplate):
                     gt_points.tofile(f)
 
                 if (used_classes is None) or names[i] in used_classes:
-                    db_path = str(filepath.relative_to(save_path))  # gt_database/xxxxx.bin
+                    db_path = str(filepath.relative_to(self.root_path))  # gt_database/xxxxx.bin
                     db_info = {'name': names[i], 'path': db_path, 'image_idx': sample_idx, 'gt_idx': i,
                                'box3d_lidar': gt_boxes[i], 'num_points_in_gt': gt_points.shape[0],
                                'difficulty': difficulty[i], 'bbox': bbox[i], 'score': annos['score'][i]}
@@ -464,50 +431,34 @@ def create_kitti_infos(dataset_cfg, class_names, data_path, save_path, workers=4
     dataset = KittiDataset(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
     train_split, val_split = 'train', 'val'
 
-    train_filename = save_path / ('kitti_infos_%s_raw.pkl' % train_split)
-    val_filename = save_path / ('kitti_infos_%s_raw.pkl' % val_split)
-    # trainval_filename = save_path / 'kitti_infos_trainval_raw.pkl'
-    # test_filename = save_path / 'kitti_infos_test_raw.pkl'
+    train_filename = save_path / ('kitti_infos_%s.pkl' % train_split)
+    val_filename = save_path / ('kitti_infos_%s.pkl' % val_split)
+    trainval_filename = save_path / 'kitti_infos_trainval.pkl'
+    test_filename = save_path / 'kitti_infos_test.pkl'
 
-    ### Remove train ids with empty .txt
-    # dataset.set_split(train_split) #['000000', '000001', ...]
-    # non_empty_ids = []
-    # for sample_idx in dataset.sample_id_list:
-    #     obj_list = dataset.get_label(sample_idx)
-    #     if len(obj_list) <= 0:
-    #         continue
-    #     non_empty_ids.append(sample_idx) #31794
-    # # Save empty IDs in a txt
-    # with open('/home/ipl-pc/cmkd/data/kitti/train_no_empty.txt', 'wt') as f:
-    #     for id in non_empty_ids:
-    #         f.write(id + '\n')
-    #     f.close()
-    # print('Cleaned.')
-    # exit()
-    ####
-    
     print('---------------Start to generate data infos---------------')
+
     dataset.set_split(train_split)
     kitti_infos_train = dataset.get_infos(num_workers=workers, has_label=True, count_inside_pts=True)
     with open(train_filename, 'wb') as f:
         pickle.dump(kitti_infos_train, f)
-    print('Kitti info train_raw file is saved to %s' % train_filename)
+    print('Kitti info train file is saved to %s' % train_filename)
 
-    # dataset.set_split(val_split)
-    # kitti_infos_val = dataset.get_infos(num_workers=workers, has_label=True, count_inside_pts=True)
-    # with open(val_filename, 'wb') as f:
-    #     pickle.dump(kitti_infos_val, f)
-    # print('Kitti info val_raw file is saved to %s' % val_filename)
+    dataset.set_split(val_split)
+    kitti_infos_val = dataset.get_infos(num_workers=workers, has_label=True, count_inside_pts=True)
+    with open(val_filename, 'wb') as f:
+        pickle.dump(kitti_infos_val, f)
+    print('Kitti info val file is saved to %s' % val_filename)
 
-    # with open(trainval_filename, 'wb') as f:
-    #     pickle.dump(kitti_infos_train + kitti_infos_val, f)
-    # print('Kitti info trainval_raw file is saved to %s' % trainval_filename)
+    with open(trainval_filename, 'wb') as f:
+        pickle.dump(kitti_infos_train + kitti_infos_val, f)
+    print('Kitti info trainval file is saved to %s' % trainval_filename)
 
-    # dataset.set_split('test')
-    # kitti_infos_test = dataset.get_infos(num_workers=workers, has_label=False, count_inside_pts=False)
-    # with open(test_filename, 'wb') as f:
-    #     pickle.dump(kitti_infos_test, f)
-    # print('Kitti info test_raw file is saved to %s' % test_filename)
+    dataset.set_split('test')
+    kitti_infos_test = dataset.get_infos(num_workers=workers, has_label=False, count_inside_pts=False)
+    with open(test_filename, 'wb') as f:
+        pickle.dump(kitti_infos_test, f)
+    print('Kitti info test file is saved to %s' % test_filename)
 
     print('---------------Start create groundtruth database for data augmentation---------------')
     dataset.set_split(train_split)
@@ -518,7 +469,6 @@ def create_kitti_infos(dataset_cfg, class_names, data_path, save_path, workers=4
 
 if __name__ == '__main__':
     import sys
-    
     if sys.argv.__len__() > 1 and sys.argv[1] == 'create_kitti_infos':
         import yaml
         from pathlib import Path
@@ -528,22 +478,6 @@ if __name__ == '__main__':
         create_kitti_infos(
             dataset_cfg=dataset_cfg,
             class_names=['Car', 'Pedestrian', 'Cyclist'],
-            data_path=Path('/mnt/disk2/Data/KITTI/kitti_merge'),
+            data_path=ROOT_DIR / 'data' / 'kitti',
             save_path=ROOT_DIR / 'data' / 'kitti'
         )
-
-    # DEBUG MODE
-    # import yaml
-    # from pathlib import Path
-    # from easydict import EasyDict
-    # dataset_cfg = EasyDict(yaml.safe_load(open(sys.argv[4])))
-    # ROOT_DIR = (Path(__file__).resolve().parent / '../../../').resolve()
-    # create_kitti_infos(
-    #     dataset_cfg=dataset_cfg,
-    #     class_names=['Car', 'Pedestrian', 'Cyclist'],
-    #     data_path=Path('/mnt/disk2/Data/KITTI/kitti_merge'),
-    #     save_path=ROOT_DIR / 'data' / 'kitti'
-    # )
-
-
-# python -m pcdet.datasets.kitti.kitti_dataset create_kitti_infos tools/cfgs/dataset_configs/kitti_dataset_raw.yaml
