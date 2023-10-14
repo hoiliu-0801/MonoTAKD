@@ -3,7 +3,6 @@ import pickle
 
 import numpy as np
 from skimage import io
-from tqdm import tqdm
 
 from pcdet.datasets.kitti import kitti_utils
 from pcdet.ops.roiaware_pool3d import roiaware_pool3d_utils
@@ -27,7 +26,7 @@ class KittiDataset(DatasetTemplate):
         self.split = self.dataset_cfg.DATA_SPLIT[self.mode]
         self.root_split_path = self.root_path / ('training' if self.split != 'test' else 'testing')
 
-        split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
+        split_dir = self.root_path / 'training/split' / (self.split + '.txt')
         self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
 
         self.kitti_infos = []
@@ -58,7 +57,7 @@ class KittiDataset(DatasetTemplate):
         self.split = split
         self.root_split_path = self.root_path / ('training' if self.split != 'test' else 'testing')
 
-        split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
+        split_dir = self.root_path / 'training/split' / (self.split + '.txt')
         self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
         print(f'Number of {self.split} samples: {len(self.sample_id_list)}')
 
@@ -152,8 +151,9 @@ class KittiDataset(DatasetTemplate):
     def get_infos(self, num_workers=4, has_label=True, count_inside_pts=True, sample_id_list=None):
         import concurrent.futures as futures
 
+
         def process_single_scene(sample_idx, is_empty=False):
-            # print('%s sample_idx: %s' % (self.split, sample_idx))
+            print('%s sample_idx: %s' % (self.split, sample_idx))
             info = {}
             pc_info = {'num_features': 4, 'lidar_idx': sample_idx}
             info['point_cloud'] = pc_info
@@ -236,24 +236,16 @@ class KittiDataset(DatasetTemplate):
                 
         infos = []
         empty = []
-        non_empty = []
-        for sample in tqdm(sample_id_list):
+        for sample in sample_id_list:
             info, is_empty = process_single_scene(sample)
             if is_empty:
                 empty.append(str(sample))
                 continue
-            else:
-                non_empty.append(str(sample))
             infos.append(info)
             
         # Save empty IDs in a txt
         with open('/home/ipl-pc/cmkd/data/kitti/empty_train_ids.txt', 'wt') as f:
             for id in empty:
-                f.write(id + '\n')
-            f.close()
-        
-        with open('/home/ipl-pc/cmkd/data/kitti/non_empty_train_ids.txt', 'wt') as f:
-            for id in non_empty:
                 f.write(id + '\n')
             f.close()
         
@@ -274,8 +266,8 @@ class KittiDataset(DatasetTemplate):
         with open(info_path, 'rb') as f:
             infos = pickle.load(f)
 
-        for k in tqdm(range(len(infos))):
-            # print('gt_database sample: %d/%d' % (k + 1, len(infos)))
+        for k in range(len(infos)):
+            print('gt_database sample: %d/%d' % (k + 1, len(infos)))
             info = infos[k]
             sample_idx = info['point_cloud']['lidar_idx']
             points = self.get_lidar(sample_idx)
@@ -472,8 +464,8 @@ def create_kitti_infos(dataset_cfg, class_names, data_path, save_path, workers=4
     dataset = KittiDataset(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
     train_split, val_split = 'train', 'val'
 
-    train_filename = save_path / ('kitti_infos_%s_lpcg.pkl' % train_split)
-    val_filename = save_path / ('kitti_infos_%s_lpcg.pkl' % val_split)
+    train_filename = save_path / ('kitti_infos_%s_raw.pkl' % train_split)
+    val_filename = save_path / ('kitti_infos_%s_raw.pkl' % val_split)
     # trainval_filename = save_path / 'kitti_infos_trainval_raw.pkl'
     # test_filename = save_path / 'kitti_infos_test_raw.pkl'
 
@@ -501,11 +493,11 @@ def create_kitti_infos(dataset_cfg, class_names, data_path, save_path, workers=4
         pickle.dump(kitti_infos_train, f)
     print('Kitti info train_raw file is saved to %s' % train_filename)
 
-    dataset.set_split(val_split)
-    kitti_infos_val = dataset.get_infos(num_workers=workers, has_label=True, count_inside_pts=True)
-    with open(val_filename, 'wb') as f:
-        pickle.dump(kitti_infos_val, f)
-    print('Kitti info val_raw file is saved to %s' % val_filename)
+    # dataset.set_split(val_split)
+    # kitti_infos_val = dataset.get_infos(num_workers=workers, has_label=True, count_inside_pts=True)
+    # with open(val_filename, 'wb') as f:
+    #     pickle.dump(kitti_infos_val, f)
+    # print('Kitti info val_raw file is saved to %s' % val_filename)
 
     # with open(trainval_filename, 'wb') as f:
     #     pickle.dump(kitti_infos_train + kitti_infos_val, f)
@@ -536,7 +528,7 @@ if __name__ == '__main__':
         create_kitti_infos(
             dataset_cfg=dataset_cfg,
             class_names=['Car', 'Pedestrian', 'Cyclist'],
-            data_path=Path('/mnt/disk2/Data/KITTI/lpcg'),
+            data_path=Path('/mnt/disk2/Data/KITTI/kitti_merge'),
             save_path=ROOT_DIR / 'data' / 'kitti'
         )
 
@@ -549,7 +541,7 @@ if __name__ == '__main__':
     # create_kitti_infos(
     #     dataset_cfg=dataset_cfg,
     #     class_names=['Car', 'Pedestrian', 'Cyclist'],
-    #     data_path=Path('/mnt/disk2/Data/KITTI/lpcg'),
+    #     data_path=Path('/mnt/disk2/Data/KITTI/kitti_merge'),
     #     save_path=ROOT_DIR / 'data' / 'kitti'
     # )
 

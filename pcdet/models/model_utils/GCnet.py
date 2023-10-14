@@ -2,6 +2,52 @@ import torch
 from torch import nn
 from pcdet.models.model_utils.ASPP import ASPP
 
+from torchvision.ops import DeformConv2d
+
+class DConv(nn.Module):
+    def __init__(self, inplanes, planes, kernel_size=3, stride=1, padding=1, bias=False):
+        super(DConv, self).__init__()
+        self.conv1 = nn.Conv2d(inplanes, 2 * kernel_size * kernel_size, kernel_size=kernel_size,
+                               stride=stride, padding=padding, bias=bias)
+        self.conv2 = DeformConv2d(inplanes, planes, kernel_size=kernel_size, stride=stride, padding=padding, bias=bias)
+
+    def forward(self, x):
+        out = self.conv1(x)
+        out = self.conv2(x, out)
+        return out
+
+class SAM(nn.Module):
+
+    def __init__(self, in_channels, out_channels):
+        super(SAM, self).__init__()
+        self.inplanes = in_channels # 640
+        self.planes = out_channels  # 128
+        self.aspp = ASPP()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.dcn = DConv(inplanes=self.inplanes, planes=self.planes, kernel_size=3, stride=1, padding=1, bias=False)
+        self.fc = nn.Sequential(
+            nn.Linear(self.inplanes, self.planes, bias=False),
+            nn.Mish(inplace=True),
+            nn.Linear(self.planes, self.planes, bias=False),
+            nn.Mish(inplace=True),
+            nn.Linear(self.planes, self.inplanes, bias=False),
+            nn.Sigmoid()
+        )
+    def SENet(self, x):
+        b, c, _, _ = x.size()
+        x = self.aspp(x)  # x = torch.Size([2, 128, 188, 140])
+        y = self.avg_pool(x).view(b, c) # y = torch.Size([2, 128])
+        y = self.fc(y).view(b, c, 1, 1)  # y = torch.Size([2, 128, 1, 1])
+        return x * y.expand_as(x)
+
+    def forward(self, x):
+        # [N, C, 1, 1]
+        channel_att_feat = self.SENet(x) # ([2, 128, 188, 140])
+        y = self.dcn(channel_att_feat) # ([2, 128, 188, 140])
+        # x = self.aspp(channel_att_feat) # (2, 128, 188, 140)
+        return y
+
+
 class ContextBlock2d(nn.Module):
 
     def __init__(self, in_channels, out_channels, pool, fusions):
@@ -61,13 +107,11 @@ class ContextBlock2d(nn.Module):
         else:
             # [N, C, 1, 1]
             context = self.avg_pool(x)
-
         return context
-
 
     def forward(self, x):
         # [N, C, 1, 1]
-        context = self.spatial_pool(x)
+        context = self.spatial_pool(x) # ([2, 128, 188, 140])->([2, 128, 1, 1])
 
         if self.channel_mul_conv is not None:
             # [N, C, 1, 1]

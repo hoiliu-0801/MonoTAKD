@@ -22,6 +22,9 @@
 
 4. Copy generated .pkl (train/val) to '/mnt/disk2/Data/KITTI/kitti_merge'
 
+            // python train_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_raw_R50_scd_V2.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth
+
+CUDA_VISIBLE_DEVICES=0 python test_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test.yaml --ckpt ../output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_raw/default/ckpt/checkpoint_epoch_15.pth
 ----
 23623
 

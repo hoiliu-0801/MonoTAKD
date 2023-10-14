@@ -1,13 +1,13 @@
 import numpy as np
 import torch
 import torch.nn as nn
-
+from pcdet.models.model_utils.basic_block_2d import BasicBlock2D_copy
 
 class BaseBEVBackbone(nn.Module):
     def __init__(self, model_cfg, input_channels):
         super().__init__()
         self.model_cfg = model_cfg
-
+        self.fusion_nn = BasicBlock2D_copy()
         if self.model_cfg.get('LAYER_NUMS', None) is not None:
             assert len(self.model_cfg.LAYER_NUMS) == len(self.model_cfg.LAYER_STRIDES) == len(self.model_cfg.NUM_FILTERS)
             layer_nums = self.model_cfg.LAYER_NUMS
@@ -87,17 +87,22 @@ class BaseBEVBackbone(nn.Module):
         """
         # if 'spatial_features_fusion' in data_dict.keys():
         #     spatial_features = data_dict['spatial_features_fusion']
-        #     spatial_features2 = data_dict['spatial_features']
+        #     # spatial_features2 = data_dict['spatial_features']
         # else:
         #     spatial_features = data_dict['spatial_features']
+        # spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
+
         spatial_features = data_dict['spatial_features']
         # print(data_dict.keys())
         # exit()
 
-        spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
-        save_path="/home/ipl-pc/cmkd/output/"+"10.png"
-        import matplotlib.pyplot as plt
-        plt.imsave(save_path, spatial_features_, cmap='inferno')
+        # spatial_features = self.fusion_nn(spatial_features)
+        # print(spatial_features.shape)
+        # exit()
+
+        # save_path="/home/ipl-pc/cmkd/output/"+"10.png"
+        # import matplotlib.pyplot as plt
+        # plt.imsave(save_path, spatial_features_, cmap='inferno')
         # spatial_features_2 = torch.mean(spatial_features2[0,:,:,:].cpu().detach(),dim=0)
         # save_path1="/home/ipl-pc/cmkd/output/"+"11.png"
         # import matplotlib.pyplot as plt

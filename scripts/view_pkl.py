@@ -10,7 +10,8 @@ save_path = '/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_
 if not osp.exists(save_path):
     os.mkdir(save_path)
 
-with open('/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test/default/eval/epoch_15/test/default/result.pkl', 'rb') as f:
+# with open('/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test/default/eval/epoch_15/test/default/result.pkl', 'rb') as f:
+with open('/home/ipl-pc/cmkd/data/kitti/kitti_infos_train_lpcg.pkl', 'rb') as f:
     data = pickle.load(f)
 
     # Save object summary in KITTI format
