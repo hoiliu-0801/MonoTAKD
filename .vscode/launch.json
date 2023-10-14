@@ -1,0 +1,83 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Train RAW Kitti",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/train_cmkd.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "--cfg",
+                "/home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml",
+                "--pretrained_lidar_model",
+                "/home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth",
+                "--pretrained_img_model",
+                "/home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth"
+            ]
+            //CUDA_VISIBLE_DEVICES=1 python tools/train_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth --pretrained_img_model /home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth
+            //CUDA_VISIBLE_DEVICES=1 python train_cmkd.py --cfg /home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth --pretrained_img_model /home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth
+        },
+        {
+            "name": "Test Kitti",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/test_cmkd.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "args": [
+                "--cfg",
+                "cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test.yaml",
+                "--ckpt",
+                "../output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_raw/default/ckpt/checkpoint_epoch_15.pth",
+            ]
+        },
+        {
+            "name": "Kitti RAW pkl",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "-m",
+                "pcdet.datasets.kitti.kitti_dataset",
+                "create_kitti_infos",
+                "/home/ipl-pc/cmkd/tools/cfgs/dataset_configs/kitti_dataset_lpcg.yaml",
+            ]
+        },
+        {
+            "name": "Train disentagle",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/train_cmkd.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "--cfg",
+                "/home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/raw_disentagle.yaml",
+                "--pretrained_lidar_model",
+                "/home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth",
+                "--pretrained_img_model",
+                "/home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth"
+            ]
+        },
+        {
+            "name": "Test disentagle",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/test_cmkd.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "args": [
+                "--cfg",
+                "cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_copy.yaml",
+                "--ckpt",
+                "../checkpoints/cmkd-scd-2161.pth",
+            ]
+        },
+    ]
+}

@@ -7,7 +7,6 @@ data/
 venv/
 *.idea/
 *.so
-*.yaml
 *.sh
 *.pth
 *.pkl
@@ -20,6 +19,9 @@ download
 waymo_sub/
 waymo-open-dataset*
 run_cmds.txt
-.vscode/
 scripts/viz_bbox/
 *.png
+tools/cfgs/kitti_models/*
+tools/cfgs/lyft_models/*
+tools/cfgs/nuscenes_models/*
+tools/cfgs/waymo_models/*
