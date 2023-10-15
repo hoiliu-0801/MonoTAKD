@@ -100,7 +100,7 @@ class BaseBEVBackbone(nn.Module):
         # print(spatial_features.shape)
         # exit()
 
-        # save_path="/home/ipl-pc/cmkd/output/"+"10.png"
+        save_path="/home/ipl-pc/cmkd/output/"+"10.png"
         # import matplotlib.pyplot as plt
         # plt.imsave(save_path, spatial_features_, cmap='inferno')
         # spatial_features_2 = torch.mean(spatial_features2[0,:,:,:].cpu().detach(),dim=0)

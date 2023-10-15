@@ -35,7 +35,7 @@ class SAM(nn.Module):
         )
     def SENet(self, x):
         b, c, _, _ = x.size()
-        x = self.aspp(x)  # x = torch.Size([2, 128, 188, 140])
+        # x = self.aspp(x)  # x = torch.Size([2, 128, 188, 140])
         y = self.avg_pool(x).view(b, c) # y = torch.Size([2, 128])
         y = self.fc(y).view(b, c, 1, 1)  # y = torch.Size([2, 128, 1, 1])
         return x * y.expand_as(x)

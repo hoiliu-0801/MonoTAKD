@@ -57,7 +57,8 @@ class CMKD(nn.Module):
     def visual_(self, batch_dict, visual_list):
         ############ draw depth map ##############
         save_bev="/home/ipl-pc/cmkd/output/vis_result"
-        data_root="/mnt/disk2/Data/KITTI/kitti_merge/training/image_2"
+        # data_root="/mnt/disk2/Data/KITTI/kitti_merge/training/image_2"
+        data_root= "/home/ipl-pc/VirConv/data/kitti/training/image_2"
         batch_size=2
         degree=90
         # print("bev_lidar.shape:",bev_lidar.shape) # torch.Size([2, 128, 188, 140])
