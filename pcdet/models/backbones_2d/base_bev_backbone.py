@@ -84,19 +84,19 @@ class BaseBEVBackbone(nn.Module):
             data_dict:
                 spatial_features
         Returns:
-        """
-        # if 'spatial_features_fusion' in data_dict.keys():
-        #     spatial_features = data_dict['spatial_features_fusion']
-        #     # spatial_features2 = data_dict['spatial_features']
-        # else:
-        #     spatial_features = data_dict['spatial_features']
+        # """
+        if 'spatial_features_fusion' in data_dict.keys():
+            spatial_features = data_dict['spatial_features_fusion']
+            # spatial_features2 = data_dict['spatial_features']
+        else:
+            spatial_features = data_dict['spatial_features']
         # spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
 
-        spatial_features = data_dict['spatial_features']
+        # spatial_features = data_dict['spatial_features']
         # print(data_dict.keys())
         # exit()
 
-        # spatial_features = self.fusion_nn(spatial_features)
+        spatial_features = self.fusion_nn(spatial_features)
         # print(spatial_features.shape)
         # exit()
 
