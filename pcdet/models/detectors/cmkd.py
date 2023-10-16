@@ -68,15 +68,15 @@ class CMKD(nn.Module):
             image_path = os.path.join(data_root,batch_dict["frame_id"][B]+".png")
             image_=cv2.imread(image_path)
             image_ = cv2.cvtColor(image_, cv2.COLOR_BGR2RGB)
-            Image_save_path=os.path.join(save_bev, "Image_"+ str(B)+".png")
+            Image_save_path=os.path.join(save_bev, "Image__"+ str(B)+".png")
             Image.fromarray(image_).save(Image_save_path)
             ############################
             for key, bev_image in visual_list.items():
                 bev_image_ = ndimage.zoom(ndimage.rotate(torch.mean(bev_image[B,:,:,:].cpu().detach(), dim=0), degree),3)
-                save_path=os.path.join(save_bev, key+"_"+ str(B)+".png")
+                save_path=os.path.join(save_bev, key+"__"+ str(B)+".png")
                 plt.imsave(save_path, bev_image_, cmap='inferno')
                 # print(key, torch.mean(bev_image))
-    def normalize_(self, bev_lidar_img_like, bev_lidar):
+    def normalize_(self, bev_lidar_img_like):
         B, C, H, W = bev_lidar_img_like.shape  # [2, 128, 188, 140])
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         bev_lidar_img_like = bev_lidar_img_like.cpu().detach()
@@ -118,7 +118,8 @@ class CMKD(nn.Module):
         loss_bev = torch.tensor(0)
         ### Get Lidar-image-like ###
         bev_lidar_img_like = batch_dict.get(self.bev_layer_target, None) # 1st: learn from lida, 2st: teaches
-        # bev_lidar_img_like = self.normalize_(bev_lidar_img_like, bev_lidar)
+        # bev_lidar_img_like = self.normalize_(bev_lidar_img_like)
+        # bev_img = self.normalize_(bev_img)
         bev_diff = torch.absolute(bev_lidar-bev_lidar_img_like)
         ##### Stage 1 : Train bev_diff and bev_img to bev_lidar_img_like ####
         if (bev_img is not None) and (bev_lidar is not None) and (bev_lidar_img_like is not None) is not None and self.calculate_bev_loss:
@@ -136,8 +137,8 @@ class CMKD(nn.Module):
                 ##　Teacher loss ##
                 loss_bev_image_like = (self.bev_loss_fun(bev_lidar, bev_lidar_img_like)*bev_loss_mask).mean()*noralizer
                 ##　Student loss ##
-                loss_bev_image = (self.bev_loss_fun(bev_lidar_img_like, bev_img)*bev_loss_mask).mean()*noralizer
-                loss_bev_copy = (self.bev_loss_fun(bev_diff, bev_img_copy)*bev_loss_mask).mean()*noralizer
+                loss_bev_image = (self.bev_loss_fun(bev_lidar, bev_img)*bev_loss_mask).mean()*noralizer
+                loss_bev_copy = (self.bev_loss_fun(bev_lidar, bev_img_copy)*bev_loss_mask).mean()*noralizer
 
             loss_bev_image*= self.bev_loss_weight
             loss_bev_image_like*= self.bev_loss_weight

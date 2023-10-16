@@ -24,6 +24,11 @@ class SAM(nn.Module):
         self.planes = out_channels  # 128
         self.aspp = ASPP()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.conv = nn.Sequential(
+                        nn.Conv2d(in_channels, 256, kernel_size=3,stride=1, padding=1, bias=False),
+                        nn.Mish(inplace=True),
+                        nn.Conv2d(256, out_channels, kernel_size=3,stride=1, padding=1, bias=False),
+                        nn.Mish(inplace=True))
         self.dcn = DConv(inplanes=self.inplanes, planes=self.planes, kernel_size=3, stride=1, padding=1, bias=False)
         self.fc = nn.Sequential(
             nn.Linear(self.inplanes, self.planes, bias=False),
@@ -35,15 +40,19 @@ class SAM(nn.Module):
         )
     def SENet(self, x):
         b, c, _, _ = x.size()
-        # x = self.aspp(x)  # x = torch.Size([2, 128, 188, 140])
-        y = self.avg_pool(x).view(b, c) # y = torch.Size([2, 128])
+        aspp_x = self.aspp(x)  # x = torch.Size([2, 128, 188, 140])
+        y = self.avg_pool(aspp_x).view(b, c) # y = torch.Size([2, 128])
         y = self.fc(y).view(b, c, 1, 1)  # y = torch.Size([2, 128, 1, 1])
+        # y.expand_as(x) : torch.Size([2, 128, 1, 1])-> torch.Size([2, 128, 188, 140])
         return x * y.expand_as(x)
 
     def forward(self, x):
         # [N, C, 1, 1]
-        channel_att_feat = self.SENet(x) # ([2, 128, 188, 140])
-        y = self.dcn(channel_att_feat) # ([2, 128, 188, 140])
+        # channel_att_feat = self.SENet(x) # ([2, 128, 188, 140])
+        # aspp_x = self.aspp(x)
+        y = self.dcn(x) # ([2, 128, 188, 140])
+        # fusion = aspp_x + y
+        # fusion = self.conv(fusion)
         # x = self.aspp(channel_att_feat) # (2, 128, 188, 140)
         return y
 

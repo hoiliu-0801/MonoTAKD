@@ -66,5 +66,5 @@ class Conv2DCollapse(nn.Module):
         bev_features_target = self.sam(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)
         batch_dict["spatial_features_target"] = bev_features_target
         # # #### Fusion ####
-        batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.2 *batch_dict["spatial_features"]
+        # batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.2 *batch_dict["spatial_features"]
         return batch_dict
