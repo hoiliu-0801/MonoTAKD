@@ -19,6 +19,10 @@
             ]
             //CUDA_VISIBLE_DEVICES=1 python tools/train_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth --pretrained_img_model /home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth
             //CUDA_VISIBLE_DEVICES=1 python train_cmkd.py --cfg /home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth --pretrained_img_model /home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth
+
+            //CUDA_VISIBLE_DEVICES=0 python test_cmkd.py --cfg ./cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --ckpt /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg/default/ckpt/checkpoint_epoch_9.pth
+
+            
         },
         {
             "name": "Test Kitti",

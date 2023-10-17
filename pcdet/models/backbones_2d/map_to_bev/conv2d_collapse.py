@@ -55,16 +55,16 @@ class Conv2DCollapse(nn.Module):
         batch_dict["spatial_features"] = bev_features_ori
 
         ## Disentagle bev-image into two copies ###
-        # bev_features_new = self.blck_copy(bev_features)
-        # bev_features_new = self.sam(bev_features_new)
-        # batch_dict["spatial_features_copy"] = bev_features_new
+        bev_features_new = self.blck_copy(bev_features)
+        bev_features_new = self.sam(bev_features_new)
+        batch_dict["spatial_features_copy"] = bev_features_new
 
-        # # #### Image like bev ####
-        # voxel_features_target = batch_dict["voxel_features_target"]
-        # bev_features_target = voxel_features_target.flatten(start_dim=1, end_dim=2)  # (B, C, Z, Y, X) -> (B, C*Z, Y, X)
-        # bev_features_target = self.block_target(bev_features_target)
-        # bev_features_target = self.GC_block(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)
-        # batch_dict["spatial_features_target"] = bev_features_target
+        # #### Image like bev ####
+        voxel_features_target = batch_dict["voxel_features_target"]
+        bev_features_target = voxel_features_target.flatten(start_dim=1, end_dim=2)  # (B, C, Z, Y, X) -> (B, C*Z, Y, X)
+        bev_features_target = self.block_target(bev_features_target)
+        bev_features_target = self.GC_block(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)
+        batch_dict["spatial_features_target"] = bev_features_target
         # # # #### Fusion ####
         # batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.2 *batch_dict["spatial_features"]
         return batch_dict
