@@ -85,13 +85,13 @@ class BaseBEVBackbone(nn.Module):
                 spatial_features
         Returns:
         # """
-        # if 'spatial_features_fusion' in data_dict.keys():
-        #     spatial_features = data_dict['spatial_features_fusion']
-        #     # spatial_features2 = data_dict['spatial_features']
-        # else:
-        #     spatial_features = data_dict['spatial_features']
+        if 'spatial_features_fusion' in data_dict.keys():
+            spatial_features = data_dict['spatial_features_fusion']
+            # spatial_features2 = data_dict['spatial_features']
+        else:
+            spatial_features = data_dict['spatial_features']
 
-        spatial_features = data_dict['spatial_features']
+        # spatial_features = data_dict['spatial_features']
         # print(data_dict.keys())
         # exit()
 
