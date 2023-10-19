@@ -45,7 +45,7 @@ DATA_CONFIG:
 CMKD_CFG:
     LOSS_BEV: True
     LOSS_DEPTH: False  # not implement yet
-    LOSS_PRN: False
+    LOSS_PRN: True
 
 MODEL_IMG:
     NAME: CMKD_MONO
