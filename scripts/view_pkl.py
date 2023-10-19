@@ -6,12 +6,12 @@ import os.path as osp
 from tqdm import tqdm
 
 
-save_path = '/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test/default/kitti_frames'
+save_path = '/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2/default/eval/epoch_2161/val/default/final_results'
 if not osp.exists(save_path):
     os.mkdir(save_path)
 
-# with open('/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test/default/eval/epoch_15/test/default/result.pkl', 'rb') as f:
-with open('/home/ipl-pc/cmkd/data/kitti/kitti_infos_train_lpcg.pkl', 'rb') as f:
+# with open('/home/ipl-pc/cmkd/output/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg/default/eval/epoch_14/val/default/result.pkl', 'rb') as f:
+with open('output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2/default/eval/epoch_2161/val/default/result.pkl', 'rb') as f:
     data = pickle.load(f)
 
     # Save object summary in KITTI format

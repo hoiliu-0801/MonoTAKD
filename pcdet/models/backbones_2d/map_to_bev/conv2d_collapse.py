@@ -23,7 +23,7 @@ class Conv2DCollapse(nn.Module):
         self.block = BasicBlock2D(in_channels=self.num_in_features * self.num_heights,
                                   out_channels=self.num_bev_features,
                                   **self.model_cfg.ARGS)
-        self.blck_copy = BasicBlock2D(in_channels=self.num_in_features * self.num_heights,
+        self.block_copy = BasicBlock2D(in_channels=self.num_in_features * self.num_heights,
                                   out_channels=self.num_bev_features,
                                   **self.model_cfg.ARGS)
         self.block_target = BasicBlock2D(in_channels=self.num_in_features * self.num_heights,
@@ -55,7 +55,7 @@ class Conv2DCollapse(nn.Module):
         batch_dict["spatial_features"] = bev_features_ori
 
         ## Disentagle bev-image into two copies ###
-        bev_features_new = self.blck_copy(bev_features)
+        bev_features_new = self.block_copy(bev_features)
         bev_features_new = self.sam(bev_features_new)
         batch_dict["spatial_features_copy"] = bev_features_new
 
@@ -66,5 +66,5 @@ class Conv2DCollapse(nn.Module):
         bev_features_target = self.GC_block(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)
         batch_dict["spatial_features_target"] = bev_features_target
         # # # #### Fusion ####
-        batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.2 *batch_dict["spatial_features"]
+        # batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.2 *batch_dict["spatial_features"]
         return batch_dict
