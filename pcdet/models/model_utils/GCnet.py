@@ -24,17 +24,18 @@ class SAM(nn.Module):
         self.planes = out_channels  # 128
         self.aspp = ASPP()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        #　nn.Mish(inplace=True)
         self.conv = nn.Sequential(
                         nn.Conv2d(in_channels, 256, kernel_size=3,stride=1, padding=1, bias=False),
-                        nn.Mish(inplace=True),
+                        nn.ReLU(inplace=True),
                         nn.Conv2d(256, out_channels, kernel_size=3,stride=1, padding=1, bias=False),
-                        nn.Mish(inplace=True))
+                        nn.ReLU(inplace=True))
         self.dcn = DConv(inplanes=self.inplanes, planes=self.planes, kernel_size=3, stride=1, padding=1, bias=False)
         self.fc = nn.Sequential(
             nn.Linear(self.inplanes, self.planes, bias=False),
-            nn.Mish(inplace=True),
+            nn.ReLU(inplace=True),
             nn.Linear(self.planes, self.planes, bias=False),
-            nn.Mish(inplace=True),
+            nn.ReLU(inplace=True),
             nn.Linear(self.planes, self.inplanes, bias=False),
             nn.Sigmoid()
         )

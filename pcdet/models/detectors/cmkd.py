@@ -200,7 +200,6 @@ class CMKD_MONO(Detector3DTemplate_CMKD):
             batch_dict = cur_module(batch_dict)
         # batch_dict['image_features'].shape = torch.Size([2, 64, 47, 156])
         # batch_dict['voxel_features'].shape = torch.Size([2, 64, 10, 188, 140])
-        # 還差把融合後的 bev 換回去model img的bev
         if self.training:  # True
             self.calculate_rpn_loss = batch_dict.get('calculate_rpn_loss', self.calculate_rpn_loss)
             loss, tb_dict, disp_dict = self.get_training_loss()
