@@ -29,7 +29,7 @@ class DatasetTemplate_CMKD(torch_data.Dataset):
         self.data_augmentor = DataAugmentor(
             self.root_path, self.dataset_cfg.DATA_AUGMENTOR, self.class_names, logger=self.logger
         ) if self.training else None
-        
+
         # change data processor
         self.data_processor = DataProcessor_CMKD(
             self.dataset_cfg.DATA_PROCESSOR, point_cloud_range=self.point_cloud_range,

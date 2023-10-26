@@ -4,7 +4,7 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
     DATASET: 'KittiDataset_CMKD'
-    DATA_PATH: '../data/kitti'
+    DATA_PATH: '/home/ipl-pc/VirConv/data/kitti'
 
     INFO_PATH: {
     'train': [kitti_infos_train_unlabel.pkl],
@@ -36,8 +36,8 @@ DATA_CONFIG:
             'test': 40000
           }
 
-        - NAME: downsample_depth_map
-          DOWNSAMPLE_FACTOR: 8
+        # - NAME: downsample_depth_map
+        #   DOWNSAMPLE_FACTOR: 8
 CMKD_CFG:
     LOSS_BEV: True
     LOSS_DEPTH: False
@@ -85,6 +85,10 @@ MODEL_IMG:
             "kernel_size": 1,
             "stride": 1,
             "bias": False
+        }
+        GC_ARGS: {
+            "pool": 'att', #"pool": ['avg', 'att'],
+            "fusions": ['channel_add', 'channel_mul']
         }
 
     DOMAIN_ADAPTATION:

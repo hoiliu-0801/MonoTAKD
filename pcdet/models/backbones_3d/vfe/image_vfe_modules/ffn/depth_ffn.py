@@ -3,10 +3,7 @@ import torch.nn.functional as F
 
 from . import ddn, ddn_loss
 from pcdet.models.model_utils.basic_block_2d import BasicBlock2D
-from skimage import transform
-import numpy as np
-import torch
-import matplotlib.pyplot as plt
+
 
 class DepthFFN(nn.Module):
 
@@ -33,51 +30,18 @@ class DepthFFN(nn.Module):
             self.channel_reduce = BasicBlock2D(**model_cfg.CHANNEL_REDUCE)
 
         # DDN_LOSS is optional
-        if model_cfg.get('LOSS_',None) is not None:
-            self.ddn_loss = ddn_loss.__all__[model_cfg.LOSS_.NAME](
+        if model_cfg.get('LOSS',None) is not None:
+            self.ddn_loss = ddn_loss.__all__[model_cfg.LOSS.NAME](
                 disc_cfg=self.disc_cfg,
                 downsample_factor=downsample_factor,
-                **model_cfg.LOSS_.ARGS
+                **model_cfg.LOSS.ARGS
             )
-
         else:
             self.ddn_loss = None
         self.forward_ret_dict = {}
 
     def get_output_feature_dim(self):
         return self.channel_reduce.out_channels
-    # sparse average pooling, by hoiliu
-    def sparse_avg_pooling(self, feature_map, size=2):
-        feature_map=feature_map.cpu().detach()
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        Batch = feature_map.shape[0]
-        pool_out_list=[]
-        for i in range(Batch):
-            a = transform.downscale_local_mean(feature_map[i,:,:],(size,size))
-            b = transform.downscale_local_mean(feature_map[i,:,:]!=0,(size,size))
-            pool_out = a / (b+1e-10)
-            pool_out_list.append(torch.from_numpy(pool_out).float().to(device))
-        pool_out1 = torch.stack(pool_out_list)
-        return pool_out1
-    def create_depth_target(self, depth_map_target, depth_target_bin):
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        B, h, w = depth_map_target.shape  # torch.Size([2, 47, 156])
-        D = 120
-        depth_target = torch.from_numpy(np.zeros([B, D+1, h, w])).float().to(device)
-        for b in range(B):
-            for i in range(h):
-                for j in range(w):
-                    bin_value = depth_target_bin [b,i,j]
-                    depth_target [b,bin_value,i,j] = 1
-                    # if bin_value==120: # out of boundary
-                    #     # print("depth_map_target:", depth_map_target[b,i,j])
-                    #     depth_target [b,bin_value,i,j] = 100000
-                    # elif bin_value>120 or bin_value<0:
-                    #     print("error bin")
-                    # else:
-                    #     depth_target [b,bin_value,i,j] = 1
-
-        return depth_target
 
     def forward(self, batch_dict):
         """
@@ -89,45 +53,29 @@ class DepthFFN(nn.Module):
             batch_dict:
                 frustum_features: (N, C, D, H_out, W_out), Image depth features
         """
-        # print("batch_dict['frame_id']:", batch_dict['frame_id'][0])
         # Pixel-wise depth classification
-        images = batch_dict["images"] #([2, 3, 375, 1242])
-        ddn_result = self.ddn(images)  # self.ddn is a pretrained backbone, which is used to generate pretrained depth feature and depth bin
-        image_features = ddn_result["features"] #([2, 1024, 47, 156])
-        depth_logits = ddn_result["logits"]  #([2, 121, 47, 156])
+        images = batch_dict["images"]
+        ddn_result = self.ddn(images)
+        image_features = ddn_result["features"]
+        depth_logits = ddn_result["logits"]
+
         # Channel reduce
         if self.channel_reduce is not None:
-            image_features = self.channel_reduce(image_features) # 1024 -> 64
+            image_features = self.channel_reduce(image_features)
 
         # Create image feature plane-sweep volume
         frustum_features = self.create_frustum_features(image_features=image_features,
                                                         depth_logits=depth_logits)
         batch_dict["frustum_features"] = frustum_features
-        batch_dict["image_features"] = image_features
 
-        # depth_maps and gt_boxes2d are optional
-        self.forward_ret_dict["depth_maps"] = batch_dict.get("depth_maps",None)
-        self.forward_ret_dict["gt_boxes2d"] = batch_dict.get("gt_boxes2d",None)
-        self.forward_ret_dict["depth_logits"] = depth_logits # torch.Size([2, 121, 47, 156])
-        #### New code ####
-        #### Create Lidar-image-lije feature plane-sweep volume ###
-        self.forward_ret_dict["depth_maps"] = self.sparse_avg_pooling(self.forward_ret_dict["depth_maps"], 8)
-        # save_path="/home/ipl-pc/cmkd/output/vis_result"+".depth.png"
-        # print(self.forward_ret_dict["depth_maps"])
-        # exit()
-        # plt.imsave(save_path, self.forward_ret_dict["depth_maps"][0,:].cpu().detach())
-
-        depth_map_target = self.forward_ret_dict["depth_maps"]  ## ([47, 156])
-        depth_target_bin = self.ddn_loss(**self.forward_ret_dict) # 0-120, total 121 dim
-        # print(np.unique(depth_target_bin[0,:].cpu().detach())) # 29-120
-        depth_target = self.create_depth_target(depth_map_target, depth_target_bin)
-        frustum_features_target = self.create_frustum_features(image_features, depth_target, target=True)
-        batch_dict["frustum_features_target"] = frustum_features_target
-        frustum_features = self.create_frustum_features(image_features=image_features,
-                                                depth_logits=depth_logits)
+        if self.training:
+            # depth_maps and gt_boxes2d are optional
+            self.forward_ret_dict["depth_maps"] = batch_dict.get("depth_maps",None)
+            self.forward_ret_dict["gt_boxes2d"] = batch_dict.get("gt_boxes2d",None)
+            self.forward_ret_dict["depth_logits"] = depth_logits
         return batch_dict
 
-    def create_frustum_features(self, image_features, depth_logits, target=False):
+    def create_frustum_features(self, image_features, depth_logits):
         """
         Create image depth feature volume by multiplying image features with depth distributions
         Args:
@@ -140,19 +88,15 @@ class DepthFFN(nn.Module):
         depth_dim = 2
 
         # Resize to match dimensions
-        image_features = image_features.unsqueeze(depth_dim)  # [2, 64, 47, 156] -> [2, 64, 1, 47, 156]
-        depth_logits = depth_logits.unsqueeze(channel_dim)  # [2, 120, 47, 156] -> [2, 1, 120, 47, 156]
+        image_features = image_features.unsqueeze(depth_dim)
+        depth_logits = depth_logits.unsqueeze(channel_dim)
+
         # Apply softmax along depth axis and remove last depth category (> Max Range)
-        # print("depth_logits:", depth_logits[:,:,-1,:,:])
-        if target:
-            depth_probs = depth_logits[:, :, :-1]  # [2, 1, 120, 47, 156]
-            # print("depth_probs:", depth_probs)
-        else:
-            depth_probs = F.softmax(depth_logits, dim=depth_dim)  # [2, 1, 121, 47, 156]
-            depth_probs = depth_probs[:, :, :-1]  # [2, 1, 120, 47, 156]
-            # print("depth_probs__:", depth_probs)
+        depth_probs = F.softmax(depth_logits, dim=depth_dim)
+        depth_probs = depth_probs[:, :, :-1]
+
         # Multiply to form image depth feature volume
-        frustum_features = depth_probs * image_features  #  [2, 64, 120, 47, 156] = [2, 1, 120, 47, 156] * [2, 64, 1, 47, 156]
+        frustum_features = depth_probs * image_features
         return frustum_features
 
     def get_loss(self):

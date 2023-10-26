@@ -4,13 +4,13 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset_raw.yaml
     DATASET: 'KittiDataset_CMKD'
-    DATA_PATH: '/mnt/disk2/Data/KITTI/kitti_merge'
+    DATA_PATH: '/mnt/disk2/Data/KITTI/kitti_merge_main'
 
     INFO_PATH: {
     # 'train': [kitti_infos_eigen_train_soft.pkl],
     'train': [kitti_infos_train_raw.pkl],
-    # 'val': [kitti_infos_val_raw.pkl],
-    'val': [kitti_infos_test.pkl],
+    'val': [kitti_infos_val_raw.pkl],
+    # 'val': [kitti_infos_val.pkl],
     }
 
     POINT_CLOUD_RANGE: [2, -30.08, -3.0, 46.8, 30.08, 1.0]

@@ -34,11 +34,13 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
 
         for info_path in self.dataset_cfg.INFO_PATH[mode]:
             info_path = self.root_path / info_path
+
             if not info_path.exists():
                 continue
             with open(info_path, 'rb') as f:
                 infos = pickle.load(f)
                 kitti_infos.extend(infos)
+
 
         self.kitti_infos.extend(kitti_infos)
 
@@ -106,6 +108,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
         if len(idx) == 6:
 
             depth_file = self.root_split_path / 'depth_2' / ('%s.png' % idx)
+            # print(depth_file)
         else:
             depth_dir = idx[11:37] + '/proj_depth' + '/groundtruth' + '/image_02/' + idx[-10:]+ '.png'
             depth_file = self.raw_path/'depth_sparse'/depth_dir

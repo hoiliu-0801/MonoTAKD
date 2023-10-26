@@ -3,15 +3,16 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
     DATASET: 'KittiDataset_CMKD'
-    DATA_PATH: '../data/kitti'
+    DATA_PATH: '/home/ipl-pc/VirConv/data/kitti'
 
     INFO_PATH: {
-    'train': [kitti_infos_train_unlabel.pkl],
+    'train': [kitti_infos_train.pkl],
     'val': [kitti_infos_val.pkl],
     }
 
     POINT_CLOUD_RANGE: [2, -30.08, -3.0, 46.8, 30.08, 1.0]
     GET_ITEM_LIST: ["images", "calib_matricies", "points", "depth_maps"]
+    # GET_ITEM_LIST: ["images", "depth_maps", "calib_matricies", "gt_boxes2d", "points"]
     FOV_POINTS_ONLY: True
 
     DATA_AUGMENTOR:
@@ -35,8 +36,8 @@ DATA_CONFIG:
             'test': 40000
           }
 
-        - NAME: downsample_depth_map
-          DOWNSAMPLE_FACTOR: 8
+        # - NAME: downsample_depth_map
+        #   DOWNSAMPLE_FACTOR: 8
 
 CMKD_CFG:
     LOSS_BEV: True
@@ -71,12 +72,14 @@ MODEL_IMG:
                 "depth_min": 2.0,
                 "depth_max": 46.8
             }
-            LOSS:
+            LOSS_:
                 NAME: DDNLoss
                 ARGS: {
-                    'weight': 1,
+                    'weight': 3.0,
                     'alpha': 0.25,
                     'gamma': 2.0,
+                    'fg_weight': 13,
+                    'bg_weight': 1
                 }
         F2V:
             NAME: FrustumToVoxel
@@ -93,6 +96,10 @@ MODEL_IMG:
             "kernel_size": 1,
             "stride": 1,
             "bias": False
+        }
+        GC_ARGS: {
+            "pool": 'att', #"pool": ['avg', 'att'],
+            "fusions": ['channel_add', 'channel_mul']
         }
 
     DOMAIN_ADAPTATION:
@@ -280,7 +287,7 @@ MODEL_LIDAR:
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 4
+    BATCH_SIZE_PER_GPU: 2
     NUM_EPOCHS: 20
 
     OPTIMIZER: AdamW
