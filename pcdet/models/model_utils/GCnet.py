@@ -49,13 +49,13 @@ class SAM(nn.Module):
 
     def forward(self, x):
         # [N, C, 1, 1]
-        # channel_att_feat = self.SENet(x) # ([2, 128, 188, 140])
-        # aspp_x = self.aspp(x)
+        channel_att_feat = self.SENet(x) # ([2, 128, 188, 140])
+        aspp_x = self.aspp(x)
         y = self.dcn(x) # ([2, 128, 188, 140])
-        # fusion = aspp_x + y
-        # fusion = self.conv(fusion)
+        fusion = aspp_x + y
+        fusion = self.conv(fusion)
         # x = self.aspp(channel_att_feat) # (2, 128, 188, 140)
-        return y
+        return fusion
 
 
 class ContextBlock2d(nn.Module):

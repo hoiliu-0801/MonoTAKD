@@ -5,7 +5,7 @@ from .frustum_grid_generator import FrustumGridGenerator
 from .sampler import Sampler
 
 
-class FrustumToVoxel(nn.Module):
+class FrustumToVoxel_TRKD(nn.Module):
 
     def __init__(self, model_cfg, grid_size, pc_range, disc_cfg):
         """
