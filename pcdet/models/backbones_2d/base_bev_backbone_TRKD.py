@@ -85,10 +85,8 @@ class BaseBEVBackbone_TRKD(nn.Module):
                 spatial_features
         Returns:
         """
-        # print(data_dict.keys())
         if 'spatial_features_fusion' in data_dict.keys():
             spatial_features = data_dict['spatial_features_fusion']
-            exit()
             spatial_features = self.fusion_nn(spatial_features)
             # spatial_features2 = data_dict['spatial_features']
         else:

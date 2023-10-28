@@ -109,7 +109,7 @@ MODEL_IMG:
         NUM_BLOCKS: 5
 
     BACKBONE_2D:
-        NAME: BaseBEVBackbone
+        NAME: BaseBEVBackbone_TRKD
 
         LAYER_NUMS: [5, 5]
         LAYER_STRIDES: [1, 2]

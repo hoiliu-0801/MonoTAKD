@@ -65,15 +65,16 @@ class CMKD_TRKD(nn.Module):
         # print("bev_img.shape:",bev_img.shape) # torch.Size([2, 128, 188, 140])
         for B in range(batch_size):
             #######　draw image #######
-            image_path = os.path.join(data_root,batch_dict["frame_id"][B]+".png")
+            frame_id = batch_dict["frame_id"]
+            image_path = os.path.join(data_root, frame_id[B]+".png")
             image_=cv2.imread(image_path)
             image_ = cv2.cvtColor(image_, cv2.COLOR_BGR2RGB)
-            Image_save_path=os.path.join(save_bev, "Image__"+ str(B)+".png")
+            Image_save_path=os.path.join(save_bev, frame_id[B]+ str(B)+".png")
             Image.fromarray(image_).save(Image_save_path)
             ############################
             for key, bev_image in visual_list.items():
                 bev_image_ = ndimage.zoom(ndimage.rotate(torch.mean(bev_image[B,:,:,:].cpu().detach(), dim=0), degree),3)
-                save_path=os.path.join(save_bev, key+"__"+ str(B)+".png")
+                save_path=os.path.join(save_bev,  frame_id[B] +"_"+key+".png")
                 plt.imsave(save_path, bev_image_, cmap='inferno')
                 # print(key, torch.mean(bev_image))
     def normalize_(self, bev_lidar_img_like):
@@ -172,9 +173,9 @@ class CMKD_TRKD(nn.Module):
             loss_bev_copy*= self.bev_loss_weight
             loss_bev = loss_bev_image_like + 0.2*loss_bev_copy + loss_bev_image
         ### bev_draw ###
-        bev_final = bev_img + bev_img_copy
-        visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_like=bev_lidar_img_like, bev_img_copy=bev_img_copy, bev_diff=bev_diff, bev_final=bev_final)
-        self.visual_(batch_dict, visual_dict)
+        # bev_final = bev_img + bev_img_copy
+        # visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_like=bev_lidar_img_like, bev_img_copy=bev_img_copy, bev_diff=bev_diff, bev_final=bev_final)
+        # self.visual_(batch_dict, visual_dict)
 
 
         #all loss
