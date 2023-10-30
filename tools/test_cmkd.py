@@ -65,12 +65,14 @@ def eval_single_ckpt(model, test_loader, args, eval_output_dir, logger, epoch_id
     if args.use_lidar_head:
 
         model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=dist_test)
+
         if args.pretrained_lidar_model is not None:
             model.load_params_from_file(args.pretrained_lidar_model, logger, to_cpu = dist_test)
 
 
     else:
-
+        # print(model)
+        # exit()
         if args.pretrained_lidar_model is not None:
             model.load_params_from_file(args.pretrained_lidar_model, logger, to_cpu = dist_test)
         model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=dist_test)

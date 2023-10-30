@@ -33,9 +33,9 @@
             "cwd": "${workspaceFolder}/tools",
             "args": [
                 "--cfg",
-                "cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test.yaml",
+                "cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test_2161.yaml",
                 "--ckpt",
-                "../output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_raw/default/ckpt/checkpoint_epoch_15.pth",
+                "/mnt/disk2/christine/viz_kitti/monotrkd/twcc_ckpt/2161/checkpoint_epoch_6.pth",
             ]
         },
         {

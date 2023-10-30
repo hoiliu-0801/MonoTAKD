@@ -56,7 +56,7 @@ class Conv2DCollapse_TRKD(nn.Module):
 
         ## Disentagle bev-image into two copies ###
         bev_features_new = self.block_copy(bev_features)
-        bev_features_new = self.sam(bev_features_new)
+        # bev_features_new = self.GC_block(bev_features_new)
         batch_dict["spatial_features_copy"] = bev_features_new
 
         # #### Image like bev ####
@@ -66,5 +66,5 @@ class Conv2DCollapse_TRKD(nn.Module):
         # bev_features_target = self.sam(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)
         batch_dict["spatial_features_target"] = bev_features_target
         # # # #### Fusion ####
-        batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.1 *batch_dict["spatial_features"]
+        # batch_dict["spatial_features_fusion"] =  batch_dict["spatial_features_copy"] + 0.1 *batch_dict["spatial_features"]
         return batch_dict
