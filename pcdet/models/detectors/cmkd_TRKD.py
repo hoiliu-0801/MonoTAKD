@@ -163,19 +163,19 @@ class CMKD_TRKD(nn.Module):
 
             if self.bev_loss_type == 'L2':
                 ##　Teacher loss ##
-                # loss_bev_image_like = (self.bev_loss_fun(bev_lidar, bev_lidar_img_like)*bev_loss_mask).mean()*noralizer
+                loss_bev_image_like = (self.bev_loss_fun(bev_lidar, bev_lidar_img_like)*bev_loss_mask).mean()*noralizer
                 ##　Student loss ##
                 loss_bev_image = (self.bev_loss_fun(bev_lidar_img_like, bev_img)*bev_loss_mask).mean()*noralizer
                 loss_bev_copy = (self.bev_loss_fun(bev_diff, bev_img_copy)*bev_loss_mask).mean()*noralizer
 
             loss_bev_image*= self.bev_loss_weight
-            # loss_bev_image_like*= self.bev_loss_weight
+            loss_bev_image_like*= self.bev_loss_weight
             loss_bev_copy*= self.bev_loss_weight
             ########
             # Only IPK
-            # loss_bev = loss_bev_image_like + loss_bev_image
+            loss_bev = loss_bev_image_like + loss_bev_image
             # Only LPK
-            loss_bev =  0.1*loss_bev_copy + loss_bev_image
+            # loss_bev =  0.1*loss_bev_copy + loss_bev_image
             # IPK & LPK
             # loss_bev = loss_bev_image_like + 0.2*loss_bev_copy + loss_bev_image
         ### bev_draw ###
