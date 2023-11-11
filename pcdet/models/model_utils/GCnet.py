@@ -50,9 +50,10 @@ class SAM(nn.Module):
     def forward(self, x):
         # [N, C, 1, 1]
         channel_att_feat = self.SENet(x) # ([2, 128, 188, 140])
-        aspp_x = self.aspp(channel_att_feat)
-        y = self.dcn(x) # ([2, 128, 188, 140])
-        fusion = aspp_x + y
+        # aspp_x = self.aspp(channel_att_feat)
+        aspp_x = self.dcn(x)
+        y = self.dcn(aspp_x) # ([2, 128, 188, 140])
+        fusion = channel_att_feat + y
         fusion = self.conv(fusion)
         # x = self.aspp(channel_att_feat) # (2, 128, 188, 140)
         return fusion

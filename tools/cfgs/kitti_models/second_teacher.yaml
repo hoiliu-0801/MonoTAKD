@@ -8,12 +8,14 @@ DATA_CONFIG:
 
     DATA_SPLIT: {
         'train': train,
-        'test': val
+        'test': test,
+        # 'test': val
     }
 
     INFO_PATH: {
         'train': [kitti_infos_trainval.pkl],
-        'test': [kitti_infos_train.pkl],
+        # 'test': [kitti_infos_train.pkl],
+        'test': [kitti_infos_test.pkl],
     }
 
     DATA_PROCESSOR:
