@@ -59,11 +59,13 @@ def main():
     if args.launcher == 'none':
         dist_train = False
         total_gpus = 1
+        print(dist_train)
     else:
         total_gpus, cfg.LOCAL_RANK = getattr(common_utils, 'init_dist_%s' % args.launcher)(
             args.tcp_port, args.local_rank, backend='nccl'
         )
         dist_train = True
+        exit()
 
     if args.batch_size is None:
         args.batch_size = cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU
