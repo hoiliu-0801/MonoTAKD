@@ -1,11 +1,11 @@
 DATASET: 'KittiDataset'
-DATA_PATH: '/home/ipl-pc/VirConv/data/kitti'
+DATA_PATH: '/mnt/disk2/Data/KITTI/KITTI3D'
 
 POINT_CLOUD_RANGE: [0, -40, -3, 70.4, 40, 1]
 
 DATA_SPLIT: {
     'train': train,
-    'test': val
+    'test': test
 }
 
 # INFO_PATH: {
@@ -14,7 +14,8 @@ DATA_SPLIT: {
 # }
 INFO_PATH: {
     'train': [kitti_infos_train.pkl],
-    'test': [kitti_infos_val.pkl],
+    'val': [kitti_infos_val.pkl],
+    'test': [kitti_infos_test.pkl],
     }
 
 GET_ITEM_LIST: ["points"]

@@ -75,7 +75,7 @@ class CMKD_TRKD(nn.Module):
             for key, bev_image in visual_list.items():
                 bev_image_ = ndimage.zoom(ndimage.rotate(torch.mean(bev_image[B,:,:,:].cpu().detach(), dim=0), degree),3)
                 save_path=os.path.join(save_bev,  frame_id[B] +"_"+key+".png")
-                plt.imsave(save_path, bev_image_)
+                plt.imsave(save_path, bev_image_, cmap='inferno')
                 # print(key, torch.mean(bev_image))
     def normalize_(self, bev_lidar_img_like):
         B, C, H, W = bev_lidar_img_like.shape  # [2, 128, 188, 140])
@@ -104,8 +104,8 @@ class CMKD_TRKD(nn.Module):
 
         # rpn_loss and depth loss
         # pass to model img
-        # self.model_img.calculate_depth_loss = self.calculate_depth_loss
-        # self.model_img.calculate_rpn_loss = self.calculate_rpn_loss
+        self.model_img.calculate_depth_loss = self.calculate_depth_loss
+        self.model_img.calculate_rpn_loss = self.calculate_rpn_loss
 
         ret_dict, tb_dict, disp_dict = self.model_img(batch_dict)
         # batch_dict: dict_keys(['frame_id', 'gt_boxes', 'gt_scores', 'images', 'points', 'trans_lidar_to_cam', 'trans_cam_to_img', 'use_lead_xyz', 'voxels', 'voxel_coords', 'voxel_num_points', 'image_shape', 'batch_size', 'frustum_features', 'image_features', 'voxel_features', 'spatial_features', 'spatial_features_2d'])
@@ -119,7 +119,7 @@ class CMKD_TRKD(nn.Module):
         loss_bev = torch.tensor(0)
         ### Get Lidar-image-like ###
         bev_lidar_img_like = batch_dict.get(self.bev_layer_target, None) # 1st: learn from lida, 2st: teaches
-        bev_lidar_img_like = self.normalize_(bev_lidar_img_like)
+        # bev_lidar_img_like = self.normalize_(bev_lidar_img_like)
         # bev_img = self.normalize_(bev_img)
         bev_diff = torch.absolute(bev_lidar-bev_lidar_img_like)
         ##### Stage 1 : Train bev_diff and bev_img to bev_lidar_img_like ####
@@ -179,9 +179,10 @@ class CMKD_TRKD(nn.Module):
             # IPK & LPK
             loss_bev = loss_bev_image_like + 0.2*loss_bev_copy + loss_bev_image
         ### bev_draw ###
-        # bev_final = bev_img + bev_img_copy
+        bev_final = bev_img + bev_img_copy
+        visual_dict=dict(bev_img=bev_img)
         # visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_like=bev_lidar_img_like, bev_img_copy=bev_img_copy, bev_diff=bev_diff, bev_final=bev_final)
-        visual_dict=dict(bev_lidar=bev_lidar, bev_lidar_img_like=bev_lidar_img_like)
+        # visual_dict=dict(bev_lidar=bev_lidar, bev_lidar_img_like=bev_lidar_img_like)
         self.visual_(batch_dict, visual_dict)
 
 

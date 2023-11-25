@@ -2,6 +2,8 @@ import copy
 import pickle
 from cv2 import split
 
+
+import os
 import numpy as np
 from skimage import io
 
@@ -131,7 +133,9 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
             calib_dir = 'calib/'+idx[0:10]+'.txt'
             calib_file = self.raw_path / calib_dir
 
-        assert calib_file.exists()
+        # assert calib_file.exists()
+        if not os.path.exists(calib_file):
+            print(calib_file)
         return calibration_kitti.Calibration(calib_file)
 
     def get_road_plane(self, idx):

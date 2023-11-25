@@ -33,9 +33,10 @@
             "cwd": "${workspaceFolder}/tools",
             "args": [
                 "--cfg",
-                "cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_test_2161.yaml",
+                "./cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_TRKD.yaml",
                 "--ckpt",
-                "/mnt/disk2/christine/viz_kitti/monotrkd/twcc_ckpt/2161/checkpoint_epoch_6.pth",
+                "/home/ipl-pc/cmkd/output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_TRKD_8015_twcc/TRKD_8015_l/checkpoint_epoch_10.pth",
+                "--save_to_file"
             ]
         },
         {

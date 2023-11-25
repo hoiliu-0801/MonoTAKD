@@ -92,11 +92,11 @@ class BaseBEVBackbone_TRKD(nn.Module):
         else:
             spatial_features = data_dict['spatial_features']
         spatial_features = data_dict['spatial_features']
-        spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
+        # spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
 
 
-        import matplotlib.pyplot as plt
-        save_path="/home/ipl-pc/cmkd/output/"+"10.png"
+        # import matplotlib.pyplot as plt
+        # save_path="/home/ipl-pc/cmkd/output/"+"10.png"
         # plt.imsave(save_path, spatial_features_, cmap='inferno')
         # spatial_features_2 = torch.mean(spatial_features2[0,:,:,:].cpu().detach(),dim=0)
         # save_path1="/home/ipl-pc/cmkd/output/"+"11.png"

@@ -4,12 +4,13 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
     DATASET: 'KittiDataset_CMKD'
-    DATA_PATH: '/home/ipl-pc/VirConv/data/kitti'
+    DATA_PATH: '/mnt/disk2/Data/KITTI/KITTI3D'
     # DATA_PATH: '/mnt/disk2/Data/KITTI/kitti_merge'
 
     INFO_PATH: {
     'train': [kitti_infos_train.pkl],
     'val': [kitti_infos_val.pkl],
+    'test': [kitti_infos_test.pkl],
     }
     # INFO_PATH: {
     # 'train': [kitti_infos_train.pkl],  # [kitti_infos_train_raw.pkl]
