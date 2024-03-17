@@ -3,7 +3,7 @@ from cv2 import fastNlMeansDenoising
 
 from gflags import Flag
 from ordered_set import T
-from .detector3d_template_cmkd import Detector3DTemplate_CMKD
+from .detector3d_template_LTKD import Detector3DTemplate_LTKD
 from pcdet.utils import loss_utils
 from pcdet.models.backbones_2d import domain_adaptation
 from ..model_utils.model_nms_utils import class_agnostic_nms
@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from scipy import ndimage
 
-class CMKD_TRKD(nn.Module):
+class CMKD_LTKD(nn.Module):
     def __init__(self, model_cfg):
         super().__init__()
         self.model_img = None
@@ -56,8 +56,7 @@ class CMKD_TRKD(nn.Module):
         return ret_dict, tb_dict, disp_dict
     def visual_(self, batch_dict, visual_list):
         ############ draw depth map ##############
-        save_bev="/home/ipl-pc/cmkd/output/vis_result"
-        # data_root="/mnt/disk2/Data/KITTI/kitti_merge/training/image_2"
+        save_bev="/home/ipl-pc/cmkd/output/vis_result_0"
         data_root= "/home/ipl-pc/VirConv/data/kitti/training/image_2"
         batch_size=2
         degree=90
@@ -66,15 +65,17 @@ class CMKD_TRKD(nn.Module):
         for B in range(batch_size):
             #######　draw image #######
             frame_id = batch_dict["frame_id"]
-            image_path = os.path.join(data_root, frame_id[B]+".png")
-            image_=cv2.imread(image_path)
-            image_ = cv2.cvtColor(image_, cv2.COLOR_BGR2RGB)
-            Image_save_path=os.path.join(save_bev, frame_id[B]+ str(B)+".png")
-            Image.fromarray(image_).save(Image_save_path)
+            # image_path = os.path.join(data_root, frame_id[B]+".png")
+            # image_=cv2.imread(image_path)
+            # image_ = cv2.cvtColor(image_, cv2.COLOR_BGR2RGB)
+            # Image_save_path=os.path.join(save_bev, frame_id[B]+ str(B)+".png")
+            # Image.fromarray(image_).save(Image_save_path)
             ############################
             for key, bev_image in visual_list.items():
                 bev_image_ = ndimage.zoom(ndimage.rotate(torch.mean(bev_image[B,:,:,:].cpu().detach(), dim=0), degree),3)
+                # save_path=os.path.join(save_bev,  frame_id[B] +"_"+key+".png")
                 save_path=os.path.join(save_bev,  frame_id[B] +"_"+key+".png")
+                # if key =="000857":
                 plt.imsave(save_path, bev_image_, cmap='inferno')
                 # print(key, torch.mean(bev_image))
     def normalize_(self, bev_lidar_img_like):
@@ -163,28 +164,29 @@ class CMKD_TRKD(nn.Module):
 
             if self.bev_loss_type == 'L2':
                 ##　Teacher loss ##
-                loss_bev_image_like = (self.bev_loss_fun(bev_lidar, bev_lidar_img_like)*bev_loss_mask).mean()*noralizer
+                # loss_bev_image_like = (self.bev_loss_fun(bev_lidar, bev_lidar_img_like)*bev_loss_mask).mean()*noralizer
                 ##　Student loss ##
-                loss_bev_image = (self.bev_loss_fun(bev_lidar_img_like, bev_img)*bev_loss_mask).mean()*noralizer
+                # loss_bev_image_lpk = (self.bev_loss_fun(bev_lidar, bev_img_copy)*bev_loss_mask).mean()*noralizer
+                loss_bev_image_ipk = (self.bev_loss_fun(bev_lidar_img_like, bev_img)*bev_loss_mask).mean()*noralizer
                 loss_bev_copy = (self.bev_loss_fun(bev_diff, bev_img_copy)*bev_loss_mask).mean()*noralizer
 
-            loss_bev_image*= self.bev_loss_weight
-            loss_bev_image_like*= self.bev_loss_weight
-            loss_bev_copy*= self.bev_loss_weight
+            # loss_bev_image*= self.bev_loss_weight
+            # loss_bev_image_like*= self.bev_loss_weight
+            # loss_bev_copy*= self.bev_loss_weight
             ########
             # Only IPK
             # loss_bev = loss_bev_image_like + loss_bev_image
             # Only LPK
             # loss_bev =  0.1*loss_bev_copy + loss_bev_image
             # IPK & LPK
-            loss_bev = loss_bev_image_like + 0.2*loss_bev_copy + loss_bev_image
+            # loss_bev = loss_bev_image_like + 0.2*loss_bev_copy + loss_bev_image
+            loss_bev =  loss_bev_image_ipk + 0.2*loss_bev_copy
         ### bev_draw ###
         bev_final = bev_img + bev_img_copy
         visual_dict=dict(bev_img=bev_img)
         # visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_like=bev_lidar_img_like, bev_img_copy=bev_img_copy, bev_diff=bev_diff, bev_final=bev_final)
         # visual_dict=dict(bev_lidar=bev_lidar, bev_lidar_img_like=bev_lidar_img_like)
         self.visual_(batch_dict, visual_dict)
-
 
         #all loss
         loss = loss_bev + loss_rpn
@@ -197,7 +199,7 @@ class CMKD_TRKD(nn.Module):
         return loss, tb_dict, disp_dict
 
 
-class CMKD_MONO_TRKD(Detector3DTemplate_CMKD):
+class CMKD_MONO_LTKD(Detector3DTemplate_LTKD):
     def __init__(self, model_cfg, num_class, dataset):
         super().__init__(model_cfg=model_cfg, num_class=num_class, dataset=dataset)
         self.module_list = self.build_networks()
@@ -392,7 +394,7 @@ class CMKD_MONO_TRKD(Detector3DTemplate_CMKD):
         return final_pred_dict, recall_dict
 
 
-class CMKD_LIDAR_TRKD(Detector3DTemplate_CMKD):
+class CMKD_LIDAR_LTKD(Detector3DTemplate_LTKD):
     def __init__(self, model_cfg, num_class, dataset):
         super().__init__(model_cfg=model_cfg, num_class=num_class, dataset=dataset)
         self.module_list = self.build_networks()

@@ -3,19 +3,14 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
-    DATASET: 'KittiDataset_CMKD'
-    DATA_PATH: '/mnt/disk2/Data/KITTI/KITTI3D'
+    DATASET: 'KittiDataset_LTKD'
+    DATA_PATH: '/home/ipl-pc/VirConv/data/kitti'
     # DATA_PATH: '/mnt/disk2/Data/KITTI/kitti_merge'
 
     INFO_PATH: {
     'train': [kitti_infos_train.pkl],
     'val': [kitti_infos_val.pkl],
-    'test': [kitti_infos_test.pkl],
     }
-    # INFO_PATH: {
-    # 'train': [kitti_infos_train.pkl],  # [kitti_infos_train_raw.pkl]
-    # 'val': [kitti_infos_val_raw.pkl],
-    # }
 
     POINT_CLOUD_RANGE: [2, -30.08, -3.0, 46.8, 30.08, 1.0]
     # GET_ITEM_LIST: ["images", "calib_matricies", "points"]
@@ -49,12 +44,12 @@ CMKD_CFG:
     LOSS_PRN: True
 
 MODEL_IMG:
-    NAME: CMKD_MONO_TRKD
+    NAME: CMKD_MONO_LTKD
 
     VFE:
         NAME: ImageVFE
         FFN:
-            NAME: DepthFFN_TRKD
+            NAME: DepthFFN_LTKD
             DDN:
                 NAME: DDNDeepLabV3
                 BACKBONE_NAME: ResNet50
@@ -85,14 +80,14 @@ MODEL_IMG:
                     'bg_weight': 1
                 }
         F2V:
-            NAME: FrustumToVoxel_TRKD
+            NAME: FrustumToVoxel_LTKD
             SAMPLER: {
                 "mode": "bilinear",
                 "padding_mode": "zeros"
             }
 
     MAP_TO_BEV:
-        NAME: Conv2DCollapse_TRKD
+        NAME: Conv2DCollapse_LTKD
         NUM_IN_FEATURES: 64
         NUM_BEV_FEATURES: 128
         ARGS: {
@@ -110,7 +105,7 @@ MODEL_IMG:
         NUM_BLOCKS: 5
 
     BACKBONE_2D:
-        NAME: BaseBEVBackbone_TRKD
+        NAME: BaseBEVBackbone_LTKD
 
         LAYER_NUMS: [5, 5]
         LAYER_STRIDES: [1, 2]
@@ -191,7 +186,7 @@ MODEL_IMG:
             NMS_POST_MAXSIZE: 500
 
 MODEL_LIDAR:
-    NAME: CMKD_LIDAR_TRKD
+    NAME: CMKD_LIDAR_LTKD
 
     VFE:
         NAME: MeanVFE
@@ -204,7 +199,7 @@ MODEL_LIDAR:
         NUM_BEV_FEATURES: 128
 
     BACKBONE_2D:
-        NAME: BaseBEVBackbone_TRKD
+        NAME: BaseBEVBackbone_LTKD
 
         LAYER_NUMS: [5, 5]
         LAYER_STRIDES: [1, 2]
@@ -287,7 +282,7 @@ MODEL_LIDAR:
 
 OPTIMIZATION:
     BATCH_SIZE_PER_GPU: 2
-    NUM_EPOCHS: 40
+    NUM_EPOCHS: 10
 
     OPTIMIZER: AdamW
     LR: 0.0002

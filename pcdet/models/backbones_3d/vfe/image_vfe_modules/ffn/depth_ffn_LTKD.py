@@ -8,7 +8,7 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
-class DepthFFN_TRKD(nn.Module):
+class DepthFFN_LTKD(nn.Module):
 
     def __init__(self, model_cfg, downsample_factor):
         """

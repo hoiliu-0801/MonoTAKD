@@ -21,8 +21,6 @@
             //CUDA_VISIBLE_DEVICES=1 python train_cmkd.py --cfg /home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth --pretrained_img_model /home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth
 
             //CUDA_VISIBLE_DEVICES=0 python test_cmkd.py --cfg ./cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml --ckpt /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_lpcg/default/ckpt/checkpoint_epoch_9.pth
-
-            
         },
         {
             "name": "Test Kitti",
@@ -54,34 +52,93 @@
             ]
         },
         {
-            "name": "Train disentagle",
+            "name": "Train Teacher",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/tools/train_cmkd.py",
+            "program": "${workspaceFolder}/tools/train.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/tools",
             "env": {"CUDA_VISIBLE_DEVICES":"1"},
             "args": [
                 "--cfg",
-                "/home/ipl-pc/cmkd/tools/cfgs/kitti_models/CMKD/CMKD-scd/raw_disentagle.yaml",
-                "--pretrained_lidar_model",
-                "/home/ipl-pc/cmkd/checkpoints/scd-teacher-kitti.pth",
-                "--pretrained_img_model",
-                "/home/ipl-pc/cmkd/checkpoints/cmkd-scd-2161.pth"
+                "cfgs/kitti_models/second.yaml",
+                // "--ckpt",
+                // "../checkpoints/scd-teacher-kitti.pth",
+                // "--pretrained_model",
+                // "../checkpoints/scd-teacher-kitti.pth"
             ]
         },
         {
-            "name": "Test disentagle",
+            "name": "Train LTKD",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/tools/test_cmkd.py",
+            "program": "${workspaceFolder}/tools/train_LTKD.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
             "args": [
                 "--cfg",
-                "cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_copy.yaml",
+                "cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml",
+                "--pretrained_lidar_model",
+                "../checkpoints/scd-teacher-kitti.pth",
+                "--pretrained_img_model",
+                "../checkpoints/cmkd-scd-2161.pth"
+            ]
+        },
+        {
+            "name": "Train Kradar",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/train_LTKD.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "--cfg",
+                "cfgs/kitti_models/kradar_teacher.yaml"
+            ]
+        },
+        {
+            "name": "Test LTKD",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/test_LTKD.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "--cfg",
+                "cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml",
                 "--ckpt",
-                "../checkpoints/cmkd-scd-2161.pth",
+                "../checkpoints/cmkd-scd-2161.pth"
+            ]
+        },
+        {
+            "name": "Train nuscene",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/train_LTKD.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "--cfg",
+                "cfgs/nuscenes_models/cmkd_nu_R50_scd_LTKD.yaml",
+                "--pretrained_lidar_model",
+                "/home/ipl-pc/cmkd/output/nuscenes_models/cbgs_second_multihead/default/ckpt/checkpoint_epoch_2.pth"
+            ]
+        },
+        {
+            "name": "Train nuscene_1",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/train.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "env": {"CUDA_VISIBLE_DEVICES":"1"},
+            "args": [
+                "--cfg",
+                "cfgs/nuscenes_models/cbgs_second_multihead.yaml"
             ]
         },
     ]

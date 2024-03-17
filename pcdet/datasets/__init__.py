@@ -10,9 +10,10 @@ from .nuscenes.nuscenes_dataset import NuScenesDataset
 from .waymo.waymo_dataset import WaymoDataset
 from .pandaset.pandaset_dataset import PandasetDataset
 from .lyft.lyft_dataset import LyftDataset
-from .dataset_cmkd import DatasetTemplate_CMKD
-from .kitti.kitti_dataset_cmkd import KittiDataset_CMKD
-
+from .dataset_LTKD import DatasetTemplate_LTKD
+from .kitti.kitti_dataset_LTKD import KittiDataset_LTKD
+from .kradar.kradar_dataset import KRadarDetection
+# from .kradar.kradar_dataset_2 import KRadarDetection_v2_0
 
 
 __all__ = {
@@ -22,8 +23,10 @@ __all__ = {
     'WaymoDataset': WaymoDataset,
     'PandasetDataset': PandasetDataset,
     'LyftDataset': LyftDataset,
-    'DatasetTemplate_CMKD': DatasetTemplate_CMKD,
-    'KittiDataset_CMKD': KittiDataset_CMKD,
+    'DatasetTemplate_LTKD': DatasetTemplate_LTKD,
+    'KittiDataset_LTKD': KittiDataset_LTKD,
+    'KRadarDetection': KRadarDetection,
+    # 'KRadarDetection_v2_1': KRadarDetection
 }
 
 

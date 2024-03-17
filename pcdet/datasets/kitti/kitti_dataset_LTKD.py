@@ -10,11 +10,11 @@ from skimage import io
 from pcdet.datasets.kitti import kitti_utils
 from pcdet.ops.roiaware_pool3d import roiaware_pool3d_utils
 from pcdet.utils import box_utils, calibration_kitti, common_utils, object3d_kitti
-from pcdet.datasets.dataset_cmkd import DatasetTemplate_CMKD
+from pcdet.datasets.dataset_LTKD import DatasetTemplate_LTKD
 
 from pathlib import Path
 
-class KittiDataset_CMKD(DatasetTemplate_CMKD):
+class KittiDataset_LTKD(DatasetTemplate_LTKD):
     def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None, debug=False):
 
         super().__init__(
@@ -531,7 +531,7 @@ class KittiDataset_CMKD(DatasetTemplate_CMKD):
 
 #TODO:incomplete?
 def create_kitti_infos_soft(dataset_cfg, class_names, data_path, save_path, split_name, your_label_path=None, workers=4):
-    dataset = KittiDataset_CMKD(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
+    dataset = KittiDataset_LTKD(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
 
     soft_label_filename = save_path / ('kitti_infos_%s.pkl' % split_name)
     dataset.set_split(split_name)
@@ -555,7 +555,7 @@ def create_kitti_infos_soft(dataset_cfg, class_names, data_path, save_path, spli
     print('---------------Data preparation Done---------------')
 
 def create_kitti_infos_unlabel(dataset_cfg, class_names, data_path, save_path, split_name, workers=4):
-    dataset = KittiDataset_CMKD(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
+    dataset = KittiDataset_LTKD(dataset_cfg=dataset_cfg, class_names=class_names, root_path=data_path, training=False)
 
     soft_label_filename = save_path / ('kitti_infos_%s.pkl' % split_name)
     dataset.set_split(split_name)

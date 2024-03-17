@@ -5,7 +5,7 @@ from distutils.log import debug
 import glob
 import os
 from pathlib import Path
-from test_cmkd import repeat_eval_ckpt
+from test_LTKD import repeat_eval_ckpt
 
 import torch
 import torch.nn as nn
@@ -17,7 +17,7 @@ from pcdet.models import build_network, model_fn_decorator_cmkd
 from pcdet.utils import common_utils
 from train_utils.optimization import build_optimizer, build_scheduler
 from train_utils.train_utils import train_model_cmkd
-from pcdet.models.detectors.cmkd import CMKD
+from pcdet.models.detectors.cmkd_LTKD import CMKD_LTKD
 
 
 def parse_config():
@@ -116,7 +116,7 @@ def main():
         total_epochs=args.epochs,
     )
 
-    model = CMKD(model_cfg = cfg.get('CMKD_CFG', {}))
+    model = CMKD_LTKD(model_cfg = cfg.get('CMKD_CFG', {}))
     model.model_img = build_network(model_cfg=cfg.MODEL_IMG, num_class=len(cfg.CLASS_NAMES), dataset=train_set)
     model.model_lidar = build_network(model_cfg=cfg.MODEL_LIDAR, num_class=len(cfg.CLASS_NAMES), dataset=train_set)
     for p in model.model_lidar.parameters():

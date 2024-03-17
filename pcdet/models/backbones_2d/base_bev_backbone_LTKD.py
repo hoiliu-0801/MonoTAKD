@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from pcdet.models.model_utils.basic_block_2d import BasicBlock2D_copy
 
-class BaseBEVBackbone_TRKD(nn.Module):
+class BaseBEVBackbone_LTKD(nn.Module):
     def __init__(self, model_cfg, input_channels):
         super().__init__()
         self.model_cfg = model_cfg
@@ -91,17 +91,14 @@ class BaseBEVBackbone_TRKD(nn.Module):
             # spatial_features2 = data_dict['spatial_features']
         else:
             spatial_features = data_dict['spatial_features']
-        spatial_features = data_dict['spatial_features']
-        # spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
-
-
-        # import matplotlib.pyplot as plt
-        # save_path="/home/ipl-pc/cmkd/output/"+"10.png"
-        # plt.imsave(save_path, spatial_features_, cmap='inferno')
-        # spatial_features_2 = torch.mean(spatial_features2[0,:,:,:].cpu().detach(),dim=0)
-        # save_path1="/home/ipl-pc/cmkd/output/"+"11.png"
-        # import matplotlib.pyplot as plt
-        # plt.imsave(save_path1, spatial_features_2, cmap='inferno')
+            # spatial_features = data_dict['spatial_features_target']
+        # print(data_dict.keys())
+        # exit()
+        # spatial_features = data_dict['spatial_features_target']
+        spatial_features_ = torch.mean(spatial_features[0,:,:,:].cpu().detach(),dim=0)
+        save_path1="/home/ipl-pc/cmkd/output/"+"11.png"
+        import matplotlib.pyplot as plt
+        plt.imsave(save_path1, spatial_features_, cmap='inferno')
         # exit()
         ups = []
         ret_dict = {}

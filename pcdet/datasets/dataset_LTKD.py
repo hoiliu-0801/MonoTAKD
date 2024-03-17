@@ -6,10 +6,10 @@ import torch.utils.data as torch_data
 
 from ..utils import common_utils
 from .augmentor.data_augmentor import DataAugmentor
-from .processor.data_processor_cmkd import DataProcessor_CMKD
+from .processor.data_processor_LTKD import DataProcessor_LTKD
 from .processor.point_feature_encoder import PointFeatureEncoder
 
-class DatasetTemplate_CMKD(torch_data.Dataset):
+class DatasetTemplate_LTKD(torch_data.Dataset):
     def __init__(self, dataset_cfg=None, class_names=None, training=True, root_path=None, logger=None):
         super().__init__()
         self.dataset_cfg = dataset_cfg
@@ -31,7 +31,7 @@ class DatasetTemplate_CMKD(torch_data.Dataset):
         ) if self.training else None
 
         # change data processor
-        self.data_processor = DataProcessor_CMKD(
+        self.data_processor = DataProcessor_LTKD(
             self.dataset_cfg.DATA_PROCESSOR, point_cloud_range=self.point_cloud_range,
             training=self.training, num_point_features=self.point_feature_encoder.num_point_features
         )

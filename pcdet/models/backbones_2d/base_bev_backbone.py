@@ -1,13 +1,13 @@
 import numpy as np
 import torch
 import torch.nn as nn
-from pcdet.models.model_utils.basic_block_2d import BasicBlock2D_copy
+
 
 class BaseBEVBackbone(nn.Module):
     def __init__(self, model_cfg, input_channels):
         super().__init__()
         self.model_cfg = model_cfg
-        self.fusion_nn = BasicBlock2D_copy()
+
         if self.model_cfg.get('LAYER_NUMS', None) is not None:
             assert len(self.model_cfg.LAYER_NUMS) == len(self.model_cfg.LAYER_STRIDES) == len(self.model_cfg.NUM_FILTERS)
             layer_nums = self.model_cfg.LAYER_NUMS

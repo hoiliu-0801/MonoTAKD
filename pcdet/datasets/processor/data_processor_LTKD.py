@@ -62,7 +62,7 @@ class VoxelGeneratorWrapper():
         return voxels, coordinates, num_points
 
 
-class DataProcessor_CMKD(object):
+class DataProcessor_LTKD(object):
     def __init__(self, processor_configs, point_cloud_range, training, num_point_features):
         self.point_cloud_range = point_cloud_range
         self.training = training

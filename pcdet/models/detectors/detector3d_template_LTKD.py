@@ -12,7 +12,7 @@ from ..backbones_3d import pfe, vfe
 from ..model_utils import model_nms_utils
 import cv2
 
-class Detector3DTemplate_CMKD(nn.Module):
+class Detector3DTemplate_LTKD(nn.Module):
     def __init__(self, model_cfg, num_class, dataset):
         super().__init__()
         self.model_cfg = model_cfg
@@ -55,16 +55,15 @@ class Detector3DTemplate_CMKD(nn.Module):
     def build_vfe(self, model_info_dict):
         if self.model_cfg.get('VFE', None) is None:
             return None, model_info_dict
-
         if self.model_cfg.VFE.NAME == 'ImageVFE':
             if self.dataset.grid_size_img is not None:
                 model_info_dict.update({'grid_size':self.dataset.grid_size_img})
                 model_info_dict.update({'voxel_size':self.dataset.voxel_size_img})
         else:
             if self.dataset.grid_size_lidar is not None:
-                model_info_dict.update({'grid_size':self.dataset.grid_size_lidar}) 
+                model_info_dict.update({'grid_size':self.dataset.grid_size_lidar})
                 model_info_dict.update({'voxel_size':self.dataset.voxel_size_lidar})
-    
+
         vfe_module = vfe.__all__[self.model_cfg.VFE.NAME](
             model_cfg=self.model_cfg.VFE,
             num_point_features=model_info_dict['num_rawpoint_features'],
@@ -130,7 +129,7 @@ class Detector3DTemplate_CMKD(nn.Module):
         )
         model_info_dict['module_list'].append(backbone_2d_module)
         model_info_dict['num_bev_features'] = backbone_2d_module.num_bev_features
-        return backbone_2d_module, model_info_dict    
+        return backbone_2d_module, model_info_dict
 
     def build_pfe(self, model_info_dict):
         if self.model_cfg.get('PFE', None) is None:
@@ -153,7 +152,7 @@ class Detector3DTemplate_CMKD(nn.Module):
             return None, model_info_dict
 
         if self.dataset.grid_size_lidar is not None:
-                model_info_dict.update({'grid_size':self.dataset.grid_size_lidar}) 
+                model_info_dict.update({'grid_size':self.dataset.grid_size_lidar})
                 model_info_dict.update({'voxel_size':self.dataset.voxel_size_lidar})
 
         dense_head_module = dense_heads.__all__[self.model_cfg.DENSE_HEAD.NAME](
@@ -191,9 +190,9 @@ class Detector3DTemplate_CMKD(nn.Module):
     def build_roi_head(self, model_info_dict):
         if self.model_cfg.get('ROI_HEAD', None) is None:
             return None, model_info_dict
-        
+
         if self.dataset.grid_size_lidar is not None:
-            model_info_dict.update({'grid_size':self.dataset.grid_size_lidar}) 
+            model_info_dict.update({'grid_size':self.dataset.grid_size_lidar})
             model_info_dict.update({'voxel_size':self.dataset.voxel_size_lidar})
 
         point_head_module = roi_heads.__all__[self.model_cfg.ROI_HEAD.NAME](
@@ -287,7 +286,7 @@ class Detector3DTemplate_CMKD(nn.Module):
                 final_boxes = torch.cat(pred_boxes, dim=0)
             else:
                 cls_preds, label_preds = torch.max(cls_preds, dim=-1)
-                
+
                 if batch_dict.get('has_class_labels', False):
                     label_key = 'roi_labels' if 'roi_labels' in batch_dict else 'batch_pred_labels'
                     label_preds = batch_dict[label_key][index]

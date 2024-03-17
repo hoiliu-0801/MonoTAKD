@@ -44,12 +44,12 @@ CMKD_CFG:
     LOSS_PRN: True
 
 MODEL_IMG:
-    NAME: CMKD_MONO_TRKD
+    NAME: CMKD_MONO_LTKD
 
     VFE:
         NAME: ImageVFE
         FFN:
-            NAME: DepthFFN_TRKD
+            NAME: DepthFFN_LTKD
             DDN:
                 NAME: DDNDeepLabV3
                 BACKBONE_NAME: ResNet50
@@ -80,14 +80,14 @@ MODEL_IMG:
                     'bg_weight': 1
                 }
         F2V:
-            NAME: FrustumToVoxel_TRKD
+            NAME: FrustumToVoxel_LTKD
             SAMPLER: {
                 "mode": "bilinear",
                 "padding_mode": "zeros"
             }
 
     MAP_TO_BEV:
-        NAME: Conv2DCollapse_TRKD
+        NAME: Conv2DCollapse_LTKD
         NUM_IN_FEATURES: 64
         NUM_BEV_FEATURES: 256
         ARGS: {
@@ -171,7 +171,7 @@ MODEL_IMG:
 
 
 MODEL_LIDAR:
-    NAME: CMKD_LIDAR_TRKD
+    NAME: CMKD_LIDAR_LTKD
 
     VFE:
         NAME: MeanVFE
@@ -184,7 +184,7 @@ MODEL_LIDAR:
         NUM_BEV_FEATURES: 256
 
     BACKBONE_2D:
-        NAME: BaseBEVBackbone_TRKD
+        NAME: BaseBEVBackbone_LTKD
 
         LAYER_NUMS: [5]
         LAYER_STRIDES: [1]

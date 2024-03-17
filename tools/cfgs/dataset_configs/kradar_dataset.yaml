@@ -1,13 +1,22 @@
-DATASET: 'KittiDataset'
-# DATA_PATH: '/mnt/disk2/Data/KITTI/KITTI3D'
-DATA_PATH: '/home/ipl-pc/VirConv/data/kitti'
+# DATASET: 'KRadarDetection'
+# DATA_PATH: '/mnt/nas_kradar/kradar_dataset/dir_all/5/kradar_LTKD/'
+
+DATASET: 'KRadarDetection'
+DATA_PATH: '/mnt/nas_kradar/kradar_dataset/'
+CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
+
+MAP_CLASS_TO_KITTI: {
+   'Sedan': 'Car',
+   'Pedestrian': 'Pedestrian',
+   'Cyclist': 'Cyclist',
+}
 
 POINT_CLOUD_RANGE: [0, -40, -3, 70.4, 40, 1]
 
 DATA_SPLIT: {
     'train': train,
-    'test': val,
-    # 'test': test
+    'val': val,
+    'test': test
 }
 
 # INFO_PATH: {
@@ -15,9 +24,9 @@ DATA_SPLIT: {
 #     'test': [kitti_infos_val_raw.pkl],
 # }
 INFO_PATH: {
-    'train': [kitti_infos_train.pkl],
-    'test': [kitti_infos_val.pkl],
-    # 'test': [kitti_infos_test.pkl],
+    'train': [kradar_infos_train.pkl],
+    'val': [kradar_infos_val.pkl],
+    'test': [kradar_infos_test.pkl],
     }
 
 GET_ITEM_LIST: ["points"]
@@ -31,11 +40,11 @@ DATA_AUGMENTOR:
           DB_INFO_PATH:
               - kitti_dbinfos_train.pkl
           PREPARE: {
-             filter_by_min_points: ['Car:5', 'Pedestrian:5', 'Cyclist:5'],
+             filter_by_min_points: ['Sedan:5', 'Pedestrian:5', 'Cyclist:5'],
              filter_by_difficulty: [-1],
           }
 
-          SAMPLE_GROUPS: ['Car:20','Pedestrian:15', 'Cyclist:15']
+          SAMPLE_GROUPS: ['Sedan:20','Pedestrian:15', 'Cyclist:15']
           NUM_POINT_FEATURES: 4
           DATABASE_WITH_FAKELIDAR: False
           REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]

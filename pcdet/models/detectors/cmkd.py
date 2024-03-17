@@ -3,7 +3,7 @@ from cv2 import fastNlMeansDenoising
 
 from gflags import Flag
 from ordered_set import T
-from .detector3d_template_cmkd import Detector3DTemplate_CMKD
+from .detector3d_template_LTKD import Detector3DTemplate_CMKD
 from pcdet.utils import loss_utils
 from pcdet.models.backbones_2d import domain_adaptation
 from ..model_utils.model_nms_utils import class_agnostic_nms

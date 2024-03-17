@@ -117,6 +117,7 @@ def eval_one_epoch(cfg, model, dataloader, epoch_id, logger, dist_test=False, sa
             eval_metric=cfg.MODEL_IMG.POST_PROCESSING.EVAL_METRIC,
             output_path=final_output_dir
         )
+        print("result_str:",result_str)
         result_str = '\n' + result_str
         logger.info(result_str)
         ret_dict.update(result_dict)
