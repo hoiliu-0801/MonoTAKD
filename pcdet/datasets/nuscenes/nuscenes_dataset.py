@@ -8,14 +8,14 @@ from tqdm import tqdm
 from ...ops.roiaware_pool3d import roiaware_pool3d_utils
 from ...utils import common_utils
 from ..dataset import DatasetTemplate
-from pcdet.datasets.dataset_LTKD import DatasetTemplate_LTKD
+from pcdet.datasets.dataset_TAKD import DatasetTemplate_TAKD
 
 from pyquaternion import Quaternion
 from PIL import Image
 
 
 
-class NuScenesDataset(DatasetTemplate_LTKD):
+class NuScenesDataset(DatasetTemplate_TAKD):
     def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None):
         root_path = (root_path if root_path is not None else Path(dataset_cfg.DATA_PATH)) / dataset_cfg.VERSION
         super().__init__(

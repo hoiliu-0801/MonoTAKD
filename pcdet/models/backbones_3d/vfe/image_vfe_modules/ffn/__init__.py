@@ -1,6 +1,6 @@
 from .depth_ffn import DepthFFN
-from .depth_ffn_LTKD import DepthFFN_LTKD
+from .depth_ffn_TAKD import DepthFFN_TAKD
 __all__ = {
     'DepthFFN': DepthFFN,
-    'DepthFFN_LTKD': DepthFFN_LTKD
+    'DepthFFN_TAKD': DepthFFN_TAKD
 }

@@ -10,11 +10,11 @@ from skimage import io
 from pcdet.datasets.kitti import kitti_utils
 from pcdet.ops.roiaware_pool3d import roiaware_pool3d_utils
 from pcdet.utils import box_utils, calibration_kitti, common_utils, object3d_kitti, object3d_kradar
-from pcdet.datasets.dataset_LTKD import DatasetTemplate_LTKD
+from pcdet.datasets.dataset_TAKD import DatasetTemplate_TAKD
 
 from pathlib import Path
 
-class KRadarDetection(DatasetTemplate_LTKD):
+class KRadarDetection(DatasetTemplate_TAKD):
     def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None, debug=False):
 
         super().__init__(

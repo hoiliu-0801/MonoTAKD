@@ -9,7 +9,7 @@ from .caddn import CaDDN
 from .voxel_rcnn import VoxelRCNN
 from .centerpoint import CenterPoint
 from .pv_rcnn_plusplus import PVRCNNPlusPlus
-from .cmkd_LTKD import CMKD_LTKD, CMKD_MONO_LTKD, CMKD_LIDAR_LTKD
+from .cmkd_TAKD import CMKD_TAKD, CMKD_MONO_TAKD, CMKD_LIDAR_TAKD
 
 __all__ = {
     'Detector3DTemplate': Detector3DTemplate,
@@ -23,9 +23,9 @@ __all__ = {
     'VoxelRCNN': VoxelRCNN,
     'CenterPoint': CenterPoint,
     'PVRCNNPlusPlus': PVRCNNPlusPlus,
-    'CMKD_LTKD': CMKD_LTKD,
-    'CMKD_MONO_LTKD': CMKD_MONO_LTKD,
-    'CMKD_LIDAR_LTKD': CMKD_LIDAR_LTKD
+    'CMKD_TAKD': CMKD_TAKD,
+    'CMKD_MONO_TAKD': CMKD_MONO_TAKD,
+    'CMKD_LIDAR_TAKD': CMKD_LIDAR_TAKD
 }
 
 

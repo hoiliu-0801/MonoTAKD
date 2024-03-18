@@ -1,7 +1,7 @@
 from .base_bev_backbone import BaseBEVBackbone
-from .base_bev_backbone_LTKD import BaseBEVBackbone_LTKD
+from .base_bev_backbone_TAKD import BaseBEVBackbone_TAKD
 
 __all__ = {
     'BaseBEVBackbone': BaseBEVBackbone,
-    'BaseBEVBackbone_LTKD': BaseBEVBackbone_LTKD
+    'BaseBEVBackbone_TAKD': BaseBEVBackbone_TAKD
 }

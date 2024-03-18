@@ -1,7 +1,7 @@
 from .frustum_to_voxel import FrustumToVoxel
-from .frustum_to_voxel_LTKD import FrustumToVoxel_LTKD
+from .frustum_to_voxel_TAKD import FrustumToVoxel_TAKD
 
 __all__ = {
     'FrustumToVoxel': FrustumToVoxel,
-    'FrustumToVoxel_LTKD': FrustumToVoxel_LTKD
+    'FrustumToVoxel_TAKD': FrustumToVoxel_TAKD
 }
