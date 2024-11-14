@@ -141,5 +141,22 @@
                 "cfgs/nuscenes_models/cbgs_second_multihead.yaml"
             ]
         },
+        {
+            "name": "Test Kitti v2",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/test_TAKD.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/tools",
+            "args": [
+                "--cfg",
+                "./cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml",
+                "--ckpt",
+                "../checkpoints/twcc_8015_checkpoint_epoch_10.pth",
+            ]
+        },
     ]
 }
+
+// Training: python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+// Testing:  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt ../checkpoints/twcc_8015_checkpoint_epoch_10.pth

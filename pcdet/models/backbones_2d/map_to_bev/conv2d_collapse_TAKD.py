@@ -56,7 +56,7 @@ class Conv2DCollapse_TAKD(nn.Module):
 
         ## Disentagle bev-image into two copies ###
         bev_features_new = self.block_copy(bev_features)
-        bev_features_new = self.sam(bev_features_new)
+        bev_features_new = self.sam(bev_features_new) #Comment
         # bev_features_new = self.GC_block(bev_features_new)
         batch_dict["spatial_features_copy"] = bev_features_new
 
@@ -64,7 +64,7 @@ class Conv2DCollapse_TAKD(nn.Module):
         voxel_features_target = batch_dict["voxel_features_target"]
         bev_features_target = voxel_features_target.flatten(start_dim=1, end_dim=2)  # (B, C, Z, Y, X) -> (B, C*Z, Y, X)
         bev_features_target = self.block_target(bev_features_target)
-        bev_features_target = self.sam(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)
+        bev_features_target = self.sam(bev_features_target)  # (B, C*Z, Y, X) -> (B, C, Y, X)  #Comment
         batch_dict["spatial_features_target"] = bev_features_target
         # # # #### Fusion ####
         # Add this when you train a new model

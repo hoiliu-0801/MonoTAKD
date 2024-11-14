@@ -78,12 +78,14 @@ class CMKD_TAKD(nn.Module):
                 # if key =="000857":
                 plt.imsave(save_path, bev_image_, cmap='inferno')
                 # print(key, torch.mean(bev_image))
-    def normalize_(self, bev_lidar_img_TA):
-        B, C, H, W = bev_lidar_img_TA.shape  # [2, 128, 188, 140])
+    def normalize_(self, bev_img):
+        B, C, H, W = bev_img.shape  # [2, 128, 188, 140])
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        bev_lidar_img_TA = bev_lidar_img_TA.cpu().detach()
-        bev_lidar_img_TA[bev_lidar_img_TA<0]=0
-        return torch.tensor(bev_lidar_img_TA).float().to(device)
+        bev_img = bev_img.cpu().detach()
+        bev_img -= bev_img.min()
+        bev_img /= bev_img.max()
+        # bev_img[bev_img<200]=0
+        return torch.tensor(bev_img).float().to(device)
 
     def get_training_loss(self, batch_dict):
         # forward lidar model
@@ -116,10 +118,13 @@ class CMKD_TAKD(nn.Module):
         loss_bev = torch.tensor(0)
         ### Get TA's bev ###
         bev_lidar_img_TA = batch_dict.get(self.bev_layer_target, None) 
-        # bev_lidar_img_TA = self.normalize_(bev_lidar_img_TA)
-        # bev_img = self.normalize_(bev_img)
-        bev_diff = torch.absolute(bev_lidar-bev_lidar_img_TA)
-
+        bev_lidar_img_TA = self.normalize_(bev_lidar_img_TA)
+        bev_img = self.normalize_(bev_img)
+        # bev_diff = bev_lidar_img_TA-bev_lidar
+        bev_diff = torch.absolute(bev_lidar_img_TA-bev_lidar)
+        bev_diff[bev_diff<(3/5*bev_diff.max())]=0
+        # bev_diff = torch.absolute(bev_lidar-bev_lidar_img_TA)
+        # exit()
         if (bev_img is not None) and (bev_lidar is not None) and (bev_lidar_img_TA is not None) is not None and self.calculate_bev_loss:
 
             bev_loss_mask = torch.ones((bev_lidar_img_TA.shape[0], 1, bev_lidar_img_TA.shape[2], bev_lidar_img_TA.shape[3]), device = bev_lidar_img_TA.device)
@@ -152,7 +157,7 @@ class CMKD_TAKD(nn.Module):
         ### Visualization ###
         # bev_final = bev_img + bev_img_copy
         # visual_dict=dict(bev_img=bev_img)
-        # visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_TA=bev_lidar_img_TA, bev_img_copy=bev_img_copy, bev_diff=bev_diff, bev_final=bev_final)
+        # visual_dict=dict(bev_lidar=bev_lidar, bev_img=bev_img, bev_lidar_img_TA=bev_lidar_img_TA, bev_diff=bev_diff)
         # visual_dict=dict(bev_lidar=bev_lidar, bev_lidar_img_TA=bev_lidar_img_TA)
         # self.visual_(batch_dict, visual_dict)
 
@@ -165,7 +170,7 @@ class CMKD_TAKD(nn.Module):
 
 
         return loss, tb_dict, disp_dict
-
+import time
 
 class CMKD_MONO_TAKD(Detector3DTemplate_TAKD):
     def __init__(self, model_cfg, num_class, dataset):
@@ -174,7 +179,7 @@ class CMKD_MONO_TAKD(Detector3DTemplate_TAKD):
         self.rpn_loss_weight = 1
 
     def forward(self, batch_dict):
-
+        time_start = time.time()
         for cur_module in self.module_list:
             batch_dict = cur_module(batch_dict)
         # batch_dict['image_features'].shape = torch.Size([2, 64, 47, 156])
@@ -196,6 +201,8 @@ class CMKD_MONO_TAKD(Detector3DTemplate_TAKD):
                 pred_dicts, recall_dicts = self.post_processing_center_head(batch_dict)
             else:
                 pred_dicts, recall_dicts = self.post_processing(batch_dict)
+            time_end = time.time()
+            print(f'Time elapsed: {time_end - time_start:.4f}')
             return pred_dicts, recall_dicts
 
     def get_training_loss(self):

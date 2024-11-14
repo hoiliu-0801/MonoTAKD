@@ -1,0 +1,1000 @@
+ 1002  sudo su
+ 1003  /etc/init.d/sshd start
+ 1004  sudo service sshd start
+ 1005  sudo systemctl start sshd
+ 1006  ssh localhost
+ 1007  exit
+ 1008  sudo /etc/init.d/ssh restart
+ 1009  whoami
+ 1010  conda activate dmkd
+ 1011  conda activate cmkd
+ 1012  python train.py --cfg nu
+ 1013  cd tools/
+ 1014  python train.py --cfg nuscenes 
+ 1015  python train.py --cfg nuscenes_models/cbgs_second_multihead.yaml
+ 1016  python train.py --cfg /home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead.yaml
+ 1017  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_config/nuscene_dataset.yaml --version v1.0-mini
+ 1018  cd ..
+ 1019  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_config/nuscene_dataset.yaml --version v1.0-mini
+ 1020  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscene_dataset.yaml --version v1.0-mini
+ 1021  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-mini
+ 1022  pip install nuscenes-devkit==1.0.5
+ 1023  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-mini
+ 1024  python train.py --cfg /home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead.yaml
+ 1025  cd tools/
+ 1026  python train.py --cfg /home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead.yaml
+ 1027  sudo apt-get install openssh-server
+ 1028  lsb_release -a
+ 1029  strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX
+ 1030  sudo apt-get update && sudo apt-get upgrade
+ 1031  sudo apt-get install build-essential
+ 1032  sudo apt-get install aptitude
+ 1033  clear
+ 1034  sudo apt-get install libstdc++6
+ 1035  clear
+ 1036  sudo /etc/init.d/ssh restart
+ 1037  sudo apt-get install openssh-client
+ 1038  sudo apt install openssh-client openssh-server
+ 1039  vim ~/.vscode-server/{HASH}server.sh
+ 1040  cd ~/.vscode-server/{HASH}server.sh
+ 1041  ls
+ 1042  pwd
+ 1043  ls -a
+ 1044  cd ~/.vscode-server/
+ 1045  ls
+ 1046  cd bin
+ 1047  ls
+ 1048  mkdir
+ 1049  mkdir test
+ 1050  pwd
+ 1051  conda activate cmkd
+ 1052  python train.py --cfg /home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead.yaml
+ 1053  cd tools/
+ 1054  python train.py --cfg /home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead.yaml
+ 1055  cd ..
+ 1056  cd CMKD-MV/
+ 1057  cd data/
+ 1058  cd nuscenes
+ 1059  mkdir test
+ 1060  ll
+ 1061  cd /mnt/disk1/data
+ 1062  cd nuscenes/
+ 1063  ll
+ 1064  mkdir test
+ 1065  conda activate cmkd
+ 1066  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_config/nuscene_dataset.yaml --version v1.0-trainval
+ 1067  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_config/nuscenes_dataset.yaml --version v1.0-trainval
+ 1068  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-trainval
+ 1069  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-trainval 
+ 1070  conda nev list 
+ 1071  conda env list 
+ 1072  cp -r v1.0-trainval
+ 1073  cp -r v1.0-trainval test
+ 1074  cd
+ 1075  cd cmkd/
+ 1076  cd LIDAR_TOP/
+ 1077  ls
+ 1078  cd 
+ 1079  cd cmkd/
+ 1080  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth \
+ 1081  cd tools/
+ 1082  python train_LTKD.py --cfg cfgs/nuscenes_models/cmkd_nu_R50_scd_LTKD.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead/default/ckpt/checkpoint_epoch_20.pth
+ 1083  conda activate cmkd
+ 1084  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1085  conda activate cmkd
+ 1086  python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-trainval 
+ 1087  cd tools/
+ 1088  python train_LTKD.py --cfg cfgs/nuscenes_models/cmkd_nu_R50_scd_LTKD.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead/default/ckpt/checkpoint_epoch_20.pth
+ 1089  exit
+ 1090  pwd
+ 1091  rm -rf .vscode-server
+ 1092  ls -a
+ 1093  reinstall remote-ssh
+ 1094  ls
+ 1095  cd .vscode/
+ 1096  ls -a
+ 1097  cd ..
+ 1098  ls -a
+ 1099  /sbin/ldconfig -p | grep stdc++
+ 1100  strings /usr/lib/libstdc++.so.6 | grep LIBCXX
+ 1101  /usr/lib/i386-linux-gnu/libstdc++.so.6 | grep LIBCXX
+ 1102  cd /usr/lib/i386-linux-gnu/libstdc++.so.6
+ 1103  cd /usr/lib/i386-linux-gnu/
+ 1104  ls
+ 1105  sudo apt-get update
+ 1106  sudo apt-get install libstdc++6
+ 1107  cd /usr/lib/i386-linux-gnu/
+ 1108  ls
+ 1109  cd libstc++.so.6
+ 1110  cd libstdc++.so.6
+ 1111  cat libstdc++.so.6
+ 1112  1;0c1;0c
+ 1113  ls
+ 1114  /usr/lib/i386-linux-gnu/libstdc++.so.6 | grep LIBCXX
+ 1115  sudo /usr/lib/i386-linux-gnu/libstdc++.so.6 | grep LIBCXX
+ 1116  sudo su
+ 1117  cd ~
+ 1118  ls
+ 1119  rm -rf .vscode-server
+ 1120  ldd --version
+ 1121  strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX
+ 1122  rm -rf .vscode-server
+ 1123  nvtop
+ 1124  kill -9 32339
+ 1125  nvtop
+ 1126  cd LIDAR_TOP/
+ 1127  ls
+ 1128  find n015-2018-10-08-15-52-24+0800__LIDAR_TOP__1538985270697911.pcd.bin
+ 1129  $ find ./ -name "n015-2018-10-08-15-52-24+0800__LIDAR_TOP__1538985270697911.pcd.bin" -type f
+ 1130  find ./ -name "n015-2018-10-08-15-52-24+0800__LIDAR_TOP__1538985270697911.pcd.bin" -type f
+ 1131  find ./ -name "n015-2018-10-08-15-52-24+0800__LIDAR_TOP__1538985270148281.pcd.bin" -type f
+ 1132  cd
+ 1133  find ./ -name "n015-2018-10-08-15-52-24+0800__LIDAR_TOP__1538985270148281.pcd.bin" -type f
+ 1134  git status
+ 1135  /usr/bin/python /home/ipl-pc/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1136  conda activate cmkd
+ 1137  python train_LTKD.py --cfg cfgs/nuscenes_models/cmkd_nu_R50_scd_LTKD.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead/default/ckpt/checkpoint_epoch_20.pth
+ 1138  clear
+ 1139  python train_LTKD.py --cfg cfgs/nuscenes_models/cmkd_nu_R50_scd_LTKD.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead/default/ckpt/checkpoint_epoch_20.pth
+ 1140  conda activate cmkd
+ 1141  python train.py --cfg /home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead.yaml
+ 1142  conda activate cmkd
+ 1143  python train_LTKD.py --cfg cfgs/nuscenes_models/cmkd_nu_R50_scd_LTKD.yaml --pretrained_lidar_model /home/ipl-pc/cmkd/output/home/ipl-pc/cmkd/tools/cfgs/nuscenes_models/cbgs_second_multihead/default/ckpt/checkpoint_epoch_20.pth
+ 1144  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1145  conda create -n tig python=3.7 -y
+ 1146  conda activate tig
+ 1147  conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge
+ 1148  conda install -c pytorch pytorch torchvision -y
+ 1149  conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=10.2 -c pytorch
+ 1150  conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
+ 1151  python -c import pytorch
+ 1152  python 
+ 1153  [200~pip install mmcv-full==1.3.13~
+ 1154  pip install mmcv-full==1.3.13
+ 1155  pip3 install mmcv-full==1.3.13
+ 1156  git clone https://github.com/ADLab3Ds/TiG-BEV.git
+ 1157  cd TiG-BEV/
+ 1158  pip install -v -e .
+ 1159  pip install pygame
+ 1160  pip install mmcv-full==1.3.13
+ 1161  conda install -c pytorch pytorch torchvision -y
+ 1162  conda install conda=24.1.0
+ 1163  conda activate 
+ 1164  conda env remove -n tig
+ 1165  conda create -n tig -y
+ 1166  conda activate tig
+ 1167  pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1168  pip~ install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1169  pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1170  pip3 install python==3.6.9
+ 1171  pip3 install python==3.7
+ 1172  pip3 install python=3.6.9
+ 1173  pip3 install python==3.6.9
+ 1174  conda activate 
+ 1175  conda env remove -n tig
+ 1176  conda create -n tig -y python=3.6.9
+ 1177  conda create -n tig -y python=3.7
+ 1178  conda activate tig
+ 1179  pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1180  pip3 install mmcv-full==1.3.13
+ 1181  pip install mmdet==2.14.0
+ 1182  pip install mmsegmentation==0.14.1
+ 1183  pip install -v -e .
+ 1184  python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1185  cd ..
+ 1186  python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1187  python tools/train.py --cfg configs/tig_bev/tig_bev-r50-CBGS.py
+ 1188  conda activate tig
+ 1189  python tools/train.py --cfg configs/tig_bev/tig_bev-r50-CBGS.py
+ 1190  python tools/train.py configs/tig_bev/tig_bev-r50-CBGS.py
+ 1191  python tools/train.py configs/tig_bev/tig_bev4d-r101-CBGS.py 
+ 1192  pip install yapf==0.40.1
+ 1193  python tools/train.py configs/tig_bev/tig_bev4d-r101-CBGS.py 
+ 1194  python tools/train.py configs/tig_bev/tig_bev4d-r50.py 
+ 1195  python tools/train.py configs/tig_bev/tig_bev-r50.py 
+ 1196  CUDA_VISIBLE_DEVICES=1 python tools/train.py configs/tig_bev/tig_bev-r50.py 
+ 1197  pip install setuptools
+ 1198  pip uninstall setuptools
+ 1199  pip install setuptools
+ 1200  CUDA_VISIBLE_DEVICES=1 python tools/train.py configs/tig_bev/tig_bev-r50.py 
+ 1201  pip uninstall setuptools
+ 1202  pip install setuptools==63.4.2
+ 1203  CUDA_VISIBLE_DEVICES=1 python tools/train.py configs/tig_bev/tig_bev-r50.py 
+ 1204  pip install setuptools==59.5.0
+ 1205  CUDA_VISIBLE_DEVICES=1 python tools/train.py configs/tig_bev/tig_bev-r50.py 
+ 1206  CUDA_VISIBLE_DEVICES=1 python tools/train.py configs/tig_bev/tig_bev-r50.py  cd /home/ipl-pc/TiG-BEV ; /usr/bin/env /home/ipl-pc/anaconda3/envs/tig/bin/python /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher 33757 -- /home/ipl-pc/TiG-BEV/tools/test.py configs/tig_bev/tig_bev-r50-CBGS.py /home/ipl-pc/TiG-BEV/checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox 
+ 1207  ssssssssssssssssssssssswwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee4444444444444444444444444444444444444444444444444444444
+ 1208  clear
+ 1209  conda activate cmkd
+ 1210  nvtop
+ 1211  tmux 
+ 1212  tmux at -t 0
+ 1213  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1214  cibda activate cmkd
+ 1215  conda activate cmkd
+ 1216  python
+ 1217  conda activate CMKD-MV
+ 1218  conda env list
+ 1219  conda activate cmkd-mv
+ 1220  conda activatge cmkd-mv
+ 1221  conda activate cmkd-mv
+ 1222  ls
+ 1223  cd CMKD-MV/
+ 1224  cd tools/
+ 1225  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1226  conda activate cmkd
+ 1227  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1228  conda env list
+ 1229  conda activate cmkd-nu
+ 1230  conda activate cmkdnu
+ 1231  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1232  conda env list
+ 1233  conda activate cmkd-mv
+ 1234  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1235  conda list mmcv
+ 1236  conda activate 
+ 1237  conda create cmkd-nu
+ 1238  conda create -n cmkd-nu python=3.7 -y
+ 1239  conda activate cmkd-nu
+ 1240  pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1241  pip install mmcv-full==1.3.13
+ 1242  pip install mmdet==2.14.0
+ 1243  pip install mmsegmentation==0.14.1
+ 1244  pip install -v -e .
+ 1245  cd .
+ 1246  cd ..
+ 1247  pip install -v -e .
+ 1248  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1249  cd tools/
+ 1250  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1251  pip install yapf==0.40.1
+ 1252  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1253  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1254  pip install setuptools==59.5.0
+ 1255  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1256  pwd
+ 1257  cd ..
+ 1258  conda list mmcv
+ 1259  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1260  conda activate cmkd-mv
+ 1261  conda activate CMKD-MV
+ 1262  cd CMKD-MV
+ 1263  cd tools/
+ 1264  conda activate cmkd-mv
+ 1265  git status
+ 1266  conda list
+ 1267  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1268  conda activate tig
+ 1269  python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
+ 1270  python tools/create_data.py nuscenes --root-path /mnt/disk1/data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes/
+ 1271  python tools/create_data.py nuscenes --root-path /mnt/disk1/data/nuscenes --out-dir /mnt/disk1/data/nuscenes --extra-tag nuscenes/
+ 1272  python tools/create_data.py nuscenes --root-path /mnt/disk1/data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes/
+ 1273  python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
+ 1274  python tools/create_data.py nuscenes --root-path ./mnt/disk1/data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
+ 1275  python tools/create_data.py nuscenes --root-path ./mnt/disk1/data/nuscenes --out-dir /mnt/disk1/data/nuscenes --extra-tag nuscenes
+ 1276  bash ./tools/dist_test.sh configs/pointpillars/hv_pointpillars_fpn_sbn-all_4x8_2x_nus-3d.py checkpoints/hv_pointpillars_fpn_sbn-all_4x8_2x_nus-3d_20200620_230405-2fa62f3d.pth 8 --eval bbox
+ 1277  bash ./tools/dist_test.sh configs/tig_bev/tig_bev4d-r101-CBGS.py  checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox
+ 1278  python tools/test.py configs/tig_bev/tig_bev4d-r101-CBGS.py  checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox
+ 1279  python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
+ 1280  python tools/create_data.py nuscenes --root-path ./mnt/disk1/data/nuscenes --out-dir /mnt/disk1/data/nuscenes --extra-tag nuscenes
+ 1281  CUDA_VISIBLE_DEVICES=1 python tools/test.py configs/tig_bev/tig_bev4d-r101-CBGS.py /home/ipl-pc/TiG-BEV/checkpoints/TiG-BEV4D-R101-CBGS.pth  --eval bbox
+ 1282  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1283  conda activate
+ 1284  conda activate cmkd
+ 1285  python
+ 1286  tmux at -t 0
+ 1287  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1288  nvidia-smi
+ 1289  nvcc -V
+ 1290  condaa activate cmkd-mv
+ 1291  conda activate cmkd-mv
+ 1292  conda list cuda
+ 1293  pip install -v -e .
+ 1294  cd ..
+ 1295  pip install -v -e .
+ 1296  conda activate cmkd-mv
+ 1297  pip install -v -e .
+ 1298  cd ..
+ 1299  pip install -v -e .
+ 1300  pip install mmcv-full==1.3.13
+ 1301  pip install mmdet==2.14.0
+ 1302  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1303  conda activate 
+ 1304  conda env list
+ 1305  conda activate cmkd-nu
+ 1306  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1307  conda activate 
+ 1308  conda create -n nu python=3.7 -y
+ 1309  conda activate nu
+ 1310  pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+ 1311  pip install mmcv-full==1.3.13
+ 1312  pip install mmdet==2.14.0
+ 1313  pip install mmsegmentation==0.14.1
+ 1314  pip install -v -e .
+ 1315  cd ..
+ 1316  pip install -v -e .
+ 1317  pip3 install -v -e .
+ 1318  pip install pygame==
+ 1319  pip install pygame==2.1.3.dev8
+ 1320  pip install -v -e .
+ 1321  sudo pip install -e .
+ 1322  sudo pip3 install -e .
+ 1323  python3 --version
+ 1324  pip3 install --upgrade pip
+ 1325  pip install --upgrade pip
+ 1326  pip3 install mmcv-full==1.3.13
+ 1327  sudo pip3 install -e .
+ 1328  pip3 install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+ 1329  python
+ 1330  pip install -e .
+ 1331  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1332  cd tools/
+ 1333  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1334  conda active 
+ 1335  conda activate 
+ 1336  conda remove -n nu
+ 1337  conda env remove -n nu
+ 1338  conda create -n nu python=3.7 -y
+ 1339  cinda activate nu
+ 1340  conda activate nu
+ 1341  pip3 install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+ 1342  pip3 install mmcv-full==1.3.13
+ 1343  pip3 install mmdet==2.14.0
+ 1344  pip3 install mmsegmentation==0.14.1
+ 1345  pip3 install -v -e .
+ 1346  cd ..
+ 1347  pip3 install -v -e .
+ 1348  sudo pip3 install -v -e .
+ 1349  conda list torch
+ 1350  python -m pip install wheel setuptools pip --upgrade
+ 1351  sudo pip3 install -v -e .
+ 1352  ls
+ 1353  python -m pip install wheel setuptools pip --upgrade
+ 1354  python -m pip3 install wheel setuptools pip3 --upgrade
+ 1355  pip install pip~
+ 1356  pip install pip3
+ 1357  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1358  cd tools/
+ 1359  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1360  conda list mmdet
+ 1361  pip --version
+ 1362  cd ..
+ 1363  sudo pip install -e .
+ 1364  pip install -e .
+ 1365  pip install pygame --pre
+ 1366  sudo pip install -e .
+ 1367  pip install -e .
+ 1368  pip install pygame --pre
+ 1369  pip install setuptools==50.3.2
+ 1370  pip install pygame 
+ 1371  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1372  pip install -e .
+ 1373  cd ..
+ 1374  conda activate 
+ 1375  conda env remove nu
+ 1376  conda env remove -n nu
+ 1377  conda create -n nu -y
+ 1378  conda actinate nu
+ 1379  conda activate nu
+ 1380  cd CMKD-MV/
+ 1381  conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
+ 1382  pip install torch==1.12.0+cu113 torchvision==0.13.0+cu113 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu113
+ 1383  pip install mmcv-full==1.3.13
+ 1384  conda activate
+ 1385  conda env remove nu
+ 1386  conda env remove -n nu
+ 1387  conda create -n cmkd python=3.6.9 -y
+ 1388  conda create -n cmkd python=3.6 -y
+ 1389  conda activate nu
+ 1390  conda env list
+ 1391  conda activate cmkd
+ 1392  conda list
+ 1393  conda activate 
+ 1394  conda env remove -n cmkd
+ 1395  conda list
+ 1396  conda env list
+ 1397  conda acreate cmkd --clone cmkd-1-template
+ 1398  conda create cmkd --clone cmkd-1-template
+ 1399  conda create -n cmkd --clone cmkd-1-template
+ 1400  conda activate tig
+ 1401  cd tools/
+ 1402  python train.py configs/tig_bev/tig_bev-r50.py
+ 1403  python train.py ../configs/tig_bev/tig_bev-r50.py
+ 1404  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r50.py 
+ 1405  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r50.py --out ../work_dirs/
+ 1406  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r50.py 
+ 1407  nvtop
+ 1408  kill -9 32652
+ 1409  conda activate tig
+ 1410  python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1411  sudo python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1412  python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1413  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r101-CB
+ 1414  cd tools/
+ 1415  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1416  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1417  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1418  CUDA_VISIBLE_DEVICES=1 python test.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py ../checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox
+ 1419  python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1420  cd ..
+ 1421  python tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1422  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1423  cd tools/
+ 1424  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1425  bash cat.sh 
+ 1426  conda activate tig
+ 1427  cd tools/
+ 1428  python test.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py /home/ipl-pc/TiG-BEV/checkpoints/TiG-BEV4D-R101-CBGS.pth
+ 1429  python test.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py /home/ipl-pc/TiG-BEV/checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox 
+ 1430  tensorboard --logdir ../output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2/
+ 1431  tensorboard --logdir ../work_dirs/tig_bev-r50
+ 1432  tensorboard --logdir ../work_dirs/tig_bev-r50/tf_logs/
+ 1433  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r50.py 
+ 1434  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r50.py --work
+ 1435  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev-r50.py 
+ 1436  CUDA_VISIBLE_DEVICES=1 python test.py ../configs/tig_bev/tig_bev-r50.py /home/ipl-pc/TiG-BEV/tools/work_dirs/tig_bev-r50/epoch_4.pth --eval bbox
+ 1437  conda activate cmkd-nu
+ 1438  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1439  conda activate cmkdnu
+ 1440  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1441  conda env remove cmkd-nu
+ 1442  conda env remove -n cmkd-nu
+ 1443  pip install -v -e .
+ 1444  cd ..
+ 1445  pip install -v -e .
+ 1446  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1447  cd tools/
+ 1448  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1449  conda list mmcv
+ 1450  pip install mmcv==1.3.1~
+ 1451  pip install mmcv==1.3.13
+ 1452  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1453  pip install torch==1.12.0+cu102 torchvision==0.13.0+cu102 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu102
+ 1454  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1455  pip install -v -e .
+ 1456  cd ..
+ 1457  pip install -v -e .
+ 1458  pip install torch==1.9.1+cu102 torchvision==0.10.1+cu102 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1459  pip install -v -e .
+ 1460  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1461  cd tools/
+ 1462  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1463  python 
+ 1464  coda list torch
+ 1465  conda list torch
+ 1466  conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge
+ 1467  pip install -v -e .
+ 1468  cd ..
+ 1469  pip install -v -e .
+ 1470  pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+ 1471  pip install -v -e .
+ 1472  conda activate tog
+ 1473  conda activate tig
+ 1474  python train.py ../configs/cmkd/cmkd-bevdet-r50-10sweep.py 
+ 1475  cd 
+ 1476  cd /mnt/disk1/data/nuscenes/
+ 1477  conda env 
+ 1478  conda activate cmkd-mv
+ 1479  ls
+ 1480  cd CMKD-MV/
+ 1481  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1482  conda activate cmkd
+ 1483  tmux at -t 0
+ 1484  cd output/
+ 1485  ls
+ 1486  cd vis_result_0/
+ 1487  rm -r *.png
+ 1488  cd ..
+ 1489  cd vis_result_0/
+ 1490  rm -r *.png
+ 1491  tmux at -t 0
+ 1492  tnvtop
+ 1493  nvtop
+ 1494  /home/ipl-pc/anaconda3/envs/tig/bin/python /home/ipl-pc/TiG-BEV/tools/data_converter/prepare_nuscenes_for_bevdet4d.py
+ 1495  mkdir data
+ 1496  ln -s /mnt/disk1/data/nuscenes/ ./data/
+ 1497  sudo kill -9 2929
+ 1498  sudo kill -9 2027
+ 1499  nvtop
+ 1500  sudo kill -9 2727
+ 1501  ls
+ 1502  tmux 
+ 1503  python test_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_LTKD.yaml --ckpt ../outp 
+ 1504  cd tools/
+ 1505  python test_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_29.pth 
+ 1506  python test.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_29.pth 
+ 1507  python test_LTKD.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_29.pth 
+ 1508  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_29.pth 
+ 1509  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../checkpoints/cmkd-scd-2161.pth 
+ 1510  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../checkpoints/cmkd-scd-2161.pth 
+ 1511  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --prtrained_teacher_model ../checkpoints/scd-teacher-kitti.pth --pretrained_image_model ../checkpoints/cmkd-scd-2161.pth 
+ 1512  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --prtrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+ 1513  python train_LTKD.py --cfg_file cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --prtrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+ 1514  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1515  clear
+ 1516  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../checkpoints/cmkd-scd-2161.pth 
+ 1517  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_29.pth 
+ 1518  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1519  clear
+ 1520  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1521  CUDA_VISIBLE_DEVICES=0 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1522  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1523  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_10.pth 
+ 1524  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_1.pth 
+ 1525  CUDA_VISIBLE_DEVICES=0 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1526  clear
+ 1527  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD/default/ckpt/checkpoint_epoch_1.pth 
+ 1528  CUDA_VISIBLE_DEVICES=0 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1529  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD/default/ckpt/checkpoint_epoch_40.pth
+ 1530  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD_8015_twcc/TRKD_8015_l/checkpoint_epoch_10.pth
+ 1531  CUDA_VISIBLE_DEVICES=0 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1532  clear
+ 1533  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model  ../checkpoints/cmkd-scd-2161.pth 
+ 1534  python differ_img.py 
+ 1535  clear
+ 1536  python differ_img.py 
+ 1537  python process_img.py 
+ 1538  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1539  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+ 1540  CUDA_VISIBLE_DEVICES=1 python train.py --cfg configs/tig_bev/tig_bev4d-r101-CBGS.py _second_multihead.yaml
+ 1541  cd tools/
+ 1542  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _--resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1543  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _--resume_from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1544  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _--resume ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1545  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _--resume_from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1546  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _--resume ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1547  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _
+ 1548  CUDA_VISIBLE_DEVICES=1 python train.py --cfg ../configs/tig_bev/tig_bev4d-r101-CBGS.py _--resume ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1549  CUDA_VISIBLE_DEVICES=1 python train.py --cfg ../configs/tig_bev/tig_bev4d-r101-CBGS.py _
+ 1550  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py _
+ 1551  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py 
+ 1552  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1553  sh cat.sh 
+ 1554  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1555  sh cat.sh 
+ 1556  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1557  sh dist_train.sh ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1558  sh dist_train.sh ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 
+ 1559  sh dist_train.sh 8 --cfg_file ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 
+ 1560  sh dist_train.sh 2 --cfg_file ../configs/tig_bev/tig_bev4d-r101-CBGS.py 
+ 1561  sh dist_train.sh 2 ../configs/tig_bev/tig_bev4d-r101-CBGS.py 
+ 1562  CUDA_VISIBLE_DEVICES=0,1 ./ dist_train.sh 2 ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2
+ 1563  CUDA_VISIBLE_DEVICES=0,1 ./dist_train.sh 2 ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2
+ 1564  sudo CUDA_VISIBLE_DEVICES=0,1 ./dist_train.sh 2 ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2
+ 1565  sudo CUDA_VISIBLE_DEVICES=0,1 sh dist_train.sh 2 ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2
+ 1566  chmod 777 ./tools/dist_train.sh
+ 1567  chmod 777 dist_train.sh
+ 1568  sh dist_train.sh ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 
+ 1569  bash dist_train.sh ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 
+ 1570  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1571  bash dist_train.sh ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 
+ 1572  CUDA_VISIBLE_DEVICES=0,1 bash dist_train.sh ../configs/tig_bev/tig_bev4d-r101-CBGS.py 2 
+ 1573  sh cat.sh 
+ 1574  CUDA_VISIBLE_DEVICES=1 python train.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py --resume-from ../checkpoints/TiG-BEV4D-R101-CBGS.pth 
+ 1575  CUDA_VISIBLE_DEVICES=1 python test.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py ../checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox
+ 1576  conda ennv list 
+ 1577  conda env list 
+ 1578  pip freeze > ~/Desktop/requirement.txt
+ 1579  code ~/Desktop/requirement.txt 
+ 1580  CUDA_VISIBLE_DEVICES=1 python test.py ../configs/tig_bev/tig_bev4d-r101-CBGS.py ../checkpoints/TiG-BEV4D-R101-CBGS.pth --eval bbox
+ 1581  clear
+ 1582  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.2.0/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.2.0/pythonFiles/deactivate/bash/envVars.txt
+ 1583  python tools/process_img.py 
+ 1584  python tools/differ_img.py 
+ 1585  /home/ipl-pc/anaconda3/envs/cmkd/bin/python
+ 1586  conda activate cmkd
+ 1587  cd cmkd/
+ 1588  cd /mnt
+ 1589  ls
+ 1590  cd disk2
+ 1591  ls
+ 1592  cd christine/
+ 1593  ls
+ 1594  cd monoTAKD/
+ 1595  ls
+ 1596  cd monotlkd/
+ 1597  ls
+ 1598  cd ..
+ 1599  ls
+ 1600  cd ..
+ 1601  ls
+ 1602  python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+ 1603  cd tools/
+ 1604  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+ 1605  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth  
+ 1606  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+ 1607  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth 
+ 1608  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD/default/ckpt/checkpoint_epoch_37.pth
+ 1609  CUDA_VISIBLE_DEVICES=1 python train_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth 
+ 1610  tensorboard --logdir ../output/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2/
+ 1611  tensorboard --logdir /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD_copy
+ 1612  tensorboard --logdir /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD
+ 1613  tensorboard --logdir /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_TRKD
+ 1614  tensorboard --logdir /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_V2_TRKD
+ 1615  tensorboard --logdir /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD
+ 1616  tumx 
+ 1617  tmux 
+ 1618  cd tools/
+ 1619  python test_LTKD.py --cfg cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2_LTKD.yaml --ckpt ../checkpoints/cmkd-scd-2161.pth
+ 1620  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../checkpoints/cmkd-scd-2161.pth 
+ 1621  cd 
+ 1622  cd /
+ 1623  ls
+ 1624  cd mnt/
+ 1625  cd disk1/
+ 1626  ls
+ 1627  cd data/
+ 1628  ls
+ 1629  cd ../..
+ 1630  cd 
+ 1631  cd cmkd/output/vis_result
+ 1632  rm *.png
+ 1633  cd ..
+ 1634  cd vis_result0
+ 1635  rm *.png
+ 1636  cd vis_result0
+ 1637  cd vis_result
+ 1638  cd vis_result_0
+ 1639  cd ..
+ 1640  cd vis_result_0/
+ 1641  rm *.png
+ 1642  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.2.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.2.1/pythonFiles/deactivate/bash/envVars.txt
+ 1643  ls
+ 1644  cd pcdet
+ 1645  ls
+ 1646  cd models/
+ 1647  cd backbones_2d/
+ 1648  ls
+ 1649  cd map_to_bev/
+ 1650  ls
+ 1651  cd 
+ 1652  cd cmkd/
+ 1653  ls
+ 1654  cd tools/
+ 1655  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_student_model ../checkpoints/cmkd-scd-2161.pth
+ 1656  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1657  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth
+ 1658  git remote
+ 1659  git remote -V
+ 1660  git remote -v
+ 1661  cd ..
+ 1662  git init -b main
+ 1663  cd ..
+ 1664  cd cmkd
+ 1665  cd MonoTAKD/
+ 1666  git init
+ 1667  cd tools/
+ 1668  ls
+ 1669  git reset --hard HEAD
+ 1670  ls
+ 1671  tumx ls
+ 1672  tmux ls
+ 1673  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD_8015_twcc/TRKD_8015/checkpoint_epoch_10.pth
+ 1674  cd tools/
+ 1675  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD_8015_twcc/TRKD_8015/checkpoint_epoch_10.pth
+ 1676  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt ../checkpoints/cmkd-scd-2161.pth 
+ 1677  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt /home/ipl-pc/cmkd/output/kitti_models/LTKD/LTKD-scd/cmkd_kitti_R50_scd_V2_TRKD_8015_twcc/TRKD_8015/checkpoint_epoch_10.pth
+ 1678  python test_LTKD.py --cfg cfgs/kitti_models/LTKD/LTKD-scd/kitti_R50_scd_LTKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth
+ 1679  git status
+ 1680  git add .
+ 1681  git status
+ 1682  git add --all
+ 1683  git status
+ 1684  git commit -m "update0317"
+ 1685  git push origin monotakd
+ 1686  cd ..
+ 1687  pwd
+ 1688  cd ..
+ 1689  ls
+ 1690  cd MonoTAKD/
+ 1691  pwd
+ 1692  cp -r /home/ipl-pc/VIS-KITTI ./VIS-KITTI
+ 1693  ls
+ 1694  cd ..
+ 1695  ls
+ 1696  cd VIS-KITTI/
+ 1697  ls
+ 1698  git status
+ 1699  git add -u
+ 1700  git commit -m "modify README"
+ 1701  git push origin main
+ 1702  ls
+ 1703  cd demo
+ 1704  ks
+ 1705  cd ..
+ 1706  ls
+ 1707  cd ..
+ 1708  cd Mo
+ 1709  cd ipl-pc
+ 1710  ls
+ 1711  cd MonoTAKD/
+ 1712  ls
+ 1713  cd VIS-KITTI/d
+ 1714  cd VIS-KITTI/demo/
+ 1715  ls
+ 1716  pwd
+ 1717  cp /mnt/disk2/christine/viz_kitti/seq2/cam_bev_demo.mp4 .
+ 1718  ls
+ 1719  cd ..
+ 1720  cd v..
+ 1721  cd ..
+ 1722  ls
+ 1723  cd VIS-KITTI/
+ 1724  ls
+ 1725  git status
+ 1726  git add --all
+ 1727  git commit -m "adding video"
+ 1728  git push origin main
+ 1729  git pull origin main
+ 1730  git status
+ 1731  git add -u
+ 1732  git commit -m "display video"
+ 1733  git push origin main
+ 1734  cd ..
+ 1735  ls
+ 1736  cd MonoTAKD/
+ 1737  ls
+ 1738  cd ..
+ 1739  ls
+ 1740  cd VIS-KITTI/
+ 1741  ls
+ 1742  cd demo
+ 1743  ls
+ 1744  cp /mnt/disk2/christine/viz_kitti/seq2/*.gif
+ 1745  cp /mnt/disk2/christine/viz_kitti/seq2/*.gif .
+ 1746  ls
+ 1747  cd ..
+ 1748  git status
+ 1749  git add --all
+ 1750  git commit -m "changing to gif"
+ 1751  git push origin main
+ 1752  git status
+ 1753  git add -u
+ 1754  git commit -m "forgot to save"
+ 1755  git push origin main
+ 1756  git add -u
+ 1757  git commit -m "forgot to save"
+ 1758  git push origin main
+ 1759  git add -u
+ 1760  git commit -m "gif size to 70%"
+ 1761  git push origin main
+ 1762  cp /mnt/disk2/christine/viz_kitti/seq2/3d-better.gif .
+ 1763  ls
+ 1764  mv 3d-better.gif ./demo/
+ 1765  ls
+ 1766  git status
+ 1767  git add -u
+ 1768  git commit -m "adding better 3d gif for spotting problem"
+ 1769  git push origin mian
+ 1770  git push origin main
+ 1771  git add --all
+ 1772  git commit -m "adding better 3d gif for spotting problem"
+ 1773  git push origin main
+ 1774  git add -u
+ 1775  git commit -m "adding better 3d gif for spotting problem"
+ 1776  git push origin main
+ 1777  ls
+ 1778  cd demo
+ 1779  ls
+ 1780  rm *.gif
+ 1781  ls
+ 1782  cp /mnt/disk2/christine/viz_kitti/seq2/*.gif .
+ 1783  git add --all
+ 1784  git commit -m "fix all gif"
+ 1785  git push origin main
+ 1786  cp /mnt/disk2/christine/viz_kitti/seq2/*.gif .
+ 1787  git add --all
+ 1788  git commit -m "fix all gif"
+ 1789  git push origin main
+ 1790  cd ..
+ 1791  ls
+ 1792  cd MonoTAKD/
+ 1793  ls
+ 1794  cd VIS-KITTI/
+ 1795  ls
+ 1796  cd demo
+ 1797  ls
+ 1798  cp /mnt/disk2/christine/viz_kitti/seq2/*.gif .
+ 1799  cp /mnt/disk2/christine/viz_kitti/seq2/*.mp4 .
+ 1800  ls
+ 1801  rm 2011*.mp4
+ 1802  ls
+ 1803  rm *.gif
+ 1804  cp /mnt/disk2/christine/viz_kitti/seq2/*.gif .
+ 1805  cd ..
+ 1806  ls
+ 1807  git status
+ 1808  git add --all
+ 1809  git status
+ 1810  git add -u
+ 1811  git status
+ 1812  git add --all
+ 1813  git submodule add  VIS-KITTI
+ 1814  git status
+ 1815  git submodule add git@github.com:christinewoo/VIS-KITTI.git VIS-KITTI
+ 1816  cd VIS-KITTI/
+ 1817  git status
+ 1818  git add --all
+ 1819  git status
+ 1820  git rm --cached VIS-KITTI
+ 1821  cd ..
+ 1822  git rm --cached VIS-KITTI
+ 1823  git -f rm --cached VIS-KITTI
+ 1824  git rm -f --cached VIS-KITTI
+ 1825  cd VIS-KITTI/
+ 1826  ls
+ 1827  rm -fr .git
+ 1828  ls
+ 1829  cd ..
+ 1830  git status
+ 1831  git add -u
+ 1832  git add --all
+ 1833  git status
+ 1834  git commit -m "adding vis-kitti"
+ 1835  git push origin main
+ 1836  git status
+ 1837  git add --all
+ 1838  git commit -m "save progress"
+ 1839  git push origin main
+ 1840  conda activate cmkd
+ 1841  git status
+ 1842  git reflog
+ 1843  rm -rf ,git
+ 1844  git reflog
+ 1845  git status
+ 1846  rm -rf .git
+ 1847  git status
+ 1848  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1849  cd MonoTAKD/
+ 1850  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1851  cd tools/
+ 1852  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1853  conda activate cmkd
+ 1854  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1855  conda activate cmkd
+ 1856  conda activate 
+ 1857  conda activate python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1858  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1859  conda env list
+ 1860  conda list
+ 1861  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1862  conda activate cmkd-1-template
+ 1863  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1864  conda activate cmkd
+ 1865  python tools/train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1866  cd ..
+ 1867  python tools/train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1868  git status
+ 1869  git add .
+ 1870  git status
+ 1871  git commit -m "update"
+ 1872  git remote -v
+ 1873  git add .
+ 1874  git status
+ 1875  git commit -m "update"
+ 1876  git remote set-url
+ 1877  git remote set-url origin https://github.com/hoiliu-0801/MonoTAKD.git
+ 1878  git remote -v
+ 1879  git push origin main
+ 1880  git fetch
+ 1881  git push origin main
+ 1882  git push --H
+ 1883  git push -f -u origin main
+ 1884  git init
+ 1885  git status
+ 1886  git init
+ 1887  git remote -v
+ 1888  git pull origin main
+ 1889  git push origin main
+ 1890  git -f push origin main
+ 1891  git push -f origin main
+ 1892  conda activate cmkd
+ 1893  cd tools/
+ 1894  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1895  conda activate cmkd/
+ 1896  cd cmkd/tools/
+ 1897  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1898  CUDA_VISBLE_DEVICES=1 python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1899  clear
+ 1900  CUDA_VISBLE_DEVICES=0 python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1901  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.2.1/pythonFiles/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.2.1/pythonFiles/deactivate/bash/envVars.txt
+ 1902  cd cmkd/tools/
+ 1903  python tools/train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1904  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1905  conda activate cmkd
+ 1906  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1907  git status
+ 1908  pwd
+ 1909  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1910  git remote -v
+ 1911  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1912  git status
+ 1913  git add .
+ 1914  git commit -m "update0318"
+ 1915  git add -all
+ 1916  git add --all
+ 1917  git commit -m "update0318"
+ 1918  git push origin main
+ 1919  python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+ 1920  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth
+ 1921  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/checkpoints/twcc_8015_checkpoint_epoch_10.pth
+ 1922  ls
+ 1923  cd MonoTAKD/
+ 1924  ls
+ 1925  git status
+ 1926  git push origin main
+ 1927  ls
+ 1928  conda env list
+ 1929  ls
+ 1930  cd pc
+ 1931  cd pcdet
+ 1932  ls
+ 1933  git clone https://github.com/jihanyang/pytorch-OpCounter.git
+ 1934  ls
+ 1935  cd pytorch-OpCounter/
+ 1936  pip install .
+ 1937  cp extra_files/conv.py ${CONDA_PATH}/envs/${ENV_NAME}/lib/${PYTHON_VERSION}/site-packages/spconv/pytorch/
+ 1938  which python
+ 1939  echo $CONDA_PATH
+ 1940  ls /home/ipl-pc/anaconda3/envs/cmkd/bin/python
+ 1941  ls
+ 1942  ls /home/ipl-pc/anaconda3/envs/cmkd/lib
+ 1943  ls /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/
+ 1944  pwd
+ 1945  cd /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/
+ 1946  ls
+ 1947  pwd
+ 1948  cd /site-packages/spconv/pytorch/
+ 1949  cd site-packages/spconv/pytorch/
+ 1950  pwd
+ 1951  ls
+ 1952  pwd
+ 1953  cd ~
+ 1954  ls
+ 1955  cd cmkd
+ 1956  ls
+ 1957  cd pcdet
+ 1958  ls
+ 1959  cd pytorch-OpCounter/
+ 1960  cp extra_files/conv.py /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/site-packages/spconv/pytorch/
+ 1961  ls
+ 1962  cd ..
+ 1963  ls
+ 1964  cd ..
+ 1965  ls
+ 1966  cd tools
+ 1967  cp extra_files/conv.py /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/site-packages/spconv/pytorch/
+ 1968  ls
+ 1969  cd ..
+ 1970  ls
+ 1971  cd pcdet
+ 1972  ls
+ 1973  cp /home/ipl-pc/cmkd/pcdet/pytorch-OpCounter/conv.py /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/site-packages/spconv/pytorch/
+ 1974  tmux ls
+ 1975  history
+ 1976  python test_cmkd.py --cfg cfgs/kitti_models/CMKD/CMKD-pp/cmkd_kitti_R50_pp_V2_TRKD.yaml --ckpt ../checkpoints/cmkd-kitti-pp-2147.pth 
+ 1977  cd ..
+ 1978  ls
+ 1979  cd tools
+ 1980  lks
+ 1981  ls
+ 1982  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth --batch_size 1 --ckpt ${CKPT_PATH} --infer_time --cal_params python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth --batch_size 1  --infer_time --cal_params \
+ 1983  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth --batch_size 1  --infer_time --cal_params
+ 1984  ls /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/site-packages/spconv/pytorch/
+ 1985  cp /home/ipl-pc/cmkd/pcdet/pytorch-OpCounter/conv.py /home/ipl-pc/anaconda3/envs/cmkd/lib/python3.9/site-packages/spconv/pytorch/
+ 1986  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth --batch_size 1  --infer_time --cal_params
+ 1987  ls /mnt/disk2/christine/monoTAKD/twcc_8015_checkpoint_epoch_10.pth
+ 1988  ls /mnt/disk2/christine/monoTAKD/
+ 1989  ls /mnt/disk2/christine/monoTAKD/checkpoints/
+ 1990  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/checkpoints/twcc_8015_checkpoint_epoch_10.pth --batch_size 1  --infer_time --cal_params
+ 1991  pip install prettytable
+ 1992  python
+ 1993  pip install thop
+ 1994  python
+ 1995  pip install onnx
+ 1996  python
+ 1997  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/checkpoints/twcc_8015_checkpoint_epoch_10.pth --batch_size 1  --infer_time --cal_params
+ 1998  python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R101_scd_TAKD.yaml --ckpt /mnt/disk2/christine/monoTAKD/checkpoints/twcc_8015_checkpoint_epoch_10.pth --batch_size 1  --infer_time --cal_params
+ 1999  /usr/bin/python3 /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.6.0/python_files/printEnvVariablesToFile.py /home/ipl-pc/.vscode-server/extensions/ms-python.python-2024.6.0/python_files/deactivate/bash/envVars.txt
+ 2000  history
+ 2001  history > history_commands.txt

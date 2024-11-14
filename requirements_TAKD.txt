@@ -76,7 +76,7 @@ ninja==1.11.1
 numba==0.56.4
 numpy==1.23.0
 oauthlib==3.2.2
-olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
+# olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
 open3d==0.17.0
 opencv-python==4.8.0.76
 opt-einsum==3.3.0
@@ -85,7 +85,7 @@ packaging==23.1
 pandas==2.1.1
 parso==0.8.3
 pccm==0.4.8
--e git+https://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@github.com/DNTR-ICCV2023/CMKD@a208f6bd7e44ed18b1eab2dfc083b75c76880810#egg=pcdet
+# -e git+https://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@github.com/DNTR-ICCV2023/CMKD@a208f6bd7e44ed18b1eab2dfc083b75c76880810#egg=pcdet
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==10.0.0
@@ -93,7 +93,7 @@ platformdirs==3.10.0
 plotly==5.17.0
 portalocker==2.7.0
 prompt-toolkit==3.0.39
-protobuf==3.20.3
+# protobuf==3.20.3
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pyasn1==0.5.0
@@ -123,11 +123,13 @@ six==1.15.0
 spconv-cu114==2.3.6
 stack-data==0.6.3
 tenacity==8.2.3
-tensorboard==2.11.2
-tensorboard-data-server==0.6.1
-tensorboard-plugin-wit==1.8.1
-tensorboardX==2.6.1
+tensorboard
+tensorboard-data-server
+tensorboard-plugin-wit
+tensorboardX
 tensorflow==2.5.0
+
+
 tensorflow-estimator==2.5.0
 termcolor==1.1.0
 threadpoolctl==3.2.0
@@ -140,7 +142,7 @@ tqdm==4.65.0
 traitlets==5.11.2
 traits==6.4.3
 traitsui==8.0.0
-typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1688315532570/work
+# typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1688315532570/work
 tzdata==2023.3
 urllib3==1.26.16
 vtk==9.2.6

@@ -248,6 +248,40 @@ def sa_create(name, var):
     x.flags.writeable = False
     return x
 
+## FLOPS ##
+
+def calculate_trainable_params(model):
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    return trainable_params
+
+
+def calculate_trainable_params_for_submodules(model):
+    from prettytable import PrettyTable
+    table = PrettyTable(["Modules", "Parameters"])
+    param_list = []
+    for cur_module in model.module_list:
+        module_name = str(type(cur_module)).split('.')[-1][:-2]
+        n_params = calculate_trainable_params(cur_module)
+        table.add_row([module_name, n_params])
+        param_list.append(n_params)
+    print(table)
+    print(f"Total Trainable Params: {sum(param_list)}")
+    return param_list
+
+from .spconv_utils import spconv
+try:
+    from thop import profile, clever_format, profile_acts
+except:
+    pass
+    # you cannot use cal_param without profile
+    
+def cal_flops(model, batch_dict):
+    macs, params, acts = profile_acts(model, inputs=(batch_dict,),
+                           custom_ops={spconv.SubMConv3d: spconv.SubMConv3d.count_your_model,
+                                       spconv.SparseConv3d: spconv.SparseConv3d.count_your_model}
+                           )
+    return macs, params, acts
+
 
 class AverageMeter(object):
     """Computes and stores the average and current value"""
@@ -265,3 +299,28 @@ class AverageMeter(object):
         self.sum += val * n
         self.count += n
         self.avg = self.sum / self.count
+
+    def __repr__(self):
+        result = f"average value: {self.avg:.3f}"
+        return result
+    
+class DictAverageMeter(object):
+    """
+    Contain AverageMeter as dict and update respectively or simultaneously
+    """
+    def __init__(self):
+        self.meters = {}
+
+    def update(self, key, val, n=1):
+        if key not in self.meters:
+            self.meters[key] = AverageMeter()
+        self.meters[key].update(val, n)
+
+    def __repr__(self):
+        result = ""
+        sum = 0
+        for key in self.meters.keys():
+            result += f'{key}: {self.meters[key].avg:.2f}\n'
+            sum += self.meters[key].avg
+        result += f'Total: {sum:.2f}\n'
+        return result

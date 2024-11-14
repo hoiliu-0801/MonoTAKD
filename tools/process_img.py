@@ -7,8 +7,8 @@
 import cv2
 import numpy as np
 
-img = cv2.imread('/home/ipl-pc/cmkd/output/LiDAR_img.png')
-ret, mask = cv2.threshold(img[:, :,2], 200, 255, cv2.THRESH_BINARY)
+img = cv2.imread('/home/ipl-pc/cmkd/output/vis_result/000113_bev_img.png')
+ret, mask = cv2.threshold(img[:, :,2], 120, 255, cv2.THRESH_BINARY)
 
 mask3 = np.zeros_like(img)
 mask3[:, :, 0] = mask
@@ -27,7 +27,7 @@ gray = cv2.bitwise_and(img, 255 - mask3)
 # orange masked output
 out = gray + orange
 
-cv2.imwrite('/home/ipl-pc/cmkd/output/diff_feat.png', orange)
+cv2.imwrite('/home/ipl-pc/cmkd/output/diff_feat_113.png', orange)
 # cv2.imwrite('gray.png', gray)
 # cv2.imwrite("output.png", out)
 

@@ -8,12 +8,6 @@ import tqdm
 from pcdet.models import load_data_to_gpu
 from pcdet.utils import common_utils
 
-## FLOPS ##
-try:
-    from thop import clever_format
-except:
-    pass
-    # you cannot use cal_param without profile
 
 def statistics_info(cfg, ret_dict, metric, disp_dict):
     for cur_thresh in cfg.MODEL_IMG.POST_PROCESSING.RECALL_THRESH_LIST:
@@ -24,7 +18,7 @@ def statistics_info(cfg, ret_dict, metric, disp_dict):
     disp_dict['recall_%s' % str(min_thresh)] = \
         '(%d, %d) / %d' % (metric['recall_roi_%s' % str(min_thresh)], metric['recall_rcnn_%s' % str(min_thresh)], metric['gt_num'])
 
-def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=False, save_to_file=False, result_dir=None, tb_log=None, format_only= False):
+def eval_one_epoch(cfg, model, dataloader, epoch_id, logger, dist_test=False, save_to_file=False, result_dir=None, tb_log=None, format_only= False):
     result_dir.mkdir(parents=True, exist_ok=True)
 
     final_output_dir = result_dir / 'final_result' / 'data'
@@ -42,15 +36,6 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
     class_names = dataset.class_names
     det_annos = []
 
-    ## FLOPS ##
-    if getattr(args, 'infer_time', False):
-        start_iter = int(len(dataloader) * 0.1)
-        infer_time_meter = common_utils.AverageMeter()
-    ## FLOPS ##
-    if getattr(args, 'cal_params', False):
-        flops_meter = common_utils.AverageMeter()
-        acts_meter = common_utils.AverageMeter()
-
     logger.info('*************** EPOCH %s EVALUATION *****************' % epoch_id)
     if dist_test:
         num_gpus = torch.cuda.device_count()
@@ -67,26 +52,9 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
     start_time = time.time()
     for i, batch_dict in enumerate(dataloader):
         load_data_to_gpu(batch_dict)
-        
-        ## FLOPS ##
-        if getattr(args, 'infer_time', False):
-            start_time = time.time()
-        
         with torch.no_grad():
             pred_dicts, ret_dict = model(batch_dict)
         disp_dict = {}
-
-        ## FLOPS ##
-        if getattr(args, 'infer_time', False) and i > start_iter:
-            inference_time = time.time() - start_time
-            infer_time_meter.update(inference_time * 1000)
-            # use ms to measure inference time
-            disp_dict['infer_time'] = f'{infer_time_meter.val:.2f}({infer_time_meter.avg:.2f})'
-
-        if getattr(args, 'cal_params', False):
-            macs, params, acts = common_utils.cal_flops(model, batch_dict)
-            flops_meter.update(macs)
-            acts_meter.update(acts)
 
         statistics_info(cfg, ret_dict, metric, disp_dict)
         annos = dataset.generate_prediction_dicts(
@@ -98,19 +66,8 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
             progress_bar.set_postfix(disp_dict)
             progress_bar.update()
 
-    ## FLOPS ##
-    if getattr(args, 'cal_params', False):
-        macs, params, acts = clever_format([flops_meter.avg, params, acts_meter.avg], "%.3f")
-        print(f'\nparams: {params}\nmacs: {macs}\nacts: {acts}\n')
-
     if cfg.LOCAL_RANK == 0:
         progress_bar.close()
-    
-    ## FLOPS ##
-    if getattr(args, 'infer_time', False):
-        print(model.module_time_meter)
-        if hasattr(model.dense_head, 'time_meter'):
-            print(model.dense_head.time_meter)
 
     if dist_test:
         rank, world_size = common_utils.get_dist_info()
@@ -166,30 +123,6 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
         ret_dict.update(result_dict)
 
     logger.info('****************Evaluation done.*****************')
-
-    # =====================================================
-    ## FLOPS ##
-    for i, batch_dict in enumerate(dataloader):
-        # Calculate number of FLOPs
-        from ptflops import get_model_complexity_info
-        import re
-        input_shape = (1, 256, 256, 3)
-        tmp_img = np.ones(input_shape)
-        batch_dict["images"] = tmp_img
-        load_data_to_gpu(batch_dict)
-        macs, params = get_model_complexity_info(model, (3, 256, 256), as_strings=True,
-                                                 print_per_layer_stat=True, verbose=True,
-                                                 custom_modules_hooks=batch_dict)
-        # Extract the numerical value
-        flops = eval(re.findall(r'([\d.]+)', macs)[0])*2
-        # Extract the unit
-        flops_unit = re.findall(r'([A-Za-z]+)', macs)[0][0]
-
-        print('Computational complexity: {:<8}'.format(macs))
-        print('Computational complexity: {} {}Flops'.format(flops, flops_unit))
-        print('Number of parameters: {:<8}'.format(params))
-    # =====================================================
-
     return ret_dict
 
 if __name__ == '__main__':

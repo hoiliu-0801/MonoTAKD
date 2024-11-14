@@ -1,5 +1,3 @@
-##### MODIFIED FOR GFLOPS !!!!! ######
-
 import argparse
 import datetime
 import glob
@@ -18,7 +16,6 @@ from pcdet.config import cfg, cfg_from_list, cfg_from_yaml_file, log_config_to_f
 from pcdet.datasets import build_dataloader
 from pcdet.models import build_network
 from pcdet.utils import common_utils
-from ptflops import get_model_complexity_info
 
 
 def parse_config():
@@ -45,9 +42,6 @@ def parse_config():
     parser.add_argument('--format_only', action='store_true', default=False, help='')
     parser.add_argument('--debug', action='store_true', default=False, help='')
     parser.add_argument('--mem', action='store_true', default=False, help='')
-
-    parser.add_argument('--infer_time', action='store_true', default=False, help='')
-    parser.add_argument('--cal_params', action='store_true', default=False, help='')
 
     parser.add_argument('--vis_online', action='store_true', default=False, help='whether to evaluate all checkpoints')
 
@@ -98,7 +92,7 @@ def eval_single_ckpt(model, test_loader, args, eval_output_dir, logger, epoch_id
 
     # start evaluation
     eval_utils_cmkd.eval_one_epoch(
-        cfg, args, model, test_loader, epoch_id, logger, dist_test=dist_test,
+        cfg, model, test_loader, epoch_id, logger, dist_test=dist_test,
         result_dir=eval_output_dir, save_to_file=args.save_to_file, tb_log=tb_log, format_only = args.format_only
     )
 
@@ -176,7 +170,7 @@ def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir
         # start evaluation
         cur_result_dir = eval_output_dir / ('epoch_%s' % cur_epoch_id) / cfg.DATA_CONFIG.DATA_SPLIT['test']
         tb_dict = eval_utils_cmkd.eval_one_epoch(
-            cfg, args, model, test_loader, cur_epoch_id, logger, dist_test=dist_test,
+            cfg, model, test_loader, cur_epoch_id, logger, dist_test=dist_test,
             result_dir=cur_result_dir, save_to_file=args.save_to_file, format_only = args.format_only    #, tb_log = tb_log
         )
 
@@ -192,10 +186,6 @@ def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir
 
 def main():
     args, cfg = parse_config()
-    
-    if args.infer_time:
-        os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-    
     if args.launcher == 'none':
         dist_test = False
         total_gpus = 1
@@ -251,10 +241,6 @@ def main():
     )
 
     model = build_network(model_cfg=cfg.MODEL_IMG, num_class=len(cfg.CLASS_NAMES), dataset=test_set)
-    # macs, params = get_model_complexity_info(model,  (3, 375, 1242))
-    # macs, params = get_model_complexity_info(model, (3, 384, 1280), as_strings=True, backend='pytorch', print_per_layer_stat=True, verbose=True)
-    # print('{:<30} S {:<8}'.format('Number of parameters: ', params)) # 80.32
-
 
     if args.mem:
         model.vfe.ffn.ddn.save_mem()
