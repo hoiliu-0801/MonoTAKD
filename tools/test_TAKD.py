@@ -252,9 +252,9 @@ def main():
 
     model = build_network(model_cfg=cfg.MODEL_IMG, num_class=len(cfg.CLASS_NAMES), dataset=test_set)
     # macs, params = get_model_complexity_info(model,  (3, 375, 1242))
-    # macs, params = get_model_complexity_info(model, (3, 384, 1280), as_strings=True, backend='pytorch', print_per_layer_stat=True, verbose=True)
+    # # macs, params = get_model_complexity_info(model, (3, 384, 1280), as_strings=True, backend='pytorch', print_per_layer_stat=True, verbose=True)
     # print('{:<30} S {:<8}'.format('Number of parameters: ', params)) # 80.32
-
+    # exit()
 
     if args.mem:
         model.vfe.ffn.ddn.save_mem()

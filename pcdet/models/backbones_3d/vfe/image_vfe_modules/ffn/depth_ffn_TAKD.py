@@ -91,6 +91,13 @@ class DepthFFN_TAKD(nn.Module):
         """
         # print("batch_dict['frame_id']:", batch_dict['frame_id'][0])
         # Pixel-wise depth classification
+        # for i,j in batch_dict.items():
+        #     print(i)
+        ### Flops
+        # batch_dict={}
+        # batch_dict["images"]=torch.tensor([1, 3, 375, 1242]).cuda()
+        ####
+
         images = batch_dict["images"] #([2, 3, 375, 1242])
         ddn_result = self.ddn(images)  # self.ddn is a pretrained backbone, which is used to generate pretrained depth feature and depth bin
         image_features = ddn_result["features"] #([2, 1024, 47, 156])

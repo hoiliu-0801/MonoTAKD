@@ -48,6 +48,7 @@ class DDNLoss(nn.Module):
             tb_dict: dict[float], All losses to log in tensorboard
         """
         # Bin depth map to create target
+        print()
         depth_target = transform_utils.bin_depths(depth_maps, **self.disc_cfg, target=True)
 
         return depth_target
