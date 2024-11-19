@@ -1,10 +1,10 @@
 ## Our code will be released soon.
 
 ## Framework Overview
-![image](/docs/framework.png)
+<!-- ![image](/docs/framework.png) -->
 
 ## BEV Features Generation
-![image](/docs/BEV%20generation.png)
+<!-- ![image](/docs/BEV%20generation.png) -->
 
 ## Use TAKD
 
