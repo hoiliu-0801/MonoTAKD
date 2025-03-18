@@ -1,9 +1,10 @@
 # Visualize KITTI Objects
-This tool is adapted from [Visualize-KITTI-Objects-In-Videos](https://github.com/HengLan/Visualize-KITTI-Objects-in-Videos). This tool is included to provide visualization of MonoTAKD. It can be used to visualize objects of KITTI in camera image, point cloud and bird's eye view.
+This tool is adapted from [Visualize-KITTI-Objects-In-Videos](https://github.com/HengLan/Visualize-KITTI-Objects-in-Videos). This tool is modified to provide visualization of MonoTAKD. It can be used to visualize objects of KITTI in camera image, point cloud and bird's eye view.
 
 ## Installation
 ```
-(base)$ mkdir VIS-KITTI
+(base)$ git clone https://github.com/christinewoo/VIS-KITTI.git
+(base)$ cd VIS-KITTI
 ```
 * Create a new conda environment (note: vtk is incompatible with Python 3.8)
 ```
@@ -63,6 +64,10 @@ optional arguments:
 ## Visualization
 ### Visualization of detected objects in CAMERA perspective
 <img src="demo/3d.gif" width = "70%">
+<img src="demo/seq329.gif" width = "70%">
 
 ### Visualization of detected objects in BEV perspective
 <img src="demo/bev.gif" width = "70%">
+
+### Visualization of detected objects CAMERA / BEV side-by-side
+<img src="demo/cam_bev_demo.gif" width = "70%">
