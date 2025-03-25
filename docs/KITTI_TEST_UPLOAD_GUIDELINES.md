@@ -1,4 +1,4 @@
-# KITTI TEST Benchmark Upload Guidelines
+# KITTI *test* Benchmark Upload Guidelines
 ## Overview
 This guide will walk you through the process of preparing and submitting your monocular 3D object detection results to the KITTI Vision Benchmark Suite.
 ## Result Format Requirements
@@ -14,8 +14,7 @@ This guide will walk you through the process of preparing and submitting your mo
 ### Detection Format
 Each prediction file must be a text file with the following format for each detection
 
-!!! THIS IS COPIED FROM [KITTI DEVKIT](https://github.com/bostondiditeam/kitti/blob/71d51b8a66c9226369797d437315c3ca2b56f312/resources/devkit_object/readme.txt#L46C1-L63C73)
-Please refer to it for most updated details.
+!!! THIS IS COPIED FROM [KITTI DEVKIT](https://github.com/bostondiditeam/kitti/blob/71d51b8a66c9226369797d437315c3ca2b56f312/resources/devkit_object/readme.txt#L46C1-L63C73) Please refer to it for most updated details. !!!
 ```
 ----------------------------------------------------------------------------
 #Values    Name      Description
@@ -42,13 +41,9 @@ Please refer to it for most updated details.
 Car -1 -1 -2.9269 341.6844 177.5155 445.1921 215.7168 1.5335 1.6417 3.8825 -9.0274 1.7343 30.1617 -3.2157 0.8246
 ```
 
-### Preparation Steps
+## Preparation Steps
 1. Generate Predictions : Run your monocular 3D detection model to inference the KITTI *test* set.
-2. Format Verification : Use the following script to verify your result format
-    ```
-    TBD
-    ```
-3. Create a ZIP Archive : The `.txt` files are stored in a directory called `results`.
+2. Create a ZIP Archive : The `.txt` files are stored in a directory called `results`.
     ```
     cd results
     zip -r ../<name-of-zip-file>.zip ./*.txt
@@ -56,7 +51,7 @@ Car -1 -1 -2.9269 341.6844 177.5155 445.1921 215.7168 1.5335 1.6417 3.8825 -9.02
     # ZIP Example
     zip -r ../results.zip ./*.txt
     ```
-    (OPTIONAL) Check the zip file by extracting, `.txt` files should populate the folder.
+3. (OPTIONAL) Check the zip file by extracting, `.txt` files should populate the folder.
     ```
     mkdir tmp
     cd tmp
@@ -75,5 +70,5 @@ Car -1 -1 -2.9269 341.6844 177.5155 445.1921 215.7168 1.5335 1.6417 3.8825 -9.02
     - Choose your ZIP file
     - Provide a method name and brief description
     - Submit your results
-4. Verification Period: Wait for the automatic verification (usually takes a few hours).
+4. Verification Period: Wait for the automatic verification (usually takes a few hours). You will be notified through email.
 5. Publication: Once verified, your results will appear on the leaderboard.
