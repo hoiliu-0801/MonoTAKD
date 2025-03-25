@@ -62,13 +62,13 @@ optional arguments:
 ```
 
 ## Visualization
-### Visualization of detected objects in CAMERA perspective
-<img src="demo/3d.gif" width = "70%">
+### Detection in CAMERA perspective
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/3d.gif" width = "70%">
 <br>
-<img src="demo/seq_329.gif" width = "70%">
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/seq_329.gif" width = "70%">
 
-### Visualization of detected objects in BEV perspective
-<img src="demo/bev.gif" width = "70%">
+### Detection in BEV perspective
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/bev.gif" width = "70%">
 
-### Visualization of detected objects CAMERA / BEV side-by-side
-<img src="demo/cam_bev_demo.gif" width = "70%">
+### Detection with giCAMERA & BEV side-by-side
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/cam_bev_demo.gif" width = "70%">
