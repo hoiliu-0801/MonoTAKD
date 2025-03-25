@@ -1,6 +1,10 @@
+# Visualize MonoTAKD Detection Results
+The following visualizations utilizes tool that was adapted from [Visualize-KITTI-Objects-In-Videos](https://github.com/HengLan/Visualize-KITTI-Objects-in-Videos). This tool is modified to provide visualization of MonoTAKD. It can be used to visualize objects of KITTI in camera image, point cloud and bird's eye view.
+
+---
 - [Visualize MonoTAKD Detection Results](#visualize-monotakd-detection-results)
-  - [Get Started with VIS-KITTI](#get-started-with-vis-kitti)
-  - [Main Script Args](#main-script-args)
+  - [Setup Visualization Tool](#setup-visualization-tool)
+  - [Main Script Arguments](#main-script-arguments)
     - [Command Examples](#command-examples)
   - [MonoTAKD DEMO](#monotakd-demo)
     - [Detection in CAMERA perspective](#detection-in-camera-perspective)
@@ -9,10 +13,8 @@
 
 ---
 
-# Visualize MonoTAKD Detection Results
-The following visualizations utilizes tool that was adapted from [Visualize-KITTI-Objects-In-Videos](https://github.com/HengLan/Visualize-KITTI-Objects-in-Videos). This tool is modified to provide visualization of MonoTAKD. It can be used to visualize objects of KITTI in camera image, point cloud and bird's eye view.
-
-## Get Started with [VIS-KITTI](https://github.com/christinewoo/VIS-KITTI.git)
+## Setup Visualization Tool
+* Navigate to the directory, or the repository [VIS-KITTI](https://github.com/christinewoo/VIS-KITTI.git).
 ```
 (base)$ cd vis-kitti
 ```
@@ -39,7 +41,7 @@ OR
 (vis)$ pip install mayavi
 ```
 
-## Main Script Args
+## Main Script Arguments
 ```
 usage: visualize.py [-h] [--dataset_path DATASET_PATH]
                          [--vis_data_type {camera,pointcloud,bev}] [--fov]
