@@ -1,67 +1,73 @@
-## Our code will be released soon.
+# MonoTAKD: Teaching Assistant Knowledge Distillation for Monocular 3D Object Detection
+
+## Paper
+[MonoTAKD: Teaching Assistant Knowledge Distillation for Monocular 3D Object Detection](https://arxiv.org/pdf/2404.04910) (arXiv, Supplimentary Included)
+
+<!-- [MonoTAKD: Teaching Assistant Knowledge Distillation for Monocular 3D Object Detection]() (CVPR2025, Supplimentary Included) -->
+
+## Introduction
+This is the official implementation of MonoTAKD which utilizes [OpenPCDet](https://github.com/open-mmlab/OpenPCDet) for the KITTI dataset.
+
+<!-- [another version]() is implemented with [MMDetection3D](https://github.com/open-mmlab/mmdetection3d) for Nuscenes dataset.  -->
+
+## News
+**[2025.4.6] Initial Release**
+* Release code and pre-trained models for the KITTI dataset.
+* Visualization utils are provided to visualize detection results in both camera perspective and BEV perspective. [Demo]() images & videos are included in this release.
+
+<!-- **[2023.2.14] We have several updates.** -->
+
+**Notice: Due to the short schedule, instructions and pre-trained models will be released and adjusted gradually in the near future. Please let us know if there are any issues and bugs.**
+
+---
 
 ## Framework Overview
 <!-- ![image](/docs/framework.png) -->
+![image](./docs/imgs/framework.png)
 
-## BEV Features Generation
+## BEV Feature Generation
 <!-- ![image](/docs/BEV%20generation.png) -->
+![image](./docs/imgs/vis_bev.png)
 
-## Use TAKD
+## MonoTAKD DEMO
+### Detection in CAMERA perspective
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/3d.gif" width = "80%">
+<br>
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/seq_329.gif" width = "80%">
+
+### Detection in BEV perspective
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/bev.gif" width = "80%">
+
+### Detection with CAMERA & BEV Side-By-Side
+<img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/cam_bev_demo.gif" width = "80%">
+---
+
+## Performance
+### KITTI
+Performance on the KITTI *test* set car category as [`AP_3D` / `AP_BEV`].
+|   | Teacher | TA | Student | Easy| Moderate | Hard |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| [MonoTAKD](tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_eigen_R50_scd_V2.yaml)| [SECOND]() | [CaDDN]() | [model](https://drive.google.com/file/d/1S4Uehq7ix1CE2BXwL9SmaDsrtOiNZUIN/view?usp=drive_link) |  **27.91** / 38.75  | **19.43** / 27.76 | **16.51** / 24.14 | 
+| [MonoTAKD_*Lite*]()| - | - | - | - | - | - | 
+| [MonoTAKD_*Raw*]() | - | - | - | - | - | - |
+
+<!-- [model](https://drive.google.com/file/d/1S4Uehq7ix1CE2BXwL9SmaDsrtOiNZUIN/view?usp=drive_link) -->
+
+
+### Nuscenes
+|   | mAP | NDS | Model | 
+|---|:---:|:---:|:---:|
+| BEVDet-R50        | - | - | - |
+| BEVDet-R50 + TAKD | - | - | - |
+
+---
+
+## Setting Up MonoTAKD
 
 ### Installation
 
-Please follow [INSTALL](docs/INSTALL.md) to install CMKD.
+Please follow [INSTALL](docs/INSTALL.md) to install MonoTAKD.
 
 ### Getting Started
 
 Please follow [GETTING_START](docs/GETTING_STARTED.md) to train or evaluate the models.
-
-## Models
-
-### KITTI
-<!-- 
-|   | Teacher Model|  Car Easy@R40|	Car Moderate@R40	|Car Hard@R40	 | Model | Teacher Model |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| [CMKD-R50 (kitti train + eigen clean)](tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_eigen_R50_scd_V2.yaml)| [SECOND](tools/cfgs/kitti_models/CMKD/CMKD-scd/second_teacher.yaml) |  33.36  | 21.61  | 17.97  |  [model](https://drive.google.com/file/d/1A9rdGUdLkqOWVt8IbZfF1s0FHotQUIK_/view?usp=share_link)   | [model](https://drive.google.com/file/d/1SYbReQHNjOsWQ-zxM6mn3dq9Iyi98wAg/view?usp=share_link) |
-| [CMKD-R50 (kitti train)](tools/cfgs/kitti_models/CMKD/CMKD-scd/cmkd_kitti_R50_scd_V2.yaml)|[SECOND](tools/cfgs/kitti_models/CMKD/CMKD-scd/second_teacher.yaml)|  24.02  | 15.80  | 13.22  |  [model](https://drive.google.com/file/d/1weEb8DkAHKNa4HPgzM_Pbc7FLr-Yiuii/view?usp=share_link)  | [model](https://drive.google.com/file/d/1SYbReQHNjOsWQ-zxM6mn3dq9Iyi98wAg/view?usp=share_link) |
-| [CMKD-R50 (kitti train + eigen clean)](tools/cfgs/kitti_models/CMKD/CMKD-ctp/cmkd_kitti_eigen_R50_ctp_V2.yaml)|[CenterPoint](tools/cfgs/kitti_models/CMKD/CMKD-ctp/centerpoint_teacher.yaml)|  29.78  | 21.17  | 18.41  |  [model](https://drive.google.com/file/d/1fhXf5UZ0fat9ihdApCTuAVUE8ozttNej/view?usp=share_link)  |[model](https://drive.google.com/file/d/1Oqmnl6Kctg5BRKHEgtAw7ef9Lw3eyPky/view?usp=share_link)|
-| [CMKD-R50 (kitti train)](tools/cfgs/kitti_models/CMKD/CMKD-ctp/cmkd_kitti_R50_ctp_V2.yaml)|[CenterPoint](tools/cfgs/kitti_models/CMKD/CMKD-ctp/centerpoint_teacher.yaml)|  22.56  | 16.02  | 13.52  |  [model](https://drive.google.com/file/d/1tuZdy_S4EYeGaH8Mu5nDMOTu8b1PpfG6/view?usp=share_link)  |[model](https://drive.google.com/file/d/1Oqmnl6Kctg5BRKHEgtAw7ef9Lw3eyPky/view?usp=share_link)|
-| [CMKD-R50 (kitti train + eigen clean)](tools/cfgs/kitti_models/CMKD/CMKD-pp/cmkd_kitti_eigen_R50_pp_V2.yaml)    |[PointPillar](tools/cfgs/kitti_models/CMKD/CMKD-pp/pointpillar_teacher.yaml)|  32.25  | 21.47  | 18.21  |  [model](https://drive.google.com/file/d/1yX70t4pyTTaJr0X9lzivp0JEwB4uwOTz/view?usp=share_link)  | [model](https://drive.google.com/file/d/1JvpBqNCcJjfASs86q7Qp3772eaJU3wnL/view?usp=share_link)|
-| [CMKD-R50 (kitti train)](tools/cfgs/kitti_models/CMKD/CMKD-pp/cmkd_kitti_R50_pp_V2.yaml)|[PointPillar](tools/cfgs/kitti_models/CMKD/CMKD-pp/pointpillar_teacher.yaml)|  23.84  | 16.44 | 13.58  | [model](https://drive.google.com/file/d/1tHTLoBi2m5OqpTVM9biY4ExOZ40PfTIB/view?usp=share_link)  |[model](https://drive.google.com/file/d/1JvpBqNCcJjfASs86q7Qp3772eaJU3wnL/view?usp=share_link)|
- -->
-
-
-### Waymo
-Coming Soon
-                  
-
-### Nuscenes
-<!-- |   |  mAP |	NDS |Model | 
-|---|:---:|:---:|:---:|
-| BEVDet-R50|  30.7  | 38.2  | - |
-| BEVDet-R50 + CMKD|  34.7  | 42.6  | - |
- -->
-
-
-
-
-=======
-# MonoTAKD
-Paper : MonoTAKD: Teaching assistant knowledge distillation for monocular 3D object detection.
-
-Train
-python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
-
-Test
-python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt ../checkpoints/twcc_8015_checkpoint_epoch_10.pth
-
-Train Teacher:
-python train.py --cfg cfgs/kitti_models/second_teacher.yaml --ckpt ../checkpoints/scd-teacher-kitti.pth --pretrained_model ../checkpoints/scd-teacher-kitti.pth 
-python train.py --cfg cfgs/kitti_models/second.yaml  (w/o pretrained)
-
-Test Teacher:
-python test.py --cfg cfgs/kitti_models/second_teacher.yaml --ckpt ../checkpoints/scd-teacher-kitti.pth --save_to_file
-
-Tensorboard:
-tensorboard --logdir ../output/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD/
->>>>>>> 9d852a3f193097eb414f776304cb2d8b7fb5e1de

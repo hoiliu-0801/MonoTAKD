@@ -140,3 +140,28 @@ CUDA_VISIBLE_DEVICES=0,1 python -m torch.distributed.launch --nproc_per_node=2 t
 CUDA_VISIBLE_DEVICES=0,1 python -m torch.distributed.launch --nproc_per_node=2 train_cmkd.py --launcher pytorch --cfg ../tools/cfgs/kitti_models/CMKD/cmkd_kitti_eigen_R50_scd_V2.yaml  --tcp_port 16677 --pretrained_lidar_model ../checkpoints/second_teacher.pth
 --pretrained_img_model ../output/kitti_models/CMKD/cmkd_kitti_eigen_R50_scd_bev/default/ckpt/checkpoint_epoch_30.pth
 ```
+
+
+
+####
+
+=======
+# MonoTAKD
+Paper : MonoTAKD: Teaching assistant knowledge distillation for monocular 3D object detection.
+
+Train
+python train_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --pretrained_lidar_model ../checkpoints/scd-teacher-kitti.pth --pretrained_img_model ../checkpoints/cmkd-scd-2161.pth
+
+Test
+python test_TAKD.py --cfg cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml --ckpt ../checkpoints/twcc_8015_checkpoint_epoch_10.pth
+
+Train Teacher:
+python train.py --cfg cfgs/kitti_models/second_teacher.yaml --ckpt ../checkpoints/scd-teacher-kitti.pth --pretrained_model ../checkpoints/scd-teacher-kitti.pth 
+python train.py --cfg cfgs/kitti_models/second.yaml  (w/o pretrained)
+
+Test Teacher:
+python test.py --cfg cfgs/kitti_models/second_teacher.yaml --ckpt ../checkpoints/scd-teacher-kitti.pth --save_to_file
+
+Tensorboard:
+tensorboard --logdir ../output/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD/
+>>>>>>> 9d852a3f193097eb414f776304cb2d8b7fb5e1de
