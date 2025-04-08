@@ -15,8 +15,8 @@ This is the official implementation of MonoTAKD which utilizes [OpenPCDet](https
 * Release code and pre-trained models for the KITTI dataset.
 * Visualization utils are provided to visualize detection results in both camera perspective and BEV perspective. 
 * [MonoTAKD DEMO](#monotakd-demo) images & videos are included in this release.
+** [2025/2/27]: MonoTAKD has been accepted by CVPR 2025** 🔥🔥🔥
 
-<!-- **[2023.2.14] We have several updates.** -->
 
 **Notice: Due to the short schedule, instructions and pre-trained models will be released gradually in the near future. Please let us know if there are any issues and bugs.**
 
