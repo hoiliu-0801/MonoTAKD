@@ -11,12 +11,10 @@ This is the official implementation of MonoTAKD which utilizes [OpenPCDet](https
 <!-- [MonoTAKD: Teaching Assistant Knowledge Distillation for Monocular 3D Object Detection]() (CVPR2025, Sup. Included) -->
 
 ## News
-**[2025.4.6] Initial Release** 🔥🔥🔥
+**[2025/2/27]: MonoTAKD has been accepted by CVPR 2025** 🔥🔥🔥
 * Release code and pre-trained models for the KITTI dataset.
 * Visualization utils are provided to visualize detection results in both camera perspective and BEV perspective. 
 * [MonoTAKD DEMO](#monotakd-demo) images & videos are included in this release.
-**[2025/2/27]: MonoTAKD has been accepted by CVPR 2025** 🔥🔥🔥
-
 
 **Notice: Due to the short schedule, instructions and pre-trained models will be released gradually in the near future. Please let us know if there are any issues and bugs.**
 
