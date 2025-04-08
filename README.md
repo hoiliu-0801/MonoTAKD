@@ -39,7 +39,7 @@ This is the official implementation of MonoTAKD which utilizes [OpenPCDet](https
 `AP_3D` performance on the KITTI *test* set for the car category.
 |   | Teacher | TA | Student | Easy| Moderate | Hard |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
-| [MonoTAKD](tools/cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml) | [SECOND](https://drive.google.com/file/d/1UB0XE5NS0cmVunAry-v6f7Nr6d9yIIHI/view?usp=drive_link) | [CaDDN](https://drive.google.com/file/d/1OMPkZe8_lnnoUqSf0mSTQdvYBzhICX2Z/view?usp=drive_link) | [model](https://drive.google.com/file/d/1S4Uehq7ix1CE2BXwL9SmaDsrtOiNZUIN/view?usp=drive_link) |  34.36  | 22.61 | 19.88 | 
+| [MonoTAKD](tools/cfgs/kitti_models/TAKD/TAKD-scd/kitti_R50_scd_TAKD.yaml) | [SECOND](https://drive.google.com/file/d/1UB0XE5NS0cmVunAry-v6f7Nr6d9yIIHI/view?usp=drive_link) | [CaDDN](https://drive.google.com/file/d/1OMPkZe8_lnnoUqSf0mSTQdvYBzhICX2Z/view?usp=drive_link) | [model](https://drive.google.com/file/d/1S4Uehq7ix1CE2BXwL9SmaDsrtOiNZUIN/view?usp=drive_link) |  27.91  | 19.43 | 16.51 | 
 | [MonoTAKD_*Raw*](tools/cfgs/kitti_models/TAKD/TAKD-scd/cmkd_kitti_R50_scd_V2_lpcg.yaml) | [SECOND](https://drive.google.com/file/d/1UB0XE5NS0cmVunAry-v6f7Nr6d9yIIHI/view?usp=drive_link) | [CaDDN](https://drive.google.com/file/d/1OMPkZe8_lnnoUqSf0mSTQdvYBzhICX2Z/view?usp=drive_link) | [model](https://drive.google.com/file/d/1LxQWiEY4zkAbYNLkBWe5NdP2QrCcwzTF/view?usp=drive_link) | 29.86 | 21.26 | 18.27 |
 
 ### Nuscenes
