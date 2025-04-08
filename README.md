@@ -30,6 +30,7 @@ This is the official implementation of MonoTAKD which utilizes [OpenPCDet](https
 ## MonoTAKD DEMO
 * Detection in CAMERA perspective
 <img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/seq_329.gif" width = "80%">
+
 * Detection with CAMERA & BEV Side-By-Side
 <img src="https://github.com/hoiliu-0801/MonoTAKD/blob/main/demo/cam_bev_demo.gif" width = "80%">
 
